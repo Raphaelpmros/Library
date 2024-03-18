@@ -2,7 +2,7 @@ const Author = require("../models/Author");
 
 module.exports.authors = async (req, res) => {
     try {
-        return res.status(200).json({ "message": "success" });
+        return res.status(200).json({ "message": "success authors" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ "message": "Erro interno do servidor" });
