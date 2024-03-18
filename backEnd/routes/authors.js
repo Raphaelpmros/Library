@@ -1,6 +1,8 @@
-const express = require("express");
-const router = express.Router();
 const authors = require("../controllers/authors");
+const express = require("express");
+const router = express();
 
-router.get("/authors", authors.authors)
-router.get("/authors/new", authors.new)
+router.get("/", authors.authors)
+router.post("/new", authors.new)
+
+module.exports = router;

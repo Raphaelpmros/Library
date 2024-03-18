@@ -25,47 +25,35 @@ con.query(createLibraryTableSQL, (err, result) => {
   console.log('Tabela authors criada com sucesso.');
 });
 
-function createAuthor(fullName, nationality) {
+function createAuthor(full_name, nationality) {
   return new Promise((resolve, reject) => {
-    con.connect((err) => {
-      if(err) {
-        reject(err);
-      } else {
-        var sql = "INSERT INTO authors (fullName, nationality) VALUES (?, ?)";
-        var values = [fullName, nationality]
-        con.query(sql, values, (err, res) => {
-          if(err) {
-            console.error(err);
-            return res.status(500).send("Erro ao cadastrar o autor");
-          } else {
-            resolve(result)
+      const sql = "INSERT INTO authors (full_name, nationality) VALUES (?, ?)";
+      const values = [full_name, nationality];
+      con.query(sql, values, (err, result) => {
+          if (err) {
+              console.error(err);
+              return reject(err);
           }
-        })
-      }
-    })
-  })
+          resolve(result);
+      });
+  });
 }
 
-function findAuthorByName(fullName) {
+function findAuthorByName(full_name) {
   return new Promise((resolve, reject) => {
-    con.connect((err) => {
+    var find = "SELECT * FROM authors WHERE full_name=?";
+    con.query(find, [full_name], (err, result) => {
       if (err) {
         reject(err);
       } else {
-        var find = "SELECT * FROM authors WHERE fullName=?";
-        con.query(find, [fullName], (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result);
-          }
-        });
+        resolve(result);
       }
     });
   });
 }
 
+
 module.exports = {
   createAuthor,
   findAuthorByName
-}
+};
