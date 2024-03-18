@@ -32,7 +32,7 @@ function createAuthor(fullName, nationality) {
         reject(err);
       } else {
         var sql = "INSERT INTO authors (fullName, nationality) VALUES (?, ?)";
-        var values = [fullName, national]
+        var values = [fullName, nationality]
         con.query(sql, values, (err, res) => {
           if(err) {
             console.error(err);
@@ -44,4 +44,23 @@ function createAuthor(fullName, nationality) {
       }
     })
   })
+}
+
+function findAuthorByName(fullName) {
+  return new Promise((resolve, reject) => {
+    con.connect((err) => {
+      if (err) {
+        reject(err);
+      } else {
+        var find = "SELECT * FROM authors WHERE fullName=?";
+        con.query(find, [fullName], (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      }
+    });
+  });
 }
