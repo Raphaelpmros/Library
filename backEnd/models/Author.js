@@ -64,3 +64,8 @@ function findAuthorByName(fullName) {
     });
   });
 }
+
+module.exports = {
+  createAuthor,
+  findAuthorByName
+}
