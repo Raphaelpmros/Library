@@ -3,4 +3,4 @@ const router = express.Router();
 const authors = require("../controllers/authors");
 
 router.get("/authors", authors.authors)
-router.get("/authors/new", authors.createAuthor)
+router.get("/authors/new", authors.new)
