@@ -1,4 +1,4 @@
-const con = require ("../database/db");
+const author = require ("../models/Authors")
 
 const allAuthors = new Promise((resolve, reject) => {
     con.query("SELECT * FROM authors", function (err, result) {
@@ -14,7 +14,3 @@ module.exports.authors = async (req, res) => {
     const authors =  await allAuthors;
     res.json({message: "success", data: authors})
 };
-
-module.exports.createAuthor = async (req, res) => {
-    
-}

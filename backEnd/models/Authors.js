@@ -24,3 +24,24 @@ con.query(createLibraryTableSQL, (err, result) => {
 
   console.log('Tabela authors criada com sucesso.');
 });
+
+function createAuthor(fullName, nationality) {
+  return new Promise((resolve, reject) => {
+    con.connect((err) => {
+      if(err) {
+        reject(err);
+      } else {
+        var sql = "INSERT INTO authors (fullName, nationality) VALUES (?, ?)";
+        var values = [fullName, national]
+        con.query(sql, values, (err, res) => {
+          if(err) {
+            console.error(err);
+            return res.status(500).send("Erro ao cadastrar o autor");
+          } else {
+            resolve(result)
+          }
+        })
+      }
+    })
+  })
+}
