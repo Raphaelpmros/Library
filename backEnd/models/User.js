@@ -1,4 +1,7 @@
 const con = require("../database/db");
+const bcrypt = require('bcrypt');
+const salts = 10;
+
 
 con.connect((err) => {
   if (err) {
@@ -10,17 +13,18 @@ con.connect((err) => {
 });
 
 const createLibraryTableSQL = `
-CREATE TABLE users(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    full_name VARCHAR(50),
-    email VARCHAR(30),
-    cpf VARCHAR(14),
-    full_address VARCHAR(45),
-    additional_address_details VARCHAR(45),
-    phone VARCHAR(14),
-    password VARCHAR(30),
-    admin ENUM(0,1) NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  full_name VARCHAR(50),
+  email VARCHAR(30),
+  cpf VARCHAR(14),
+  full_address VARCHAR(45),
+  additional_address_details VARCHAR(45),
+  phone VARCHAR(14),
+  password VARCHAR(255),
+  admin ENUM('0','1') NOT NULL DEFAULT '0'
 )`;
+
 
 con.query(createLibraryTableSQL, (err, result) => {
   if (err) {
@@ -55,7 +59,7 @@ function createUser(
 ) {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO users (full_name, email, cpf, full_address, additional_address_details, phone, password) (?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO users (full_name, email, cpf, full_address, additional_address_details, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
     const values = [
       full_name,
       email,

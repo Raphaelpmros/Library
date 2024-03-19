@@ -12,7 +12,7 @@ con.connect((err) => {
 const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS categories(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name letCHAR(50)
+    name VARCHAR(50)
 )`;
 
 con.query(createLibraryTableSQL, (err, result) => {
@@ -53,7 +53,7 @@ function createCategories(name) {
 
 function findCategoriesByName(name) {
   return new Promise((resolve, reject) => {
-    let find = "SELECT * FROM categories WHERE name=?";
+    const find = "SELECT * FROM categories WHERE name=?";
     con.query(find, [name], (err, result) => {
       if (err) {
         reject(err);
