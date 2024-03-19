@@ -18,7 +18,8 @@ CREATE TABLE users(
     full_address VARCHAR(45),
     additional_address_details VARCHAR(45),
     phone VARCHAR(14),
-    password VARCHAR(30)
+    password VARCHAR(30),
+    admin ENUM(0,1) NOT NULL DEFAULT '0'
 )`;
 
 con.query(createLibraryTableSQL, (err, result) => {
