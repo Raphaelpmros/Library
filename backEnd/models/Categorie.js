@@ -12,7 +12,7 @@ con.connect((err) => {
 const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS categories(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50)
+    name letCHAR(50)
 )`;
 
 con.query(createLibraryTableSQL, (err, result) => {
@@ -53,7 +53,7 @@ function createCategories(name) {
 
 function findCategoriesByName(name) {
   return new Promise((resolve, reject) => {
-    var find = "SELECT * FROM categories WHERE name=?";
+    let find = "SELECT * FROM categories WHERE name=?";
     con.query(find, [name], (err, result) => {
       if (err) {
         reject(err);
@@ -66,7 +66,7 @@ function findCategoriesByName(name) {
 
 function changeCategorieName(id, newName) {
   return new Promise((resolve, reject) => {
-    var change = "UPDATE categories SET name = ? WHERE id = ?";
+    let change = "UPDATE categories SET name = ? WHERE id = ?";
     con.query(change, [newName, id], (err, result) => {
       if (err) {
         reject(err);
@@ -79,7 +79,7 @@ function changeCategorieName(id, newName) {
 
 function deleteCategorie(id) {
   return new Promise((resolve, reject) => {
-    var remove = "DELETE FROM categories WHERE id = ?";
+    let remove = "DELETE FROM categories WHERE id = ?";
     con.query(remove, [id], (err, result) => {
       if (err) {
         reject(err);

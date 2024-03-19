@@ -76,13 +76,39 @@ function createUser(
 
 function findUserByEmail(email) {
   return new Promise((resolve, reject) => {
-    var find = "SELECT * FROM users WHERE email=?"
+    var find = "SELECT * FROM users WHERE email=?";
     con.query(find, [email], (err, result) => {
       if (err) {
         console.error(err);
         return reject(err);
       }
       resolve(result);
-    })
-  })
+    });
+  });
+}
+
+function updateUser(
+  full_name,
+  full_address,
+  additional_address_details,
+  phone,
+  password
+) {
+  const passwordHash = bcrypt.hashSync(password, salts);
+  let change =
+    "UPDATE users SET full_name = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ?";
+  let values = [
+    full_name,
+    full_address,
+    additional_address_details,
+    phone,
+    passwordHash,
+  ];
+  con.query(change, values, (err, result) => {
+    if (err) {
+      console.error(err);
+      return reject(err);
+    }
+    resolve(result);
+  });
 }
