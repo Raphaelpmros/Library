@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const salts = 10;
 const User = require("../models/User");
 
-models.export.users = async (req, res) => {
+module.export.users = async (req, res) => {
   try {
     const viewUsers = await User.allUsers();
     return res.status(200).json({ viewUsers });
