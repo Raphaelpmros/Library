@@ -110,9 +110,20 @@ function updateUser(
         console.error(err);
         return reject(err);
       }
-      resolve(result);  
-   });
+      resolve(result);
+    });
   });
 }
 
-
+function deleteUser(id) {
+  return new Promise((resolve, reject) => {
+    let remove = "DELETE FROM users WHERE id = ?";
+    con.query(remove, [id], (err, result) => {
+      if (err) {
+        console.error(err);
+        return reject(err);
+      }
+      resolve(result);
+    });
+  });
+}
