@@ -4,8 +4,8 @@ module.exports.categories = async (req, res) => {
   try {
     const viewCategories = await Categorie.allCategories();
     return res.status(200).json({ viewCategories });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
@@ -27,8 +27,8 @@ module.exports.new = async (req, res) => {
     return res
       .status(201)
       .json({ message: "Categoria cadastrada com sucesso!" });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     return res.status(500).json({ message: "Erro ao criar a categoria." });
   }
 };
@@ -63,11 +63,9 @@ module.exports.delete = async (req, res) => {
       return res.status(404).json({ message: "Tente novamente" });
     }
 
-    const category = await Categorie.deleteCategorie(id);
-    if (category.affectedRows === 0) {
-      return res
-        .status(404)
-        .json({ message: "Esta categoria não existe!" });
+    const categoryDelete = await Categorie.deleteCategorie(id);
+    if (categoryDelete.affectedRows === 0) {
+      return res.status(404).json({ message: "Esta categoria não existe!" });
     }
 
     return res

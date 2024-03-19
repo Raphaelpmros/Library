@@ -88,6 +88,7 @@ function findUserByEmail(email) {
 }
 
 function updateUser(
+  id,
   full_name,
   full_address,
   additional_address_details,
@@ -97,13 +98,14 @@ function updateUser(
   return new Promise((resolve, reject) => {
     const passwordHash = bcrypt.hashSync(password, salts);
     let change =
-      "UPDATE users SET full_name = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ?";
+      "UPDATE users SET full_name = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ? WHERE id = ?";
     let values = [
       full_name,
       full_address,
       additional_address_details,
       phone,
       passwordHash,
+      id
     ];
     con.query(change, values, (err, result) => {
       if (err) {
