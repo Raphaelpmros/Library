@@ -3,4 +3,4 @@ const bcrypt = require("bcrypt");
 const salts = 10;
 const User = require("../models/User");
 
-models
+models.export.users = async (req, res)

@@ -1,12 +1,12 @@
 const Categorie = require("../models/Categorie");
 
-module.exports.categories = async (req, resp) => {
+module.exports.categories = async (req, res) => {
   try {
     const viewCategories = await Categorie.allCategories();
-    return resp.status(200).json({ viewCategories });
+    return res.status(200).json({ viewCategories });
   } catch (error) {
     console.error(error);
-    return resp.status(500).json({ message: "Erro interno do servidor" });
+    return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
 
