@@ -11,12 +11,12 @@ con.connect((err) => {
 
 const createLibraryTableSQL = `
 CREATE TABLE books(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    full_name VARCHAR(45),
-    id_authors INT NOT NULL,
-    id_categories INT NOT NULL,
-    FOREIGN KEY (id_authors) REFERENCES authors(id),
-    FOREIGN KEY (id_categories)  REFERENCES categories(id)
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  full_name VARCHAR(45),
+  id_authors INT NOT NULL,
+  id_categories INT NOT NULL,
+  FOREIGN KEY (id_authors) REFERENCES authors(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_categories) REFERENCES categories(id) ON DELETE CASCADE
 )`;
 
 con.query(createLibraryTableSQL, (err, result) => {

@@ -11,13 +11,13 @@ con.connect((err) => {
 
 const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS rents(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_books INT NOT NULL,
-    id_user INT NOT NULL,
-    pick_up_date DATETIME,
-    returns_date DATETIME,
-    FOREIGN KEY (id_books) REFERENCES books(id),
-    FOREIGN KEY (id_user) REFERENCES users(id)
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  id_books INT NOT NULL,
+  id_user INT NOT NULL,
+  pick_up_date DATETIME,
+  returns_date DATETIME,
+  FOREIGN KEY (id_books) REFERENCES books(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 )`;
 
 con.query(createLibraryTableSQL, (err, result) => {

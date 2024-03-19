@@ -8,14 +8,15 @@ con.connect(function (err) {
 
   console.log("Conexão bem-sucedida ao banco de dados");
 
-  var createLibraryTableSQL = `CREATE TABLE IF NOT EXISTS reviews (
+  var createLibraryTableSQL = `
+  CREATE TABLE IF NOT EXISTS reviews (
     id INT PRIMARY KEY AUTO_INCREMENT, 
     comment VARCHAR(255), 
     rating INT(5), 
     id_books INT, 
-    author INT, 
-    FOREIGN KEY(id_books) REFERENCES books(id), 
-    FOREIGN KEY(author) REFERENCES users(id)
+    review_author INT, 
+    FOREIGN KEY(id_books) REFERENCES books(id) ON DELETE CASCADE, 
+    FOREIGN KEY(review_author) REFERENCES users(id) ON DELETE CASCADE
     )`;
 
   con.query(createLibraryTableSQL, function (err, result) {
