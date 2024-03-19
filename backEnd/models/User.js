@@ -74,4 +74,15 @@ function createUser(
   });
 }
 
-
+function findUserByEmail(email) {
+  return new Promise((resolve, reject) => {
+    var find = "SELECT * FROM users WHERE email=?"
+    con.query(find, [email], (err, result) => {
+      if (err) {
+        console.error(err);
+        return reject(err);
+      }
+      resolve(result);
+    })
+  })
+}
