@@ -127,3 +127,11 @@ function deleteUser(id) {
     });
   });
 }
+
+module.exports = {
+  allUsers,
+  createUser,
+  findUserByEmail,
+  updateUser,
+  deleteUser
+};
