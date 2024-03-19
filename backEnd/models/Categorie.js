@@ -24,6 +24,19 @@ con.query(createLibraryTableSQL, (err, result) => {
   console.log("Tabela categories criada com sucesso.");
 });
 
+function allCategories() {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM categories";
+    con.query(sql, (err, results) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      }
+      resolve(results);
+    });
+  });
+}
+
 function createCategories(name) {
   return new Promise((resolve, reject) => {
     const sql = "INSERT INTO categories (name) VALUES (?)";
@@ -64,9 +77,23 @@ function changeCategorieName(id, newName) {
   });
 }
 
+function deleteCategorie(id) {
+  return new Promise((resolve, reject) => {
+    var remove = "DELETE FROM categories WHERE id = ?";
+    con.query(remove, [id], (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
 
 module.exports = {
+  allCategories,
   createCategories,
   findCategoriesByName,
-  changeCategorieName
+  changeCategorieName,
+  deleteCategorie
 };

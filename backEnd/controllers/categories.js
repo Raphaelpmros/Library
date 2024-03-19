@@ -2,7 +2,8 @@ const Categorie = require("../models/Categorie");
 
 module.exports.categories = async (req, resp) => {
   try {
-    return resp.status(200).json({ message: "success categories" });
+    const viewCategories = await Categorie.allCategories();
+    return resp.status(200).json({ viewCategories });
   } catch (error) {
     console.error(error);
     return resp.status(500).json({ message: "Erro interno do servidor" });
@@ -48,7 +49,34 @@ module.exports.update = async (req, res) => {
     return res.status(200).json({ message: "Nome alterado com sucesso!" });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Erro ao tentar mudar o nome, tente novamente!" });
+    return res
+      .status(500)
+      .json({ message: "Erro ao tentar mudar o nome, tente novamente!" });
   }
 };
 
+module.exports.delete = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    if (!id) {
+      return res.status(404).json({ message: "Tente novamente" });
+    }
+
+    const category = await Categorie.deleteCategorie(id);
+    if (category.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "Esta categoria não existe!" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Apagado com Sucesso!", data: category });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: "Erro ao tentar deletar a categoria." });
+  }
+};
