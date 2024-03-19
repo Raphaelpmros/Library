@@ -94,21 +94,25 @@ function updateUser(
   phone,
   password
 ) {
-  const passwordHash = bcrypt.hashSync(password, salts);
-  let change =
-    "UPDATE users SET full_name = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ?";
-  let values = [
-    full_name,
-    full_address,
-    additional_address_details,
-    phone,
-    passwordHash,
-  ];
-  con.query(change, values, (err, result) => {
-    if (err) {
-      console.error(err);
-      return reject(err);
-    }
-    resolve(result);
+  return new Promise((resolve, reject) => {
+    const passwordHash = bcrypt.hashSync(password, salts);
+    let change =
+      "UPDATE users SET full_name = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ?";
+    let values = [
+      full_name,
+      full_address,
+      additional_address_details,
+      phone,
+      passwordHash,
+    ];
+    con.query(change, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return reject(err);
+      }
+      resolve(result);  
+   });
   });
 }
+
+
