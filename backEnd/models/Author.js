@@ -1,3 +1,4 @@
+const { update } = require("../controllers/categories");
 const con = require("../database/db");
 
 con.connect((err) => {
@@ -63,6 +64,8 @@ function findAuthorByName(full_name) {
     });
   });
 }
+
+
 
 module.exports = {
   allAuthors,

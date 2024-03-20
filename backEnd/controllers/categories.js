@@ -41,7 +41,7 @@ module.exports.update = async (req, res) => {
       return res.status(400).json({ message: "Parâmetros inválidos!" });
     }
 
-    const result = await Categorie.changeCategorieName(id, newName);
+    const result = await Categorie.updateCategorieName(id, newName);
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Categoria não encontrada!" });
     }

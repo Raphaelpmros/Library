@@ -64,7 +64,7 @@ function findCategoriesByName(name) {
   });
 }
 
-function changeCategorieName(id, newName) {
+function updateCategorieName(id, newName) {
   return new Promise((resolve, reject) => {
     let change = "UPDATE categories SET name = ? WHERE id = ?";
     con.query(change, [newName, id], (err, result) => {
@@ -94,6 +94,6 @@ module.exports = {
   allCategories,
   createCategories,
   findCategoriesByName,
-  changeCategorieName,
+  updateCategorieName,
   deleteCategorie
 };
