@@ -13,7 +13,7 @@ const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS books(
   id INT PRIMARY KEY AUTO_INCREMENT,
   full_name VARCHAR(45),
-  description VARCHAR(255),
+  description TEXT,
   quantity INT NOT NULL,
   image LONGTEXT,
   id_authors INT NOT NULL,
