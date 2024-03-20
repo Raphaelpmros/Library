@@ -28,11 +28,10 @@ function allCategories() {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM categories";
     con.query(sql, (err, results) => {
-      if (err) {
-        console.error(err);
-        reject(err);
+      if(err) {
+        return reject(err)
       }
-      resolve(results);
+      resolve(result);
     });
   });
 }
@@ -55,11 +54,10 @@ function findCategoriesByName(name) {
   return new Promise((resolve, reject) => {
     const find = "SELECT * FROM categories WHERE name=?";
     con.query(find, [name], (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
+      if(err) {
+        return reject(err)
       }
+      resolve(result);
     });
   });
 }
@@ -68,11 +66,10 @@ function updateCategorieName(id, newName) {
   return new Promise((resolve, reject) => {
     let change = "UPDATE categories SET name = ? WHERE id = ?";
     con.query(change, [newName, id], (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
+      if(err) {
+        return reject(err)
       }
+      resolve(result);
     });
   });
 }
@@ -82,10 +79,9 @@ function deleteCategorie(id) {
     let remove = "DELETE FROM categories WHERE id = ?";
     con.query(remove, [id], (err, result) => {
       if (err) {
-        reject(err);
-      } else {
-        resolve(result);
+        return reject(err);
       }
+      resolve(result);
     });
   });
 }
@@ -95,5 +91,5 @@ module.exports = {
   createCategories,
   findCategoriesByName,
   updateCategorieName,
-  deleteCategorie
+  deleteCategorie,
 };

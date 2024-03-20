@@ -30,10 +30,10 @@ function allAuthors() {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM authors";
     con.query(sql, (err, results) => {
-      if (err) {
-        reject(err);
+      if(err) {
+        return reject(err)
       }
-      resolve(results);
+      resolve(result);
     })
   })
 }
@@ -56,11 +56,10 @@ function findAuthorByName(full_name) {
   return new Promise((resolve, reject) => {
     var find = "SELECT * FROM authors WHERE full_name=?";
     con.query(find, [full_name], (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
+      if(err) {
+        return reject(err)
       }
+      resolve(result);
     });
   });
 }
@@ -69,16 +68,25 @@ function updateAuthor(id, newName, newNationality) {
   return new Promise((resolve, reject) => {
     let change = "UPDATE authors SET full_name = ?, nationality = ? WHERE  id = ?";
     con.query(change, [newName, newNationality,  id], function (err, result) {
-      if (err) {
-        return(err)
-      } else {
-        resolve(result);
+      if(err) {
+        return reject(err)
       }
+      resolve(result);
     })
   })
 }
 
-
+function deleteAuthor(id) {
+  return new Promise((resolve, reject) => {
+    let remove = "DELETE FROM authors WHERE id = ?"
+    con.query(remove [id], (err, result) => {
+      if(err) {
+        return reject(err)
+      }
+      resolve(result);
+    })
+  })
+}
 
 module.exports = {
   allAuthors,
