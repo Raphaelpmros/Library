@@ -50,7 +50,7 @@ function findBooks(full_name) {
       if (err) {
         return reject(err);
       }
-      resolve(result);
+      return resolve(result);
     });
   });
 }
@@ -78,7 +78,7 @@ function createBooks(
       if (err) {
         return reject(err);
       }
-      resolve(result);
+      return resolve(result);
     });
   });
 }
@@ -106,4 +106,24 @@ function updateBooks(
       }
     );
   });
+}
+
+function deleteBooks(id) {
+  return new Promise((resolve, reject) => {
+    let remove = "DELETE FROM books WHERE id = ?";
+    con.query(remove, [id], (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(result)
+    })
+  })
+}
+
+module.exports = {
+  allBooks,
+  findBooks,
+  createBooks,
+  updateBooks,
+  deleteBooks
 }

@@ -44,7 +44,7 @@ function findCategoriesByName(name) {
       if(err) {
         return reject(err)
       }
-      resolve(result);
+      return resolve(result);
     });
   });
 }
@@ -70,7 +70,7 @@ function updateCategorieName(id, newName) {
       if(err) {
         return reject(err)
       }
-      resolve(result);
+      return resolve(result);
     });
   });
 }
@@ -82,7 +82,7 @@ function deleteCategorie(id) {
       if (err) {
         return reject(err);
       }
-      resolve(result);
+      return resolve(result);
     });
   });
 }
