@@ -36,6 +36,19 @@ function allCategories() {
   });
 }
 
+
+function findCategoriesByName(name) {
+  return new Promise((resolve, reject) => {
+    const find = "SELECT * FROM categories WHERE name=?";
+    con.query(find, [name], (err, result) => {
+      if(err) {
+        return reject(err)
+      }
+      resolve(result);
+    });
+  });
+}
+
 function createCategories(name) {
   return new Promise((resolve, reject) => {
     const sql = "INSERT INTO categories (name) VALUES (?)";
@@ -44,18 +57,6 @@ function createCategories(name) {
       if (err) {
         console.error(err);
         return reject(err);
-      }
-      resolve(result);
-    });
-  });
-}
-
-function findCategoriesByName(name) {
-  return new Promise((resolve, reject) => {
-    const find = "SELECT * FROM categories WHERE name=?";
-    con.query(find, [name], (err, result) => {
-      if(err) {
-        return reject(err)
       }
       resolve(result);
     });
