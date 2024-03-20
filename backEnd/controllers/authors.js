@@ -32,3 +32,22 @@ module.exports.new = async (req, res) => {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
+
+module.exports.update = async (req, res) => {
+  const { id, newName, newNationality } = req.body;
+  try {
+    if (!id || (!newName && !newNationality)) {
+      return res.status(400).json({ message: "Parâmetros inválidos" });
+    }
+
+    const result = await Author.updateAuthor(id, newName, newNationality);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Autor não encontrado" });
+    }
+
+    return res.status(200).json({ message: "Autor alterado com sucesso" });
+  } catch {
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};
