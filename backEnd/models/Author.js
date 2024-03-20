@@ -92,5 +92,6 @@ module.exports = {
   allAuthors,
   createAuthor,
   findAuthorByName,
-  updateAuthor
+  updateAuthor,
+  deleteAuthor
 };
