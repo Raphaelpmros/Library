@@ -51,3 +51,23 @@ module.exports.update = async (req, res) => {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
+
+module.exports.delete = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    if (!id) {
+      return res.status(404).json({ message: "Tente novamente" });
+    }
+
+    const authorDelete = await Author.deleteAuthor(id);
+    if (authorDelete.affectedRows === 0) {
+      return res.status(404).json({ message: "Este autor não existe." });
+    }
+
+    return res.status(200).json({ message: "Apagado com sucesso!" });
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};

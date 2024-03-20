@@ -29,7 +29,7 @@ con.query(createLibraryTableSQL, (err, result) => {
 function allAuthors() {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM authors";
-    con.query(sql, (err, results) => {
+    con.query(sql, (err, result) => {
       if(err) {
         return reject(err)
       }
@@ -78,15 +78,16 @@ function updateAuthor(id, newName, newNationality) {
 
 function deleteAuthor(id) {
   return new Promise((resolve, reject) => {
-    let remove = "DELETE FROM authors WHERE id = ?"
-    con.query(remove [id], (err, result) => {
+    let remove = "DELETE FROM authors WHERE id = ?";
+    con.query(remove, [id], (err, result) => {
       if(err) {
-        return reject(err)
+        return reject(err);
       }
       resolve(result);
-    })
-  })
+    });
+  });
 }
+
 
 module.exports = {
   allAuthors,
