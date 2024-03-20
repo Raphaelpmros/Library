@@ -65,10 +65,24 @@ function findAuthorByName(full_name) {
   });
 }
 
+function updateAuthor(id, newName, newNationality) {
+  return new Promise((resolve, reject) => {
+    let change = "UPDATE authors SET full_name = ?, nationality = ? WHERE  id = ?";
+    con.query(change, [newName, newNationality,  id], function (err, result) {
+      if (err) {
+        return(err)
+      } else {
+        resolve(result);
+      }
+    })
+  })
+}
+
 
 
 module.exports = {
   allAuthors,
   createAuthor,
   findAuthorByName,
+  updateAuthor
 };
