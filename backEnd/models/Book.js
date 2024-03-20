@@ -13,6 +13,9 @@ const createLibraryTableSQL = `
 CREATE TABLE books(
   id INT PRIMARY KEY AUTO_INCREMENT,
   full_name VARCHAR(45),
+  description VARCHAR(255),
+  quantity INT NOT NULL,
+  image LONGTEXT,
   id_authors INT NOT NULL,
   id_categories INT NOT NULL,
   FOREIGN KEY (id_authors) REFERENCES authors(id) ON DELETE CASCADE,
@@ -52,10 +55,10 @@ function findBooks(full_name) {
   })
 }
 
-function createBooks(full_name, id_authors, id_categories) {
+function createBooks(full_name, description, quantity, image, id_authors, id_categories) {
   return new Promise((resolve, reject) => {
-    const sql = "INSERT INTO books (full_name, id_authors, id_categories) VALUES (?, ?, ?)";
-    const values = [full_name, id_authors, id_categories];
+    const sql = "INSERT INTO books (full_name, description, quantity, image, id_authors, id_categories) VALUES (?, ?, ?, ?, ?, ?)";
+    const values = [full_name, description, quantity, image, id_authors, id_categories];
     con.query(sql, values, (err, result) => {
       if(err) {
         return reject(err);
