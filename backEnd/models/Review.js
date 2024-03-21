@@ -14,9 +14,9 @@ con.connect(function (err) {
     comment VARCHAR(255), 
     rating INT(5), 
     id_books INT, 
-    review_author INT, 
+    id_user INT, 
     FOREIGN KEY(id_books) REFERENCES books(id) ON DELETE CASCADE, 
-    FOREIGN KEY(review_author) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY(id_user) REFERENCES users(id) ON DELETE CASCADE
     )`;
 
   con.query(createLibraryTableSQL, function (err, result) {
