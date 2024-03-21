@@ -41,7 +41,7 @@ function allRents() {
   });
 }
 
-function findRent(id_books) {
+function findRents(id_books) {
   return new Promise((resolve, reject) => {
     const find = "SELECT * FROM reviews WHERE id_books=?";
     con.query(find, [id_books], (err, result) => {
@@ -53,7 +53,22 @@ function findRent(id_books) {
   })
 }
 
+function createRents(id_books, id_user, pick_up_date, returns_date) {
+  return new Promise((resolve, reject) => {
+    const rentBook = "UPDATE books SET quantity = GREATEST(quantity -1, 0) WHERE id_books = ?"
+    const sql = "INSERT INTO rents (id_books, id_user, pick_up_date, returns_date) VALUES(?,?,?,?)";
+    const values = [id_books, id_user, pick_up_date, returns_date];
+    con.query(sql, rentBook, values, (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(result);
+    })
+  })
+}
+
 module.exports = {
   allRents,
-  findReview
+  findRents,
+  createRents
 }
