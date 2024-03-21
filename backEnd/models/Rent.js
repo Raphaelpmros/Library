@@ -41,6 +41,19 @@ function allRents() {
   });
 }
 
+function findReview(id_books) {
+  return new Promise((resolve, reject) => {
+    const find = "SELECT * FROM reviews WHERE id_books=?";
+    con.query(find, [id_books], (err, result) => {
+      if (err) {
+        return reject(err)
+      }
+      return resolve(result);
+    })
+  })
+}
+
 module.exports = {
-  allRents
+  allRents,
+  findReview
 }
