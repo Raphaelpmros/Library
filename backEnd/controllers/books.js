@@ -21,7 +21,7 @@ module.exports.new = async (req, res) => {
     !id_authors ||
     !id_categories
   ) {
-    return res.status(422).json({ mensagem: "Campo é obrigatório!" });
+    return res.status(422).json({ message: "Campo é obrigatório!" });
   }
 
   if (
@@ -74,7 +74,7 @@ module.exports.updateBook = async function (req, res) {
     !id_authors ||
     !id_categories
   ) {
-    return res.status(422).json({ mensagem: "Campo é obrigatório!" });
+    return res.status(422).json({ message: "Campo é obrigatório!" });
   }
 
   if (

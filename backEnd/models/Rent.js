@@ -55,17 +55,25 @@ function findRents(id_books) {
 
 function createRents(id_books, id_user, pick_up_date, returns_date) {
   return new Promise((resolve, reject) => {
-    const rentBook = "UPDATE books SET quantity = GREATEST(quantity -1, 0) WHERE id_books = ?"
-    const sql = "INSERT INTO rents (id_books, id_user, pick_up_date, returns_date) VALUES(?,?,?,?)";
+    const rentBookQuery = "UPDATE books SET quantity = GREATEST(quantity - 1, 0) WHERE id = ?";
+    const insertRentQuery = "INSERT INTO rents (id_books, id_user, pick_up_date, returns_date) VALUES (?, ?, ?, ?)";
     const values = [id_books, id_user, pick_up_date, returns_date];
-    con.query(sql, rentBook, values, (err, result) => {
+
+    con.query(rentBookQuery, [id_books], (err, result) => {
       if (err) {
         return reject(err);
       }
-      return resolve(result);
-    })
-  })
+
+      con.query(insertRentQuery, values, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(result);
+      });
+    });
+  });
 }
+
 
 module.exports = {
   allRents,
