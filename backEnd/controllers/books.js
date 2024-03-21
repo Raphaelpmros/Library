@@ -57,8 +57,15 @@ module.exports.new = async (req, res) => {
 };
 
 module.exports.updateBook = async function (req, res) {
-  const { full_name, description, quantity, image, id_authors, id_categories, id } =
-    req.body;
+  const {
+    full_name,
+    description,
+    quantity,
+    image,
+    id_authors,
+    id_categories,
+    id,
+  } = req.body;
 
   if (
     !full_name ||
@@ -81,16 +88,41 @@ module.exports.updateBook = async function (req, res) {
     });
   }
 
-  try{
-    const result = await Book.updateBooks(full_name, description, quantity, image, id_authors, id_categories, id);
-    if(result.affectedRows === 0) {
-      return res.status(404).json({message: "Livro não encontrado"})
+  try {
+    const result = await Book.updateBooks(
+      full_name,
+      description,
+      quantity,
+      image,
+      id_authors,
+      id_categories,
+      id
+    );
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Livro não encontrado" });
     }
 
-    return res.status(200).json({message: "Livro atualizado com sucesso!"})
+    return res.status(200).json({ message: "Livro atualizado com sucesso!" });
+  } catch (err) {
+    return res.status(500).json({ message: "Erro interno do servidor!" });
+  }
+};
 
-  } catch(err) {
-    return res.status(500).json({message: "Erro interno do servidor!"})
+module.exports.delete = async (req, res) => {
+  let { id } = req.params;
+
+  if (!id) {
+    return res.status(404).json({ message: "Tente novamente" });
   }
 
+  try {
+    const booksDelete = await Book.deleteBooks(id);
+    if (booksDelete.affectedRows == 0) {
+      return res.status(404).json({ message: "Este livro não existe." });
+    }
+
+    return res.status(200).json({ message: "Livro apagado com sucesso!" });
+  } catch (err) {
+    return res.status(500).json({ message: "Erro interno do servidor!" });
+  }
 };
