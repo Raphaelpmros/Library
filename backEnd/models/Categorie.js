@@ -27,7 +27,7 @@ con.query(createLibraryTableSQL, (err, result) => {
 function allCategories() {
   return new Promise((resolve, reject) => {
     const sql = "SELECT * FROM categories";
-    con.query(sql, (err, results) => {
+    con.query(sql, (err, result) => {
       if(err) {
         return reject(err)
       }
