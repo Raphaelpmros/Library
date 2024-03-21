@@ -85,7 +85,7 @@ module.exports.update = async (req, res) => {
 };
 
 module.exports.delete = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   try {
     if (!id) {
