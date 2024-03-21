@@ -1,12 +1,12 @@
-const con = require('../database/db');
+const con = require("../database/db");
 
 con.connect((err) => {
   if (err) {
-    console.error('Erro ao conectar-se ao banco de dados:', err.stack);
+    console.error("Erro ao conectar-se ao banco de dados:", err.stack);
     return;
   }
 
-  console.log('Conectado ao banco de dados.');
+  console.log("Conectado ao banco de dados.");
 });
 
 const createLibraryTableSQL = `
@@ -22,9 +22,25 @@ CREATE TABLE IF NOT EXISTS rents(
 
 con.query(createLibraryTableSQL, (err, result) => {
   if (err) {
-    console.error('Erro ao criar tabela rents:', err);
+    console.error("Erro ao criar tabela rents:", err);
     return;
   }
 
-  console.log('Tabela rents criada com sucesso.');
+  console.log("Tabela rents criada com sucesso.");
 });
+
+function allRents() {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM rents";
+    con.query(sql, (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(result);
+    });
+  });
+}
+
+module.exports = {
+  allRents
+}
