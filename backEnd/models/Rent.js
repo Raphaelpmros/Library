@@ -74,6 +74,11 @@ function createRents(id_books, id_user, pick_up_date, returns_date) {
   });
 }
 
+// function updateRents(id, pick_up_date ,returns_date) {
+//   return new Promise ((resolve, reject) => {
+
+//   })
+// }
 
 module.exports = {
   allRents,
