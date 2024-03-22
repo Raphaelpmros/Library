@@ -40,19 +40,17 @@ function allReviews(id_books) {
   });
 }
 
-function insertReview({ rating, comment, id_books }, callback) {
-  const sql =
-    "INSERT INTO reviews (rating, comment, id_books, author) VALUES (?, ?, ?, ?)";
-  const values = [rating, comment, id_books, author];
-
-  con.query(sql, values, (err, result) => {
-    if (err) {
-      console.error("Erro ao inserir a avaliação no MySQL:", err);
-      return callback(err, null);
-    }
-
-    console.log("1 record inserted");
-    callback(null, result);
+function createReviews(comment, rating, id_user, id_books) {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "INSERT INTO reviews (comment, rating, id_user, id_books) VALUES (?, ?, ?, ?)";
+    const values = [comment, rating, id_user, id_books];
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(result);
+    });
   });
 }
 
@@ -71,6 +69,6 @@ function deleteReview(reviewId, callback) {
 
 module.exports = {
   allReviews,
-  insertReview,
+  createReviews,
   deleteReview,
 };
