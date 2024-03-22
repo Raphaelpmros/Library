@@ -37,12 +37,34 @@ module.exports.new = async (req, res) => {
   }
 };
 
+module.exports.update = async (req, res) => {
+  const { id } = req.body;
 
+  try {
+    const rent = await Rent.updateRents(id);
 
-// module.exports.update = async (req, res) => {
-//   const {pick_up_date, returns_date, id} = req.body;
+    if (!rent || rent.error) {
+      if (rent.error) {
+        return res.status(400).json({ message: rent.error });
+      } else {
+        return res.status(404).json({ message: "Aluguel não encontrado." });
+      }
+    }
 
-//   if (!pick_up_date || !returns_date) {
-//     return res.status(422).json({ message: "Preencha todos os campos!" });
-//   }
-// }
+    const today = moment().startOf('day');
+    const returnDate = moment(rent.returns_date, 'YYYY-MM-DD').startOf('day');
+
+    if (returnDate.isSameOrBefore(today, 'day')) {
+      return res.status(400).json({ message: "Não é possível renovar o aluguel, pois a data limite de devolução já passou." });
+    }
+
+    const newReturnDate = today.clone().add(7, 'days').format('YYYY-MM-DD');
+
+    await Rent.updateRents(id, newReturnDate, true);
+
+    return res.status(200).json({ message: "Aluguel renovado com sucesso!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Erro interno do servidor!" });
+  }
+};

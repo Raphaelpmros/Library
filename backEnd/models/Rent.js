@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS rents(
   pick_up_date DATETIME,
   returns_date DATETIME,
   FOREIGN KEY (id_books) REFERENCES books(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
+  FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+  renewed BOOLEAN DEFAULT 0
 )`;
 
 con.query(createLibraryTableSQL, (err, result) => {
@@ -76,19 +77,36 @@ function createRents(id_books, id_user, pick_up_date, returns_date) {
   });
 }
 
-function updateRents(id, pick_up_date, returns_date) {
+function updateRents(id, returns_date, renewed) {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE books SET returns_date = ? WHERE id = ?";
-    const value = [returns_date, id];
-
-    con.query(sql, value, (err, result) => {
+    const selectQuery = "SELECT * FROM rents WHERE id = ?";
+    con.query(selectQuery, [id], (err, result) => {
       if (err) {
         return reject(err);
       }
-      resolve(result);
+
+      if (result.length === 0) {
+        return reject("Aluguel não encontrado.");
+      }
+
+      if (result[0].renewed === 1) {
+        return resolve({ error: "Não é possível renovar o aluguel, pois ele já foi renovado anteriormente." });
+      }
+
+      const updateQuery = "UPDATE rents SET returns_date = ?, renewed = ? WHERE id = ?";
+      const values = [returns_date, renewed, id];
+
+      con.query(updateQuery, values, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(result);
+      });
     });
   });
 }
+
+
 
 module.exports = {
   allRents,
