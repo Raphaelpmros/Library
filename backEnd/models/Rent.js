@@ -46,17 +46,19 @@ function findRents(id_books) {
     const find = "SELECT * FROM reviews WHERE id_books=?";
     con.query(find, [id_books], (err, result) => {
       if (err) {
-        return reject(err)
+        return reject(err);
       }
       return resolve(result);
-    })
-  })
+    });
+  });
 }
 
 function createRents(id_books, id_user, pick_up_date, returns_date) {
   return new Promise((resolve, reject) => {
-    const rentBookQuery = "UPDATE books SET quantity = GREATEST(quantity - 1, 0) WHERE id = ?";
-    const insertRentQuery = "INSERT INTO rents (id_books, id_user, pick_up_date, returns_date) VALUES (?, ?, ?, ?)";
+    const rentBookQuery =
+      "UPDATE books SET quantity = GREATEST(quantity - 1, 0) WHERE id = ?";
+    const insertRentQuery =
+      "INSERT INTO rents (id_books, id_user, pick_up_date, returns_date) VALUES (?, ?, ?, ?)";
     const values = [id_books, id_user, pick_up_date, returns_date];
 
     con.query(rentBookQuery, [id_books], (err, result) => {
@@ -74,14 +76,23 @@ function createRents(id_books, id_user, pick_up_date, returns_date) {
   });
 }
 
-// function updateRents(id, pick_up_date ,returns_date) {
-//   return new Promise ((resolve, reject) => {
+function updateRents(id, pick_up_date, returns_date) {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE books SET returns_date = ? WHERE id = ?";
+    const value = [returns_date, id];
 
-//   })
-// }
+    con.query(sql, value, (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(result);
+    });
+  });
+}
 
 module.exports = {
   allRents,
   findRents,
-  createRents
-}
+  createRents,
+  updateRents
+};
