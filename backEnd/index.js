@@ -8,7 +8,7 @@ const authors = require("./routes/authors");
 const books = require ("./routes/books");
 const categories = require("./routes/categories");
 const rents = require ("./routes/rents");
-// const reviews = require ("./routes/reviews");
+const reviews = require ("./routes/reviews");
 const users = require ("./routes/users");
 
 app.use(bodyParser.json());
@@ -19,7 +19,7 @@ app.use("/authors", authors);
 app.use("/books", books);
 app.use("/categories", categories);
 app.use("/rents", rents);
-// app.use("/reviews", reviews);
+app.use("/reviews", reviews);
 app.use("/users", users);
 
 app.listen(3030, () => {

@@ -28,6 +28,18 @@ con.connect(function (err) {
   });
 });
 
+function allReviews(id_books) {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM reviews WHERE id_books=?";
+    con.query(sql, [id_books], (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(result);
+    });
+  });
+}
+
 function insertReview({ rating, comment, id_books }, callback) {
   const sql =
     "INSERT INTO reviews (rating, comment, id_books, author) VALUES (?, ?, ?, ?)";
@@ -58,6 +70,7 @@ function deleteReview(reviewId, callback) {
 }
 
 module.exports = {
+  allReviews,
   insertReview,
   deleteReview,
 };
