@@ -1,5 +1,5 @@
 const Rent = require("../models/Rent");
-const moment = require("moment")
+const moment = require("moment");
 
 module.exports.rents = async (req, res) => {
   try {
@@ -9,7 +9,6 @@ module.exports.rents = async (req, res) => {
     return res.status(500).json({ message: "Erro interno do servidor!" });
   }
 };
-
 
 module.exports.new = async (req, res) => {
   const { id_books, id_user } = req.body;
@@ -24,9 +23,9 @@ module.exports.new = async (req, res) => {
     });
   }
 
-  const pickUpDate = moment().startOf("day").format('YYYY-MM-DD');
+  const pickUpDate = moment().startOf("day").format("YYYY-MM-DD");
 
-  const returnDate = moment(pickUpDate).add(7, 'days').format('YYYY-MM-DD');
+  const returnDate = moment(pickUpDate).add(7, "days").format("YYYY-MM-DD");
 
   try {
     await Rent.createRents(id_books, id_user, pickUpDate, returnDate);
@@ -51,14 +50,17 @@ module.exports.update = async (req, res) => {
       }
     }
 
-    const today = moment().startOf('day');
-    const returnDate = moment(rent.returns_date, 'YYYY-MM-DD').startOf('day');
+    const today = moment().startOf("day");
+    const returnDate = moment(rent.returns_date, "YYYY-MM-DD").startOf("day");
 
-    if (returnDate.isSameOrBefore(today, 'day')) {
-      return res.status(400).json({ message: "Não é possível renovar o aluguel, pois a data limite de devolução já passou." });
+    if (returnDate.isSameOrBefore(today, "day")) {
+      return res.status(400).json({
+        message:
+          "Não é possível renovar o aluguel, pois a data limite de devolução já passou.",
+      });
     }
 
-    const newReturnDate = today.clone().add(7, 'days').format('YYYY-MM-DD');
+    const newReturnDate = today.clone().add(7, "days").format("YYYY-MM-DD");
 
     await Rent.updateRents(id, newReturnDate, true);
 
@@ -66,5 +68,23 @@ module.exports.update = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Erro interno do servidor!" });
+  }
+};
+
+module.exports.delete = async (req, res) => {
+  const { id } = req.params;
+  const { id_books } = req.body;
+
+  try {
+    const rentsDelete = await Rent.deleteRents(id, id_books);
+
+    if (rentsDelete.affectedRows === 0) {
+      return res.status(404).json({ message: "Aluguel não encontrado." });
+    }
+
+    res.status(200).json({ message: "Aluguel devolvido com sucesso!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Erro interno do servidor." });
   }
 };

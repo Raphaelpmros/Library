@@ -1,4 +1,5 @@
 const con = require("../database/db");
+const moment = require("moment");
 
 con.connect((err) => {
   if (err) {
@@ -79,8 +80,8 @@ function createRents(id_books, id_user, pick_up_date, returns_date) {
 
 function updateRents(id, returns_date, renewed) {
   return new Promise((resolve, reject) => {
-    const selectQuery = "SELECT * FROM rents WHERE id = ?";
-    con.query(selectQuery, [id], (err, result) => {
+    const sql = "SELECT * FROM rents WHERE id = ?";
+    con.query(sql, [id], (err, result) => {
       if (err) {
         return reject(err);
       }
@@ -90,10 +91,14 @@ function updateRents(id, returns_date, renewed) {
       }
 
       if (result[0].renewed === 1) {
-        return resolve({ error: "Não é possível renovar o aluguel, pois ele já foi renovado anteriormente." });
+        return resolve({
+          error:
+            "Não é possível renovar o aluguel, pois ele já foi renovado anteriormente.",
+        });
       }
 
-      const updateQuery = "UPDATE rents SET returns_date = ?, renewed = ? WHERE id = ?";
+      const updateQuery =
+        "UPDATE rents SET returns_date = ?, renewed = ? WHERE id = ?";
       const values = [returns_date, renewed, id];
 
       con.query(updateQuery, values, (err, result) => {
@@ -106,11 +111,42 @@ function updateRents(id, returns_date, renewed) {
   });
 }
 
+function deleteRents(id) {
+  return new Promise((resolve, reject) => {
+    const selectQuery = "SELECT * FROM rents WHERE id = ?";
+    con.query(selectQuery, [id], (err, result) => {
+      if (err) {
+        return reject(err);
+      }
 
+      if (result.length === 0) {
+        return reject("Aluguel não encontrado.");
+      }
+
+      const { id_books } = result[0];
+
+      const deleteBookQuery = "UPDATE books SET quantity = quantity + 1 WHERE id = ?";
+      con.query(deleteBookQuery, [id_books], (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+
+        const deleteRentQuery = "DELETE FROM rents WHERE id = ?";
+        con.query(deleteRentQuery, [id], (err, result) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(result);
+        });
+      });
+    });
+  });
+}
 
 module.exports = {
   allRents,
   findRents,
   createRents,
-  updateRents
+  updateRents,
+  deleteRents,
 };
