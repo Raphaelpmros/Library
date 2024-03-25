@@ -54,17 +54,16 @@ function createReviews(comment, rating, id_user, id_books) {
   });
 }
 
-function deleteReview(reviewId, callback) {
-  const sql = "DELETE FROM reviews WHERE id = ?";
-
-  con.query(sql, [reviewId], (error, results) => {
-    if (error) {
-      console.error("Erro ao excluir a avaliação no MySQL:", error);
-      return callback(error, null);
-    }
-
-    callback(null, results);
-  });
+function deleteReview(id) {
+  return new Promise((resolve, reject) => {
+    const sql = "DELETE FROM reviews WHERE id = ?"
+    con.query(sql, [id], (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(result)
+    })
+  })
 }
 
 module.exports = {
