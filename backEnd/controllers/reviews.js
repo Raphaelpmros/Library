@@ -13,14 +13,13 @@ module.exports.reviews = async (req, res) => {
 
 module.exports.new = async (req, res) => {
   const { comment, rating, id_user } = req.body;
-  const { id_books} = req.params
+  const { id_books } = req.params;
 
   if (!id_user) {
     return res.status(422).json({ message: "O campo deve ser preenchido" });
   }
 
   if (!/^[1-9]\d*$/.test(id_books)) {
-    console.log(id_books);
     res.status(400).json({
       mensagem: "O 'id' deve ser um número válido!",
     });
@@ -30,6 +29,23 @@ module.exports.new = async (req, res) => {
   try {
     await Review.createReviews(comment, rating, id_user, id_books);
     return res.status(200).json({ message: "Review inserido com sucesso!" });
+  } catch (err) {
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};
+
+module.exports.delete = async (req, res) => {
+  const { id } = req.params;
+  if (!/^[1-9]\d*$/.test(id)) {
+    res.status(400).json({
+      mensagem: "O 'id' do comentário deve ser um número válido!",
+    });
+    return;
+  }
+
+  try {
+    await Review.deleteReview(id);
+    return res.status(200).json({ message: "Comentário deletado com sucesso!" });
   } catch (err) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
