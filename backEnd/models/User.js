@@ -16,12 +16,14 @@ const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   full_name VARCHAR(50),
+  imgae LONGTEXT,
   email VARCHAR(30),
   cpf VARCHAR(14),
   full_address VARCHAR(45),
   additional_address_details VARCHAR(45),
   phone VARCHAR(14),
   password VARCHAR(255),
+  image LONGTEXT,
   admin ENUM('0','1') NOT NULL DEFAULT '0'
 )`;
 
@@ -50,6 +52,7 @@ function allUsers() {
 
 function createUser(
   full_name,
+  image,
   email,
   cpf,
   full_address,
@@ -59,9 +62,10 @@ function createUser(
 ) {
   return new Promise((resolve, reject) => {
     const sql =
-      "INSERT INTO users (full_name, email, cpf, full_address, additional_address_details, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO users (full_name, image, email, cpf, full_address, additional_address_details, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
       full_name,
+      image,
       email,
       cpf,
       full_address,
@@ -95,6 +99,7 @@ function findUserByEmail(email) {
 function updateUser(
   id,
   full_name,
+  image,
   full_address,
   additional_address_details,
   phone,
@@ -103,9 +108,10 @@ function updateUser(
   return new Promise((resolve, reject) => {
     const passwordHash = bcrypt.hashSync(password, salts);
     let change =
-      "UPDATE users SET full_name = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ? WHERE id = ?";
+      "UPDATE users SET full_name = ?, image = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ? WHERE id = ?";
     let values = [
       full_name,
+      image,
       full_address,
       additional_address_details,
       phone,

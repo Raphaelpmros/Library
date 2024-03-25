@@ -11,8 +11,10 @@ module.exports.books = async (req, res) => {
 };
 
 module.exports.new = async (req, res) => {
-  const { full_name, description, quantity, image, id_authors, id_categories } =
+  const { full_name, description, quantity, id_authors, id_categories } =
     req.body;
+
+  let image;
 
   if (
     !full_name ||
@@ -22,6 +24,12 @@ module.exports.new = async (req, res) => {
     !id_categories
   ) {
     return res.status(422).json({ message: "Campo é obrigatório!" });
+  }
+
+  if (req.file && req.file.path) {
+    image = req.file.path;
+  } else {
+    image = process.env.DEFAULT_BOOK_IMAGE;
   }
 
   if (

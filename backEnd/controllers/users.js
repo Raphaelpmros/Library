@@ -22,6 +22,14 @@ module.exports.new = async (req, res) => {
     password,
   } = req.body;
 
+  let image;
+
+  if (req.file && req.file.path) {
+    image = req.file.path;
+  } else {
+    image = process.env.DEFAULT_BOOK_IMAGE
+  }
+
   try {
     if (!full_name || !email || !cpf || !full_address || !phone || !password) {
       return res
