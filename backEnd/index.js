@@ -11,6 +11,10 @@ const rents = require ("./routes/rents");
 const reviews = require ("./routes/reviews");
 const users = require ("./routes/users");
 
+// const seedAdmin = require("./seeds/admin")
+// const seedAuthor = require("./seeds/author")
+// const seedCategory = require("./seeds/category")
+
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -21,6 +25,8 @@ app.use("/categories", categories);
 app.use("/rents", rents);
 app.use("/reviews", reviews);
 app.use("/users", users);
+
+
 
 app.listen(3030, () => {
   console.log("listenning on port 3030");

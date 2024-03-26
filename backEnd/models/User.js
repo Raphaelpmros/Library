@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   full_name VARCHAR(50),
   imgae LONGTEXT,
-  email VARCHAR(30),
-  cpf VARCHAR(14),
+  email VARCHAR(30) UNIQUE,
+  cpf VARCHAR(14) UNIQUE,
   full_address VARCHAR(45),
   additional_address_details VARCHAR(45),
   phone VARCHAR(14),
@@ -61,8 +61,9 @@ function createUser(
   password
 ) {
   return new Promise((resolve, reject) => {
+    const hashedPassword = bcrypt.hashSync(password, salts);
     const sql =
-      "INSERT INTO users (full_name, image, email, cpf, full_address, additional_address_details, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+      `INSERT INTO users (full_name, image, email, cpf, full_address, additional_address_details, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     const values = [
       full_name,
       image,
@@ -71,7 +72,7 @@ function createUser(
       full_address,
       additional_address_details,
       phone,
-      password,
+      hashedPassword
     ];
     con.query(sql, values, (err, result) => {
       if (err) {
@@ -82,6 +83,7 @@ function createUser(
     });
   });
 }
+
 
 function findUserByEmail(email) {
   return new Promise((resolve, reject) => {

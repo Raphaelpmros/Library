@@ -1,4 +1,3 @@
-const con = require("../database/db");
 const User = require("../models/User");
 
 module.exports.users = async (req, res) => {
@@ -44,6 +43,7 @@ module.exports.new = async (req, res) => {
 
     await User.createUser(
       full_name,
+      image,
       email,
       cpf,
       full_address,
@@ -51,9 +51,11 @@ module.exports.new = async (req, res) => {
       phone,
       password
     );
+    
     return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
   } catch (err) {
     console.error(err);
+    console.log(password)
     return res.status(500).json({ message: "Erro ao criar o usuário" });
   }
 };
