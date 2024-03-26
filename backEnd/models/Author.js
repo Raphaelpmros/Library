@@ -13,7 +13,7 @@ con.connect((err) => {
 const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS authors(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    full_name VARCHAR(45),
+    full_name VARCHAR(45) UNIQUE,
     nationality VARCHAR(30)
 )`;
 
