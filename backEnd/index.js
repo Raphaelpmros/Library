@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const con = require("./database/db");
 const bodyParser = require("body-parser");
+require('dotenv').config();
 
 const authors = require("./routes/authors");
 const books = require ("./routes/books");
@@ -28,6 +29,6 @@ app.use("/users", users);
 
 
 
-app.listen(3030, () => {
+app.listen(process.env.SERVER_PORT, () => {
   console.log("listenning on port 3030");
 });
