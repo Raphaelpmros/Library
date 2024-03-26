@@ -12,7 +12,7 @@ con.connect((err) => {
 const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS categories(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50)
+    name VARCHAR(50) UNIQUE
 )`;
 
 con.query(createLibraryTableSQL, (err, result) => {
