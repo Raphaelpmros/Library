@@ -85,7 +85,7 @@ function createUser(
 }
 
 
-function findUserByEmail(email) {
+function login(email) {
   return new Promise((resolve, reject) => {
     var find = "SELECT * FROM users WHERE email=?";
     con.query(find, [email], (err, result) => {
@@ -146,7 +146,7 @@ function deleteUser(id) {
 module.exports = {
   allUsers,
   createUser,
-  findUserByEmail,
+  login,
   updateUser,
   deleteUser
 };
