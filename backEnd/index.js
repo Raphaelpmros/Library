@@ -30,5 +30,5 @@ app.use("/users", users);
 
 
 app.listen(process.env.SERVER_PORT, () => {
-  console.log("listenning on port 3030");
+  console.log("listenning on port");
 });

@@ -1,4 +1,3 @@
-const { update } = require("../controllers/categories");
 const con = require("../database/db");
 
 con.connect((err) => {
