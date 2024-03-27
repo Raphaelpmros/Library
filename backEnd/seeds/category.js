@@ -9,7 +9,7 @@ con.connect((err) => {
     const sql = `INSERT INTO categories (name) VALUES ('${categorieName}')`
     con.query(sql, (err, result) => {
         if(err) {
-            return console.log("Error: ", err);
+            return console.log("Categoria já registrada");
         }
         return console.log("Categoria inserida com sucesso")
     })
