@@ -5,6 +5,6 @@ const router = express();
 router.get("/", books.books);
 router.post("/new", books.new);
 router.post("/update", books.updateBook)
-router.post("/:id", books.delete);
+router.delete("/:id", books.delete);
 
 module.exports = router;
