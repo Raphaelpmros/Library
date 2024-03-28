@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 
+
 app.use("/categories", categories);
 app.use("/reviews", reviews);
 app.use("/authors", authors);

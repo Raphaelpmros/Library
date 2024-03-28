@@ -50,6 +50,23 @@ function allUsers() {
   });
 }
 
+function oneUser(id) {
+  return new Promise((resolve, reject) => {
+      con.connect((err) => {
+          if (err) {
+              return reject(err);
+          }
+          let sql = `SELECT * FROM users WHERE id='${id}'`;
+          con.query(sql, (err, result) => {
+              if (err) {
+                  return reject(err);
+              }
+              return resolve(result);
+          });
+      });
+  });
+};
+
 function createUser(
   full_name,
   image,
@@ -87,7 +104,7 @@ function createUser(
 
 function login(email) {
   return new Promise((resolve, reject) => {
-    var find = "SELECT * FROM users WHERE email=?";
+    var find = `SELECT * FROM users WHERE email = ?`;
     con.query(find, [email], (err, result) => {
       if (err) {
         console.error(err);
@@ -145,6 +162,7 @@ function deleteUser(id) {
 
 module.exports = {
   allUsers,
+  oneUser,
   createUser,
   login,
   updateUser,

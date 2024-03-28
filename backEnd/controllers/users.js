@@ -47,7 +47,7 @@ module.exports.new = async (req, res) => {
         .json({ message: "Preencha todos os dados obrigatórios" });
     }
 
-    const existingUser = await User.findUserByEmail(email);
+    const existingUser = await User.login(email);
     if (existingUser.length >= 1) {
       return res.status(409).json({ message: "E-mail já cadastrado" });
     }
@@ -105,59 +105,7 @@ module.exports.update = async (req, res) => {
   }
 };
 
-module.exports.validatePassword = new LocalStrategy(function (
-  email,
-  password,
-  done
-) {
-  User.login(email)
-    .then((rows) => {
-      if (rows.length === 0) {
-        return done(null, false, { message: "Falha na autenticação" });
-      }
-
-      const user = rows[0];
-
-      bcrypt
-        .compare(password, user.password)
-        .then((passwordMatch) => {
-          if (passwordMatch) {
-            return done(null, user);
-          } else {
-            return done(null, false, { message: "Falha na autenticação" });
-          }
-        })
-        .catch((error) => done(error));
-    })
-    .catch((error) => done(error));
-});
-
-module.exports.login = async function (req, res, next) {
-  passport.authenticate("login", async (err, user, info) => {
-    console.log(user)
-    try {
-      if (err || !user) {
-        const error = new Error("Ocorreu um erro!");
-        return next(error);
-      }
-
-      req.login(user, { session: false }, async (error) => {
-        if (error) return next(error);
-        const dataUser = await User.login(user.email);
-        const body = { id: user.id, email: user.email };
-        const token = jwt.sign({ user: body }, secreteKey, {
-          expiresIn: 3600,
-        });
-
-        return res.json({ dataUser, token });
-      });
-    } catch (err) {
-      return next(err);
-    }
-  })(req, res, next);
-};
-
-module.exports.validateToken = new JWTstrategy(
+module.exports.tokenValid = new JWTstrategy(
   {
     secretOrKey: secreteKey,
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
@@ -166,12 +114,11 @@ module.exports.validateToken = new JWTstrategy(
     try {
       return done(null, token);
     } catch (error) {
-      console.error("Erro na validação do token", error);
+      console.error("Erro in validation token:", error);
       return done(error);
     }
   }
 );
-
 module.exports.delete = async (req, res) => {
   const { id } = req.params;
 
@@ -188,6 +135,26 @@ module.exports.delete = async (req, res) => {
     return res.status(200).json({ message: "Usuário excluido com sucesso!" });
   } catch (err) {
     console.error(err);
+    return res.status(500).json({ message: "Erro ao tentar excluir!" });
+  }
+};
+
+module.exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const login = await User.login(email);
+    const crypt = await bcrypt.compare(password, login[0].password);
+    if (!crypt) {
+      return res.status(500).json({ message: "Senha errada" });
+    }
+    const dateUser = await User.oneUser(login[0].id);
+    const body = { id: login[0].id, email: login[0].email };
+    const token = jwt.sign({ user: body }, secreteKey, { expiresIn: 3600 });
+    return res.json({ dateUser, token })
+
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Erro ao tentar excluir!" });
   }
 };
