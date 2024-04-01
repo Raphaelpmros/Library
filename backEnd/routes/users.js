@@ -2,6 +2,7 @@ const users = require("../controllers/users");
 const passport = require("passport");
 const express = require("express");
 const router = express();
+const login = require("../middleware/login")
 
 const { storage } = require('../cloudinary/cloudinary')
 const multer = require('multer')
