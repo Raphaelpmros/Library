@@ -11,10 +11,10 @@ passport.deserializeUser(users.valid);
 passport.serializeUser(users.valid);
 passport.use('protect', users.tokenValid);
 
-router.post("/update", upload.single("image"), users.update);
+router.post("/update", login, upload.single("image"), users.update);
 router.post("/new", upload.single("image"), users.new);
 router.post("/login", users.login);
-router.delete("/:id", users.delete);
+router.delete("/:id", login, users.delete);
 router.get("/", users.users);
 
 module.exports = router;

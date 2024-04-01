@@ -1,7 +1,6 @@
 const con = require("../database/db");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const salts = 10;
-
 
 con.connect((err) => {
   if (err) {
@@ -14,17 +13,15 @@ const createLibraryTableSQL = `
 CREATE TABLE IF NOT EXISTS users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   full_name VARCHAR(50),
-  imgae LONGTEXT,
+  image LONGTEXT,
   email VARCHAR(30) UNIQUE,
   cpf VARCHAR(14) UNIQUE,
   full_address VARCHAR(45),
   additional_address_details VARCHAR(45),
   phone VARCHAR(14),
   password VARCHAR(255),
-  image LONGTEXT,
   admin ENUM('0','1') NOT NULL DEFAULT '0'
 )`;
-
 
 con.query(createLibraryTableSQL, (err, result) => {
   if (err) {
@@ -48,22 +45,17 @@ function allUsers() {
   });
 }
 
-function oneUser(id) {
+function oneUser(id, admin) {
   return new Promise((resolve, reject) => {
-      con.connect((err) => {
-          if (err) {
-              return reject(err);
-          }
-          let sql = `SELECT * FROM users WHERE id='${id}'`;
-          con.query(sql, (err, result) => {
-              if (err) {
-                  return reject(err);
-              }
-              return resolve(result);
-          });
-      });
+    let sql = `SELECT * FROM users WHERE id='${id}'`;
+    con.query(sql, (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(result);
+    });
   });
-};
+}
 
 function createUser(
   full_name,
@@ -77,8 +69,7 @@ function createUser(
 ) {
   return new Promise((resolve, reject) => {
     const hashedPassword = bcrypt.hashSync(password, salts);
-    const sql =
-      `INSERT INTO users (full_name, image, email, cpf, full_address, additional_address_details, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO users (full_name, image, email, cpf, full_address, additional_address_details, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     const values = [
       full_name,
       image,
@@ -87,7 +78,7 @@ function createUser(
       full_address,
       additional_address_details,
       phone,
-      hashedPassword
+      hashedPassword,
     ];
     con.query(sql, values, (err, result) => {
       if (err) {
@@ -98,7 +89,6 @@ function createUser(
     });
   });
 }
-
 
 function login(email) {
   return new Promise((resolve, reject) => {
@@ -120,12 +110,11 @@ function updateUser(
   full_address,
   additional_address_details,
   phone,
-  password,
+  password
 ) {
   return new Promise((resolve, reject) => {
     const hashedPassword = bcrypt.hashSync(password, salts);
-    let change =
-      `UPDATE users SET full_name = '${full_name}', image = '${image}', full_address = '${full_address}', additional_address_details = '${additional_address_details}', phone = '${phone}', password = '${hashedPassword}' WHERE id = '${id}'`;
+    let change = `UPDATE users SET full_name = '${full_name}', image = '${image}', full_address = '${full_address}', additional_address_details = '${additional_address_details}', phone = '${phone}', password = '${hashedPassword}' WHERE id = '${id}'`;
     con.query(change, (err, result) => {
       if (err) {
         console.error(err);
@@ -155,5 +144,5 @@ module.exports = {
   createUser,
   login,
   updateUser,
-  deleteUser
+  deleteUser,
 };
