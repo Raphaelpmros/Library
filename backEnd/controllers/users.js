@@ -75,6 +75,7 @@ module.exports.update = async (req, res) => {
   const {
     id,
     full_name,
+    image,
     full_address,
     additional_address_details,
     phone,
@@ -89,11 +90,13 @@ module.exports.update = async (req, res) => {
     const result = await User.updateUser(
       id,
       full_name,
+      image,
       full_address,
       additional_address_details,
       phone,
       password
     );
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Usuário não encontrado" });
     }
@@ -151,8 +154,7 @@ module.exports.login = async (req, res) => {
     const dateUser = await User.oneUser(login[0].id);
     const body = { id: login[0].id, email: login[0].email };
     const token = jwt.sign({ user: body }, secreteKey, { expiresIn: 3600 });
-    return res.json({ dateUser, token })
-
+    return res.json({ dateUser, token });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Erro ao tentar excluir!" });

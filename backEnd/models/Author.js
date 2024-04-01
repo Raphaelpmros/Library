@@ -5,8 +5,6 @@ con.connect((err) => {
     console.error("Erro ao conectar-se ao banco de dados:", err.stack);
     return;
   }
-
-  console.log("Conectado ao banco de dados.");
 });
 
 const createLibraryTableSQL = `

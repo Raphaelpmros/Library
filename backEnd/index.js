@@ -1,5 +1,4 @@
 const bodyParser = require("body-parser");
-const con = require("./database/db");
 const express = require("express");
 const path = require("path");
 require('dotenv').config();
@@ -9,6 +8,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+require("./database/createDb")
+require("./database/db");
 const categories = require("./routes/categories");
 const reviews = require ("./routes/reviews");
 const authors = require("./routes/authors");
@@ -35,5 +36,5 @@ app.use("/users", users);
 
 
 app.listen(process.env.SERVER_PORT, () => {
-  console.log("listenning on port");
+  console.log(`listenning on port ${process.env.SERVER_PORT}`);
 });

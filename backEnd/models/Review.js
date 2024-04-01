@@ -5,9 +5,7 @@ con.connect(function (err) {
     console.error("Erro ao conectar ao banco de dados:", err);
     return;
   }
-
-  console.log("Conexão bem-sucedida ao banco de dados");
-
+  
   var createLibraryTableSQL = `
   CREATE TABLE IF NOT EXISTS reviews (
     id INT PRIMARY KEY AUTO_INCREMENT, 

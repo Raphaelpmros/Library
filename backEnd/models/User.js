@@ -8,8 +8,6 @@ con.connect((err) => {
     console.error("Erro ao conectar-se ao banco de dados:", err.stack);
     return;
   }
-
-  console.log("Conectado ao banco de dados.");
 });
 
 const createLibraryTableSQL = `
@@ -122,22 +120,13 @@ function updateUser(
   full_address,
   additional_address_details,
   phone,
-  password
+  password,
 ) {
   return new Promise((resolve, reject) => {
-    const passwordHash = bcrypt.hashSync(password, salts);
+    const hashedPassword = bcrypt.hashSync(password, salts);
     let change =
-      "UPDATE users SET full_name = ?, image = ?, full_address = ?, additional_address_details = ?, phone = ?, password = ? WHERE id = ?";
-    let values = [
-      full_name,
-      image,
-      full_address,
-      additional_address_details,
-      phone,
-      passwordHash,
-      id
-    ];
-    con.query(change, values, (err, result) => {
+      `UPDATE users SET full_name = '${full_name}', image = '${image}', full_address = '${full_address}', additional_address_details = '${additional_address_details}', phone = '${phone}', password = '${hashedPassword}' WHERE id = '${id}'`;
+    con.query(change, (err, result) => {
       if (err) {
         console.error(err);
         return reject(err);
