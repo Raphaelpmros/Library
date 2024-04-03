@@ -31,6 +31,11 @@ app.use(cors({
   credentials: true
 }))
 
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({ error: err });
+});
+
 
 app.use("/categories", categories);
 app.use("/reviews", reviews);
