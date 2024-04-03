@@ -36,15 +36,12 @@ app.use(function (err, req, res, next) {
   res.json({ error: err });
 });
 
-
 app.use("/categories", categories);
 app.use("/reviews", reviews);
 app.use("/authors", authors);
 app.use("/books", books);
 app.use("/rents", rents);
 app.use("/users", users);
-
-
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`listenning on port ${process.env.SERVER_PORT}`);
