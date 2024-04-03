@@ -20,7 +20,12 @@ export const newAuthor = async (authors, config) => {
 
 export const updateAuthor = async (id, authors, config) => {
   try {
-    const response = await fetchApi.post(`/authors/update`, id, authors, config);
+    const response = await fetchApi.post(
+      `/authors/update`,
+      id,
+      authors,
+      config
+    );
     return response.data;
   } catch (error) {
     throw error;
@@ -28,10 +33,10 @@ export const updateAuthor = async (id, authors, config) => {
 };
 
 export const deleteAuthor = async (id, config) => {
-    try {
-        const response = await fetchApi.delete(`/authors/${id}`, config);
-        return response.data;
-      } catch (error) {
-        throw error;
-      }
-}
+  try {
+    const response = await fetchApi.delete(`/authors/${id}`, config);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
