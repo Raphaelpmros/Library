@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const path = require("path");
+const cors = require("cors")
 require('dotenv').config();
 const app = express();
 
@@ -24,6 +25,11 @@ require("./seeds/admin")
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
+
+app.use(cors({
+  origin: process.env.VITE_SERVER_PORT,
+  credentials: true
+}))
 
 
 app.use("/categories", categories);
