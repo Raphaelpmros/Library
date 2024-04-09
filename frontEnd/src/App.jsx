@@ -9,9 +9,9 @@ import NewRent from "./pages/rents/newRents";
 import AllRents from "./pages/rents/allRents";
 
 import NewUser from "./pages/users/newUsers";
-import EditUser from "./pages/users/editUser";
-import UserPage from "./pages/users/userPage";
-import LoginUser from "./pages/users/loginUser";
+import EditUser from "./pages/users/editUsers";
+import UserPage from "./pages/users/userPages";
+import LoginUser from "./pages/users/loginUsers";
 
 import NewBooks from "./pages/books/newBooks";
 import AllBooks from "./pages/books/allBooks";
@@ -21,7 +21,7 @@ import NewAuthors from "./pages/authors/newAuthors";
 import AllAuthors from "./pages/authors/allAuthors";
 import EditAuthors from "./pages/authors/editAuthors";
 
-import EditCategories from "./pages/categories/editCategory";
+import EditCategories from "./pages/categories/editCategories";
 import NewCategories from "./pages/categories/newCategories";
 import AllCategories from "./pages/categories/allCategories";
 
