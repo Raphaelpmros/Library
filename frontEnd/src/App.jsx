@@ -47,21 +47,21 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/books/new" element={< NewBooks/>}/>
-        <Route path="/books" element={<AllBooks/>}/>
-        <Route path="/books/update" element={<EditBooks/>}/>
+        <Route path="/books/new" element={<NewBooks />} />
+        <Route path="/books" element={<AllBooks />} />
+        <Route path="/books/update" element={<EditBooks />} />
       </Routes>
 
       <Routes>
-        <Route path="/authors/new" element={< NewAuthors/>}/>
-        <Route path="/authors" element={<AllAuthors/>}/>
-        <Route path="/authors/update" element={< EditAuthors/>}/>
+        <Route path="/authors/new" element={<NewAuthors />} />
+        <Route path="/authors" element={<AllAuthors />} />
+        <Route path="/authors/update" element={<EditAuthors />} />
       </Routes>
 
       <Routes>
-        <Route path="/categories/update" element={<EditCategories/>}/>
-        <Route path="/categories/new" element={<NewCategories/>}/>
-        <Route path="/categories" element={<AllCategories/>}/>
+        <Route path="/categories/update" element={<EditCategories />} />
+        <Route path="/categories/new" element={<NewCategories />} />
+        <Route path="/categories" element={<AllCategories />} />
       </Routes>
 
       <Footer />
