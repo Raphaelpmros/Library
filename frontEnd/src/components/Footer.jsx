@@ -13,10 +13,10 @@ export default function Component() {
             name="Library"
           />
           <FooterLinkGroup>
-            <FooterLink href="/about">About</FooterLink>
-            <FooterLink href="/privacy">Privacy Policy</FooterLink>
-            <FooterLink href="/licensing">Licensing</FooterLink>
-            <FooterLink href="/contact">Contact</FooterLink>
+            <FooterLink href="/about" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">About</FooterLink>
+            <FooterLink href="/privacy" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Privacy Policy</FooterLink>
+            <FooterLink href="/licensing" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Licensing</FooterLink>
+            <FooterLink href="/contact" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Contact</FooterLink>
           </FooterLinkGroup>
         </div>
         <FooterDivider />
