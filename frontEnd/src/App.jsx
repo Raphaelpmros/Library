@@ -1,7 +1,8 @@
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+import Footer from "./components/Footer/Footer";
+import Navbar from "./components/Navbar/Navbar";
 import React, { useEffect } from "react";
 import { Routes, Route, Router, useLocation } from "react-router-dom";
+import Container from "./components/Container/Container";
 
 import Home from "./pages/home/home";
 
@@ -29,40 +30,41 @@ function App() {
   return (
     <>
       <Navbar />
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
+      <Container>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
 
-      <Routes>
-        <Route path="/rents/" element={<AllRents />} />
-        <Route path="/rents/new" element={<NewRent />} />
-      </Routes>
+        <Routes>
+          <Route path="/rents/" element={<AllRents />} />
+          <Route path="/rents/new" element={<NewRent />} />
+        </Routes>
 
-      <Routes>
-        <Route path="/users/new" element={<NewUser />} />
-        <Route path="/users/update" element={<EditUser />} />
-        <Route path="/users" element={<UserPage />} />
-        <Route path="/users/login" element={<LoginUser />} />
-      </Routes>
+        <Routes>
+          <Route path="/users/new" element={<NewUser />} />
+          <Route path="/users/update" element={<EditUser />} />
+          <Route path="/users" element={<UserPage />} />
+          <Route path="/users/login" element={<LoginUser />} />
+        </Routes>
 
-      <Routes>
-        <Route path="/books/new" element={<NewBooks />} />
-        <Route path="/books" element={<AllBooks />} />
-        <Route path="/books/update" element={<EditBooks />} />
-      </Routes>
+        <Routes>
+          <Route path="/books/new" element={<NewBooks />} />
+          <Route path="/books" element={<AllBooks />} />
+          <Route path="/books/update" element={<EditBooks />} />
+        </Routes>
 
-      <Routes>
-        <Route path="/authors/new" element={<NewAuthors />} />
-        <Route path="/authors" element={<AllAuthors />} />
-        <Route path="/authors/update" element={<EditAuthors />} />
-      </Routes>
+        <Routes>
+          <Route path="/authors/new" element={<NewAuthors />} />
+          <Route path="/authors" element={<AllAuthors />} />
+          <Route path="/authors/update" element={<EditAuthors />} />
+        </Routes>
 
-      <Routes>
-        <Route path="/categories/update" element={<EditCategories />} />
-        <Route path="/categories/new" element={<NewCategories />} />
-        <Route path="/categories" element={<AllCategories />} />
-      </Routes>
+        <Routes>
+          <Route path="/categories/update" element={<EditCategories />} />
+          <Route path="/categories/new" element={<NewCategories />} />
+          <Route path="/categories" element={<AllCategories />} />
+        </Routes>
+      </Container>
 
       <Footer />
     </>
