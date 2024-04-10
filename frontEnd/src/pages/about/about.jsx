@@ -21,8 +21,8 @@ export default function about() {
             traditional ITSM solutions.Accelerate critical development work,
             eliminate toil, and deploy changes with ease.
           </p>
-          <a
-            href="#"
+          {/* <a
+            href="localhost:8000/user/new"
             className="inline-flex items-center font-medium text-primary-600 hover:text-primary-800 dark:text-primary-500 dark:hover:text-primary-700"
           >
             Learn more
@@ -38,7 +38,7 @@ export default function about() {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
+          </a> */}
         </div>
       </div>
     </section>
