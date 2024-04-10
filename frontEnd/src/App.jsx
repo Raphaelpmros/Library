@@ -5,6 +5,7 @@ import { Routes, Route, Router, useLocation } from "react-router-dom";
 import Container from "./components/Container/Container";
 
 import Home from "./pages/home/home";
+import NotFound from "./components/NotFound/NotFound";
 
 import NewRent from "./pages/rents/newRents";
 import AllRents from "./pages/rents/allRents";
@@ -22,9 +23,9 @@ import NewAuthors from "./pages/authors/newAuthors";
 import AllAuthors from "./pages/authors/allAuthors";
 import EditAuthors from "./pages/authors/editAuthors";
 
-import EditCategories from "./pages/categories/editCategories";
-import NewCategories from "./pages/categories/newCategories";
 import AllCategories from "./pages/categories/allCategories";
+import NewCategories from "./pages/categories/newCategories";
+import EditCategories from "./pages/categories/editCategories";
 
 function App() {
   return (
@@ -33,36 +34,28 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Home />} />
-        </Routes>
 
-        <Routes>
           <Route path="/rents/" element={<AllRents />} />
           <Route path="/rents/new" element={<NewRent />} />
-        </Routes>
 
-        <Routes>
           <Route path="/users/new" element={<NewUser />} />
           <Route path="/users/update" element={<EditUser />} />
           <Route path="/users" element={<UserPage />} />
           <Route path="/users/login" element={<LoginUser />} />
-        </Routes>
 
-        <Routes>
           <Route path="/books/new" element={<NewBooks />} />
-          <Route path="/books" element={<AllBooks />} />
+          <Route path="/Books" element={<AllBooks />} />
           <Route path="/books/update" element={<EditBooks />} />
-        </Routes>
 
-        <Routes>
           <Route path="/authors/new" element={<NewAuthors />} />
           <Route path="/authors" element={<AllAuthors />} />
           <Route path="/authors/update" element={<EditAuthors />} />
-        </Routes>
 
-        <Routes>
           <Route path="/categories/update" element={<EditCategories />} />
           <Route path="/categories/new" element={<NewCategories />} />
           <Route path="/categories" element={<AllCategories />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
 
