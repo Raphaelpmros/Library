@@ -29,13 +29,13 @@ function App() {
   return (
     <>
       <Navbar />
-
+      
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
 
       <Routes>
-        <Route path="/rents/allrents" element={<AllRents />} />
+        <Route path="/rents/" element={<AllRents />} />
         <Route path="/rents/new" element={<NewRent />} />
       </Routes>
 
