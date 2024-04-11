@@ -4,11 +4,11 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import styles from "./Navbar.module.css"
 
 const navigation = [
-  { name: "Home", href: "/", current: false },
-  { name: "Books", href: "/books", current: false },
-  { name: "Authors", href: "/authors", current: false },
-  { name: "Categories", href: "/categories", current: false },
-  { name: "Rents", href: "/rents", current: false },
+  { name: "Home", href: "/" },
+  { name: "Books", href: "/books", dropdownItems: ["Add New Book", "All Books"] },
+  { name: "Authors", href: "/authors", dropdownItems: ["Add New Author", "All Authors"] },
+  { name: "Categories", href: "/categories", dropdownItems: ["Add New Category", "All Categories"] },
+  { name: "Rents", href: "/rents", dropdownItems: ["Current Rents", "Rent History"] },
 ];
 
 function classNames(...classes) {
@@ -80,7 +80,7 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAhR2FfvDWCdkes1cHiNezA8x0r8G3igt8LO2rgyTYVAM2iRg03zYOpn8MVSem5Vx79Dk&usqp=CAU"
                         alt=""
                       />
                     </Menu.Button>
