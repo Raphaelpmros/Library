@@ -25,7 +25,7 @@ export default function about() {
             href="/users/new"
             className="inline-flex items-center font-medium text-primary-600 hover:text-primary-800 dark:text-primary-500 dark:hover:text-primary-700"
           >
-            Learn more
+            Register!
             <svg
               className="ml-1 w-6 h-6"
               fill="currentColor"
