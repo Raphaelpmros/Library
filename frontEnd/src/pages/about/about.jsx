@@ -6,20 +6,17 @@ export default function about() {
       <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
         <div className="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
           <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">
-            Powering innovation at <span className="font-extrabold">200,000+</span>{" "}
-            companies worldwide
+            The right place to <span className="font-extrabold">share knowledge</span>{" "}
+            is here!
           </h2>
           <p className="mb-4 font-light">
-            Track work across the enterprise through an open, collaborative
-            platform. Link issues across Jira and ingest data from other
-            software development tools, so your IT support and operations teams
-            have richer contextual information to rapidly respond to requests,
-            incidents, and changes.
+            Here at Mystic Library, you can find all types of books for free. 
+            We are a community with one common objective: to bring all knowledge to those who are ready to learn and share.
           </p>
           <p className="mb-4 font-medium">
-            Deliver great service experiences fast - without the complexity of
-            traditional ITSM solutions.Accelerate critical development work,
-            eliminate toil, and deploy changes with ease.
+            If you are interested in classic literature, fantasy, romance, horror, esoteric studies, or even want to put
+            your own published book so others can learn from you, this is the right place. We hope that you share our 
+            ideals and values. Welcome to the Mystic Library! 
           </p>
           <a
             href="/users/new"
