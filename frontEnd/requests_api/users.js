@@ -2,7 +2,7 @@ import fetchApi from "../axios/api";
 
 export const allUsers = async () => {
   try {
-    response = await fetchApi.get(`/users`);
+    const response = await fetchApi.get(`/users`);
     return response.data;
   } catch (error) {
     throw error;
@@ -11,7 +11,7 @@ export const allUsers = async () => {
 
 export const newUsers = async (users, config) => {
   try {
-    response = await fetchApi.post(`/users`, users, config);
+    const response = await fetchApi.post(`/users`, users, config);
     return response.data;
   } catch (error) {
     throw error;
@@ -30,7 +30,7 @@ export const loginUser = async (users, config) => {
 
 export const updateUsers = async (id, users, config) => {
   try {
-    response = await fetchApi.post(`/users`, id, users, config);
+    const response = await fetchApi.post(`/users`, id, users, config);
     return response.data;
   } catch (error) {
     throw error;
@@ -39,7 +39,7 @@ export const updateUsers = async (id, users, config) => {
 
 export const deleteUsers = async (id) => {
   try {
-    response = await fetchApi.delete(`/users/${id}`);
+    const response = await fetchApi.delete(`/users/${id}`);
     return response.data;
   } catch (error) {
     throw error;
