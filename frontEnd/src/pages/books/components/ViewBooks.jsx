@@ -9,9 +9,9 @@ export default function ViewBooks({
   return (
     <>
       <div className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
+        <a href="#" className="flex justify-center" style={{ height: "35rem" }}>
           <img
-            className="rounded-t-lg w-full h-auto"
+            className="rounded-t-lg w-auto object-cover"
             src={image}
             alt=""
           />
