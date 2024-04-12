@@ -47,9 +47,9 @@ export default function modal() {
                     required=""
                   />
                 </div>
-                <div class="col-span-2">
+                <div className="col-span-2">
                   <label
-                    for="description"
+                    htmlFor="description"
                     className="block mb-2 text-sm font-medium text-white"
                   >
                     Description

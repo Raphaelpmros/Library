@@ -11,7 +11,7 @@ export default function ViewBooks({
       <div className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
           <img
-            className="rounded-t-lg"
+            className="rounded-t-lg w-full h-auto"
             src={image}
             alt=""
           />
