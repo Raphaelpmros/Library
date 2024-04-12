@@ -20,11 +20,14 @@ export default function ViewBooks({ id, full_name, quantity, image }) {
           />
         </Link>
         <div className="p-5">
-          <a href="#">
+        <Link
+          to={`/books/${id}`}
+          className="flex justify-center"
+        >
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
               {full_name}
             </h5>
-          </a>
+          </Link>
           <p
             className={`mb-3 font-normal ${
               quantity > 0 ? "text-green-500" : "text-red-500"
