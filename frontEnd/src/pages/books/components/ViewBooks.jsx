@@ -1,29 +1,36 @@
 import { Link } from "react-router-dom";
 
-export default function ViewBooks({
-  id,
-  full_name,
-  quantity,
-  image
-}) {
+export default function ViewBooks({ id, full_name, quantity, image }) {
   return (
     <>
-      <div className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{width: "18rem"}}>
-        <a href="#" className="flex justify-center" style={{ height: "20rem", width: "15" }}>
+      <div
+        className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        style={{ width: "18rem" }}
+      >
+        <Link
+          to={`/books/${id}`}
+          className="flex justify-center"
+          style={{ height: "20rem" }}
+        >
+          {" "}
           <img
             className="rounded-t-lg object-cover w-auto"
             src={image}
             alt=""
           />
-        </a>
+        </Link>
         <div className="p-5">
           <a href="#">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
               {full_name}
             </h5>
           </a>
-          <p className={`mb-3 font-normal ${(quantity > 0 ? 'text-green-500' : 'text-red-500')} text-gray-700 dark:text-gray-400`}>
-            {quantity > 0 ? 'In Stock' : 'Out of Stock'} - Quantity: {quantity}
+          <p
+            className={`mb-3 font-normal ${
+              quantity > 0 ? "text-green-500" : "text-red-500"
+            } text-gray-700 dark:text-gray-400`}
+          >
+            {quantity > 0 ? "In Stock" : "Out of Stock"} - Quantity: {quantity}
           </p>
           <a
             href="#"

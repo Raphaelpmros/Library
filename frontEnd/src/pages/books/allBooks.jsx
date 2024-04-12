@@ -47,6 +47,7 @@ export default function AllBooks() {
         {books.map((book) => (
           <ViewBooksComponents
             key={book.id}
+            id={book.id}
             full_name={book.full_name}
             quantity={book.quantity}
             image={book.image}
