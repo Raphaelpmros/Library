@@ -8,10 +8,10 @@ export default function ViewBooks({
 }) {
   return (
     <>
-      <div className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="#" className="flex justify-center" style={{ height: "35rem" }}>
+      <div className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{width: "18rem"}}>
+        <a href="#" className="flex justify-center" style={{ height: "20rem", width: "15" }}>
           <img
-            className="rounded-t-lg w-auto object-cover"
+            className="rounded-t-lg object-cover w-auto"
             src={image}
             alt=""
           />
