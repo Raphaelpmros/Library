@@ -8,11 +8,9 @@ export default function ViewCategoryComponent({ id, name }) {
         style={{ width: "18rem" }}
       >
         <div className="p-5">
-          <Link to={`/categories/${id}`} className="flex justify-center">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
-              {name}
-            </h5>
-          </Link>
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
+            {name}
+          </h5>
         </div>
       </div>
     </>

@@ -22,11 +22,11 @@ CREATE TABLE IF NOT EXISTS books(
 
 con.query(createLibraryTableSQL, (err, result) => {
   if (err) {
-    console.error("Erro ao criar tabela books:", err);
+    console.error("Error creating book's table:", err);
     return;
   }
 
-  console.log("Tabela books criada com sucesso.");
+  console.log("Book's table successfuly created.");
 });
 
 function allBooks() {
@@ -41,10 +41,10 @@ function allBooks() {
   });
 }
 
-function findBooks(full_name) {
+function findBooks(id) {
   return new Promise((resolve, reject) => {
-    const find = "SELECT * FROM books WHERE full_name = ?";
-    con.query(find, [full_name], (err, result) => {
+    const find = "SELECT * FROM books WHERE id = ?";
+    con.query(find, [id], (err, result) => {
       if (err) {
         return reject(err);
       }

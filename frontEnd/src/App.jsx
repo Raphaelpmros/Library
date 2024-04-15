@@ -5,7 +5,7 @@ import { Routes, Route, Router, useLocation } from "react-router-dom";
 import Container from "./components/Container/Container";
 
 import Home from "./pages/home/home";
-import About from "./pages/about/about"
+import About from "./pages/about/about";
 import NotFound from "./components/NotFound/NotFound";
 
 import NewRent from "./pages/rents/newRents";
@@ -36,7 +36,7 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about"  element={<About />} />
+          <Route path="/about" element={<About />} />
 
           <Route path="/rents/" element={<AllRents />} />
           <Route path="/rents/new" element={<NewRent />} />
@@ -47,7 +47,7 @@ function App() {
           <Route path="/users/login" element={<LoginUser />} />
 
           <Route path="/books/new" element={<NewBooks />} />
-          <Route path="/books/:id" element={<OneBook />}></Route>
+          <Route path="/books/:id" element={<OneBook />} />
           <Route path="/Books" element={<AllBooks />} />
           <Route path="/books/update" element={<EditBooks />} />
 
