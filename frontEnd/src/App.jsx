@@ -43,6 +43,7 @@ function App() {
 
           <Route path="/users/new" element={<NewUser />} />
           <Route path="/users/update" element={<EditUser />} />
+          {/* <Route path="/users/:id" element={<OneUser />} /> */}
           <Route path="/users" element={<UserPage />} />
           <Route path="/users/login" element={<LoginUser />} />
 

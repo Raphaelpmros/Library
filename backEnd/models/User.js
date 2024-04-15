@@ -45,7 +45,7 @@ function allUsers() {
   });
 }
 
-function oneUser(id, admin) {
+function findUser(id, admin) {
   return new Promise((resolve, reject) => {
     let sql = `SELECT * FROM users WHERE id='${id}'`;
     con.query(sql, (err, result) => {
@@ -140,7 +140,7 @@ function deleteUser(id) {
 
 module.exports = {
   allUsers,
-  oneUser,
+  findUser,
   createUser,
   login,
   updateUser,

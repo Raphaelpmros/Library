@@ -21,6 +21,17 @@ module.exports.users = async (req, res) => {
   }
 };
 
+module.exports.findUser = async (req, res) => {
+  const {id} = req.params
+  try {
+    const findUser = await User.findUser(id);
+    return res.status(200).json(findUser);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};
+
 module.exports.new = async (req, res) => {
   const {
     full_name,

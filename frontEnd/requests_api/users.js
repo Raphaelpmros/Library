@@ -9,6 +9,19 @@ export const allUsers = async () => {
   }
 };
 
+export const findUser = async (id) => {
+  try {
+    const response = await fetchApi.get(`/users/${id}`);
+    if (!response.data) {
+      throw new Error("No user found for the given ID"); 
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error in findUser:", error);
+    throw error;
+  }
+};
+
 export const newUsers = async (users, config) => {
   try {
     const response = await fetchApi.post(`/users`, users, config);

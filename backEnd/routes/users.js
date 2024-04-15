@@ -17,5 +17,6 @@ router.post("/new", upload.single("image"), users.new);
 router.post("/login", users.login);
 router.delete("/:id", login, users.delete);
 router.get("/", users.users);
+router.get("/:id", users.findUser)
 
 module.exports = router;
