@@ -1,6 +1,6 @@
 import fetchApi from "../axios/api";
 
-export const allCategories = async () => {
+export const viewCategories = async () => {
   try {
     const response = await fetchApi.get(`/categories`);
     return response.data;
