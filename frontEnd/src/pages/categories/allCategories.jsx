@@ -41,15 +41,15 @@ export default function AllCategories() {
         </div>
       )}
 
-<div className="mt-5 text-xl text-center flex justify-center items-center flex-col">
-      {categories.map((category) => (
-        <ViewCategoryComponent
-          key={category.id}
-          id={category.id}
-          name={category.name}
-        />
-      ))}
-    </div>
+      <div className="mt-5 text-center flex justify-center items-center flex-col">
+        {categories.map((category) => (
+          <ViewCategoryComponent
+            key={category.id}
+            id={category.id}
+            name={category.name}
+          />
+        ))}
+      </div>
     </>
   );
 }
