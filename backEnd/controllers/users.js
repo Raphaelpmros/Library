@@ -162,12 +162,12 @@ module.exports.login = async (req, res) => {
     if (!crypt) {
       return res.status(500).json({ message: "Senha errada" });
     }
-    const dateUser = await User.oneUser(login[0].id);
+    const dateUser = await User.findUser(login[0].id);
     const body = { id: login[0].id, email: login[0].email };
     const token = jwt.sign({ user: body }, secreteKey, { expiresIn: 3600 });
     return res.json({ dateUser, token });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Erro ao tentar excluir!" });
+    return res.status(500).json({ message: "Erro ao tentar logar!" });
   }
 };

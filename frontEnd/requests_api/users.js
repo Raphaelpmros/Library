@@ -22,21 +22,23 @@ export const findUser = async (id) => {
   }
 };
 
-export const newUsers = async (users, config) => {
+export const newUsers = async (formDataObject) => {
   try {
-    const response = await fetchApi.post(`/users`, users, config);
+    console.log(formDataObject)
+    const response = await fetchApi.post(`/users/new`, formDataObject);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const loginUser = async (users, config) => {
+export const loginUser = async (formData) => {
   try {
-    const response = await apiFecth.post(`/users/login`, users, config);
+    const response = await fetchApi.post(`/users/login`, formData);
+    console.log(response.data); 
     return response.data;
-  } catch {
-    console.log(error);
+  } catch (error) {
+    console.error('Erro ao chamar a API de login:', error.message);
     throw error;
   }
 };

@@ -1,212 +1,338 @@
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Visibility from '@mui/icons-material/Visibility';
-import IconButton from '@mui/material/IconButton';
-import { loginUser } from '../../../requests_api/users';
-import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import IconButton from "@mui/material/IconButton";
+import { newUsers } from "../../../requests_api/users";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Register = () => {
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const [showPassword, setShowPassword] = React.useState(false);
-    const navigate = useNavigate();
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [imageUrl, setImageUrl] = useState('');
-    const [formData, setFormData] = useState({
-        email: '',
-        username: '',
-        password: '',
-        passwordConfirm: '',
-        description: ''
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    full_name: "",
+    password: "",
+    passwordConfirm: "",
+    cpf: "",
+    full_address: "",
+    additional_address_details: "",
+    phone: "",
+  });
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
     });
-    const handleChange = (e) => {
+  };
 
-        setFormData({
-            ...formData,
-            [e.target.id]: e.target.value,
-        });
-    };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageUrl(file);
+    }
+  };
 
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImageUrl(file);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    if (!containsNumber(formData.password) || formData.password.length < 8) {
+      notifyFail("Something is missing from the password.");
+      return;
+    }
 
-        if (
-            !containsNumber(formData.password) ||
-            !containsSpecialCharacter(formData.password) ||
-            formData.password.length < 5 ||
-            !containsUppercaseLetter(formData.password)
-        ) {
-            notifyFail("The password is very weak. Try a more complex password.");
-            return;
-        }
+    try {
+      setIsSubmitting(true);
+      const formDataObject = new FormData();
+      formDataObject.append("email", formData.email);
+      formDataObject.append("full_name", formData.full_name);
+      formDataObject.append("cpf", formData.cpf);
+      formDataObject.append("full_address", formData.full_address);
+      formDataObject.append(
+        "additional_address_details",
+        formData.additional_address_details
+      );
+      formDataObject.append("phone", formData.phone);
 
-        try {
-            setIsSubmitting(true);
-            const formDataObject = new FormData();
-            formDataObject.append('email', formData.email);
-            formDataObject.append('username', formData.username);
-            formDataObject.append('description', formData.description);
+      if (formData.password !== formData.passwordConfirm) {
+        return notifyFail("Password is not the same");
+      }
+      formDataObject.append("password", formData.password);
 
-            if (formData.password !== formData.passwordConfirm) {
-                return notifyFail("Password is not the same")
-            }
-            formDataObject.append('password', formData.password);
+      if (imageUrl) {
+        formDataObject.append("image", imageUrl);
+      } else {
+        formDataObject.append("image", "");
+      }
 
+      await newUsers(formDataObject);
 
-            if (imageUrl) {
-                formDataObject.append('img', imageUrl);
-            } else {
-                formDataObject.append('img', '');
-            }
+      notifySucess();
+      navigate("/login");
+    } catch (error) {
+      notifyFail("Email already exists");
+      console.error("Error calling API:", error.message);
+      console.error("Server response:", error.response.data);
+    }
+  };
 
-            await insertBook(formDataObject);
+  const notifySucess = () => {
+    toast.success("Create user", {
+      position: "bottom-right",
+      autoClose: 1000,
+    });
+  };
 
-            notifySucess();
-            navigate('/login')
+  const notifyFail = (mensagem) => {
+    toast.error(mensagem, {
+      position: "bottom-right",
+      autoClose: 1000,
+    });
+  };
 
-        } catch (error) {
-            notifyFail("Username and Email already exists")
-            console.error('Error calling API:', error.message);
-            console.error('Server response:', error.response.data);
-        }
-    };
+  const containsNumber = (password) => {
+    const numbers = password.match(/\d/g);
+    return numbers ? numbers.length : 0;
+  };
 
-    const notifySucess = () => {
-        toast.success("Create user", {
-            position: "bottom-right",
-            autoClose: 1000,
-        });
-    };
+  return (
+    <>
+      <div className="flex items-center justify-center h-4/5 mb-5 mt-5">
+        <div className="w-full max-w-lg p-4 bg-gray-800 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <h5 className="text-xl font-medium text-white dark:text-white text-center">
+              Register
+            </h5>
+            <div className="mb-6">
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="johnfalcon@email.com"
+                required
+                onChange={handleChange}
+              />
+            </div>
 
-    const notifyFail = (mensagem) => {
-        toast.error(mensagem, {
-            position: "bottom-right",
-            autoClose: 1000,
-        });
-    };
+            <div className="mb-6">
+              <label
+                htmlFor="full_name"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                Your name
+              </label>
+              <input
+                type="text"
+                id="full_name"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="John Falcon"
+                required
+                onChange={handleChange}
+              />
+            </div>
 
-    const containsNumber = (password) => {
-        const numbers = password.match(/\d/g);
-        return numbers ? numbers.length : 0;
-    };
+            <div className="">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required
+                />
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                  tabIndex={-1}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                  }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </div>
+            </div>
 
-    const containsSpecialCharacter = (password) => {
-        const specialCharacters = /[!@#$%^&*(),.?":{}|<>]/g;
-        const matches = password.match(specialCharacters);
-        return matches ? matches.length : 0;
-    };
+            <div className="">
+              <label
+                htmlFor="passwordConfirm"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                Type your password again
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="passwordConfirm"
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required
+                />
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                  tabIndex={-1}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                  }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </div>
+            </div>
 
-    const containsUppercaseLetter = (password) => {
-        return /[A-Z]/.test(password);
-    };
+            <div className="text-sm	bg-gray-200 rounded-lg drop-shadow-lg">
+              <h1 className="text-black text-center text-lg">
+                Password validation:
+              </h1>
+              {formData.password.length < 8 ? (
+                <p className="text-red-500 p-2">
+                  Password must contain 8 character
+                </p>
+              ) : (
+                <p className="text-green-500 p-2">
+                  Password must contain 5 character
+                </p>
+              )}
+              {containsNumber(formData.password) < 2 ? (
+                <p className="text-red-500 p-2">
+                  Password must contain at least 2 numbers
+                </p>
+              ) : (
+                <p className="text-green-500 p-2">
+                  Password contains at least 2 numbers
+                </p>
+              )}
+            </div>
 
-    return (
-        <>
-            <div className="flex items-center justify-center h-4/5 mb-5 mt-5">
-                <div className="w-full max-w-lg p-4 bg-gray-800 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div className="mb-6">
+              <label
+                htmlFor="cpf"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                CPF
+              </label>
+              <input
+                type="text"
+                id="cpf"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="xxx.xxx.xxx-xx"
+                required
+                onChange={handleChange}
+              />
+            </div>
 
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        <h5 className="text-xl font-medium text-white dark:text-white text-center">Register</h5>
-                        <div className="mb-6">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-white dark:text-white">Email address</label>
-                            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" required onChange={handleChange} />
-                        </div>
+            <div className="mb-6">
+              <label
+                htmlFor="full_address"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                Address
+              </label>
+              <input
+                type="text"
+                id="full_address"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Lombard street"
+                required
+                onChange={handleChange}
+              />
+            </div>
 
-                        <div className="mb-6">
-                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-white dark:text-white">Your Username</label>
-                            <input type="text" id="username" className="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Admin" required onChange={handleChange} />
-                        </div>
+            <div className="mb-6">
+              <label
+                htmlFor="additional_address_details"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                Additional address details
+              </label>
+              <input
+                type="text"
+                id="additional_address_details"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Number 7, apartament 81"
+                required
+                onChange={handleChange}
+              />
+            </div>
 
-                        <div className=''>
-                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-white dark:text-white">Your password</label>
-                            <div className='relative'>
-                                <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    id="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="••••••••"
-                                    className="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required
-                                />
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                    tabIndex={-1}
+            <div className="mb-6">
+              <label
+                htmlFor="phone"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                Phone number
+              </label>
+              <input
+                type="text"
+                id="phone"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="(xx)xxxxx-xxxx"
+                required
+                onChange={handleChange}
+              />
+            </div>
 
-                                    style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}
-                                >
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </div>
-                        </div>
+            <div className="">
+              <label
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+                htmlFor="file_input"
+              >
+                Upload your profile picture
+              </label>
+              <input
+                className="block w-full text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                id="file_input"
+                type="file"
+                onChange={handleFileChange}
+              />
+            </div>
 
-
-
-                        <div className=''>
-                            <label htmlFor="passwordConfirm" className="block mb-2 text-sm font-medium text-white dark:text-white">Your password</label>
-                            <div className='relative'>
-                                <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    id="passwordConfirm"
-                                    onChange={handleChange}
-                                    placeholder="••••••••"
-                                    className="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    required
-                                />
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                    tabIndex={-1}
-                                    style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }}
-                                >
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </div>
-                        </div>
-
-                        <div className='text-sm	bg-gray-200 rounded-lg drop-shadow-lg'>
-                            <h1 className='text-black text-center text-lg'>Suggestions Password</h1>
-                            {formData.password.length < 8 ? <p className='text-red-500 p-2'>Password must contain 8 character</p> : <p className='text-green-500 p-2'>Password must contain 5 character</p>}
-                            {containsNumber(formData.password) < 2 ? (
-                                <p className="text-red-500 p-2">Password must contain at least 2 numbers</p>
-                            ) : (
-                                <p className="text-green-500 p-2">Password contains at least 2 numbers</p>
-                            )}
-                        </div>
-
-                        <div className="">
-                            <label className="block mb-2 text-sm font-medium text-white dark:text-white" htmlFor="file_input">Choose your profile picture</label>
-                            <input className="block w-full text-sm text-white border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" onChange={handleFileChange} />
-                        </div>
-
-                        <label htmlFor="description" className="block  text-sm font-medium text-white dark:text-white">Your message</label>
-                        <textarea id="description" rows="4" className=" p-2.5 w-full text-sm text-white bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..." onChange={handleChange} style={{ marginTop: "10px" }}></textarea>
-
-                        <button type="submit" className="w-full text-white bg-green-600  hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Create Account</button>
-                    </form>
-                </div >
-            </div >
-
-        </>
-    );
+            <button
+              type="submit"
+              className="w-full text-white bg-green-600  hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Create Account
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Register;

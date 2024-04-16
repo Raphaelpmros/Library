@@ -1,14 +1,15 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import styles from "./Navbar.module.css"
+import styles from "./Navbar.module.css";
+import { useState, useEffect } from "react";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Books", href: "/books", dropdownItems: ["Add New Book", "All Books"] },
-  { name: "Authors", href: "/authors", dropdownItems: ["Add New Author", "All Authors"] },
-  { name: "Categories", href: "/categories", dropdownItems: ["Add New Category", "All Categories"] },
-  { name: "Rents", href: "/rents", dropdownItems: ["Current Rents", "Rent History"] },
+  { name: "Books", href: "/books" },
+  { name: "Authors", href: "/authors" },
+  { name: "Categories", href: "/categories" },
+  { name: "Rents", href: "/rents" },
 ];
 
 function classNames(...classes) {
@@ -16,6 +17,22 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const userDataFromStorage = localStorage.getItem("user");
+    if (userDataFromStorage) {
+      const parsedUserData = JSON.parse(userDataFromStorage);
+      setUserData(parsedUserData);
+    }
+  }, []);
+
+  function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  }
+
   return (
     <Disclosure as="nav" className={styles.navbar}>
       {({ open }) => (
@@ -80,7 +97,7 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAhR2FfvDWCdkes1cHiNezA8x0r8G3igt8LO2rgyTYVAM2iRg03zYOpn8MVSem5Vx79Dk&usqp=CAU"
+                        src={userData.image}
                         alt=""
                       />
                     </Menu.Button>
@@ -98,7 +115,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/users/"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -123,8 +140,8 @@ export default function Navbar() {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <a 
+                            href="/"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
