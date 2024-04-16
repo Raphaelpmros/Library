@@ -27,10 +27,23 @@ export default function AllBooks() {
     fetchBooks();
   }, []);
 
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const userDataFromStorage = localStorage.getItem("user");
+    if (userDataFromStorage) {
+      const parsedUserData = JSON.parse(userDataFromStorage);
+      setUserData(parsedUserData);
+    }
+  }, []);
+
   return (
     <>
-      <h1>All Books</h1>
-      <NewBookModal />
+      {userData.admin === "1" && (
+        <div className="flex justify-center">
+          <NewBookModal />
+        </div>
+      )}
 
       {books.length === 0 && (
         <div

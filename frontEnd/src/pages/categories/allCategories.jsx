@@ -27,10 +27,24 @@ export default function AllCategories() {
     fetchCategories();
   }, []);
 
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const userDataFromStorage = localStorage.getItem("user");
+    if (userDataFromStorage) {
+      const parsedUserData = JSON.parse(userDataFromStorage);
+      setUserData(parsedUserData);
+    }
+  }, []);
+  console.log(userData.admin);
+
   return (
     <>
-      <h1>All Categories</h1>
-      <NewCategoryModal />
+      {userData.admin === '1' && (
+        <div className="flex justify-center">
+          <NewCategoryModal />
+        </div>
+      )}
 
       {categories.length === 0 && (
         <div
@@ -41,7 +55,7 @@ export default function AllCategories() {
         </div>
       )}
 
-      <div className="mt-5 text-center flex justify-center items-center flex-col">
+      <div className="text-center flex justify-center items-center flex-col">
         {categories.map((category) => (
           <ViewCategoryComponent
             key={category.id}

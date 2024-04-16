@@ -27,10 +27,23 @@ export default function AllAuthors() {
     fetchAuthors();
   }, []);
 
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const userDataFromStorage = localStorage.getItem("user");
+    if (userDataFromStorage) {
+      const parsedUserData = JSON.parse(userDataFromStorage);
+      setUserData(parsedUserData);
+    }
+  }, []);
+
   return (
     <>
-      <h1>All Authors</h1>
-      <NewAuthorModal />
+      {userData.admin === "1" && (
+        <div className="flex justify-center">
+          <NewAuthorModal />
+        </div>
+      )}
 
       {authors.length === 0 && (
         <div
@@ -41,7 +54,7 @@ export default function AllAuthors() {
         </div>
       )}
 
-      <div className="mt-5 text-center flex justify-center items-center flex-col">
+      <div className="text-center flex justify-center items-center flex-col">
         {authors.map((author) => (
           <ViewAuthorsComponent
             key={author.id}
