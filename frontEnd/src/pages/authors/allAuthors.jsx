@@ -3,6 +3,7 @@ import NewAuthorModal from "./components/NewAuthorModal";
 import ViewAuthorsComponent from "./components/ViewAuthorsComponent";
 import { viewAuthors } from "../../../requests_api/authors";
 
+
 export default function AllAuthors() {
   const [authors, setAuthors] = useState([]);
 
@@ -40,7 +41,7 @@ export default function AllAuthors() {
   return (
     <>
       {userData.admin === "1" && (
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-5">
           <NewAuthorModal />
         </div>
       )}
@@ -54,7 +55,7 @@ export default function AllAuthors() {
         </div>
       )}
 
-      <div className="text-center flex justify-center items-center flex-col">
+      <div className="text-center flex justify-center items-center flex-col p-5">
         {authors.map((author) => (
           <ViewAuthorsComponent
             key={author.id}

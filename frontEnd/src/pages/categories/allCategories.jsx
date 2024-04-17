@@ -41,7 +41,7 @@ export default function AllCategories() {
   return (
     <>
       {userData.admin === '1' && (
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-5">
           <NewCategoryModal />
         </div>
       )}
@@ -55,7 +55,7 @@ export default function AllCategories() {
         </div>
       )}
 
-      <div className="text-center flex justify-center items-center flex-col">
+      <div className="text-center flex justify-center items-center flex-col p-5">
         {categories.map((category) => (
           <ViewCategoryComponent
             key={category.id}

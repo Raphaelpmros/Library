@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Review from "./components/Review";
 import * as React from "react";
+import DeleteButton from "../../components/Buttons/DeleteButton";
+import EditButton from "../../components/Buttons/EditButton";
 
 export default function OneBook() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,9 +37,7 @@ export default function OneBook() {
 
   return (
     <>
-      <h1>Livro Específico</h1>
-
-      <div className="flex justify-center mt-5">
+      <div className="flex justify-center p-5">
         <div className="max-w-sm bg-gray-800 rounded-lg shadow mb-5">
           <div className="flex justify-center">
             <img
@@ -53,6 +53,8 @@ export default function OneBook() {
             <h5 className="text-white">Description:</h5>
             <p className="mb-3 font-normal text-white">{book.description}</p>
           </div>
+          <DeleteButton />
+          <EditButton />
         </div>
       </div>
     </>

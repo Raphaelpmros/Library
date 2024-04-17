@@ -1,5 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import DeleteButton from "../../components/Buttons/DeleteButton";
+import EditButton from "../../components/Buttons/EditButton";
 
 export default function Perfil() {
   const [userData, setUserData] = useState("");
@@ -53,6 +55,11 @@ export default function Perfil() {
             <div className="flex justify-center text-white">
               <p className="mb-3 font-normal text-white">
                 Phone: {userData.phone}
+              </p>
+            </div>
+            <div className="flex justify-center text-white">
+              <p className="mb-3 font-normal text-white">
+                <DeleteButton/><EditButton/>
               </p>
             </div>
           </div>

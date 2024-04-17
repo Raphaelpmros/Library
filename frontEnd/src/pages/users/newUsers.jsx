@@ -106,7 +106,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center h-4/5 mb-5 mt-5">
+      <div className="flex items-center justify-center h-4/5 p-5">
         <div className="w-full max-w-lg p-4 bg-gray-800 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <h5 className="text-xl font-medium text-white dark:text-white text-center">

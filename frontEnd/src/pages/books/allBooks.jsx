@@ -40,7 +40,7 @@ export default function AllBooks() {
   return (
     <>
       {userData.admin === "1" && (
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-5">
           <NewBookModal />
         </div>
       )}
