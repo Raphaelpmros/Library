@@ -17,7 +17,7 @@ export default function Perfil() {
 
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex justify-center p-5">
         <div
           className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
           style={{ width: "20rem" }}

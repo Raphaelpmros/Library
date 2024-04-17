@@ -3,7 +3,6 @@ import NewAuthorModal from "./components/NewAuthorModal";
 import ViewAuthorsComponent from "./components/ViewAuthorsComponent";
 import { viewAuthors } from "../../../requests_api/authors";
 
-
 export default function AllAuthors() {
   const [authors, setAuthors] = useState([]);
 
@@ -55,7 +54,7 @@ export default function AllAuthors() {
         </div>
       )}
 
-      <div className="text-center flex justify-center items-center flex-col p-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5 place-items-center">
         {authors.map((author) => (
           <ViewAuthorsComponent
             key={author.id}

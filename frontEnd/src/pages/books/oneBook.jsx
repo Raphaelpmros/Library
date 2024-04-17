@@ -38,7 +38,7 @@ export default function OneBook() {
   return (
     <>
       <div className="flex justify-center p-5">
-        <div className="max-w-sm bg-gray-800 rounded-lg shadow mb-5">
+        <div className="max-w-sm bg-gray-800 rounded-lg shadow p-5">
           <div className="flex justify-center">
             <img
               className="rounded-t-lg"
