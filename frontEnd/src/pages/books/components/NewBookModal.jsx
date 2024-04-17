@@ -1,13 +1,116 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import { toast } from "react-toastify";
 import "react-responsive-modal/styles.css";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "react-responsive-modal";
+import { Label, Select } from "flowbite-react";
+import IconButton from "@mui/material/IconButton";
+import React, { useState, useEffect } from "react";
+
+import { viewAuthors } from "../../../../requests_api/authors";
+import { newBook } from "../../../../requests_api/books";
+import { viewCategories } from "../../../../requests_api/categories";
 
 export default function modal() {
   const [open, setOpen] = useState(false);
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [authors, setAuthors] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
+  const [formData, setFormData] = useState({
+    full_name: "",
+    description: "",
+    quantity: "",
+    id_authors: "",
+    id_categories: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageUrl(file);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await viewCategories();
+        setCategories(response);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      try {
+        const response = await viewAuthors();
+        setAuthors(response);
+      } catch (error) {
+        console.error("Error fetching authors:", error);
+      }
+    };
+
+    fetchAuthors();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      console.log(formData)
+      setIsSubmitting(true);
+      const formDataObject = new FormData();
+      formDataObject.append("full_name", formData.full_name);
+      formDataObject.append("description", formData.description);
+      formDataObject.append("quantity", formData.quantity);
+      formDataObject.append("id_authors", formData.id_authors);
+      formDataObject.append("id_categories", formData.id_categories);
+
+      if (imageUrl) {
+        formDataObject.append("image", imageUrl);
+      } else {
+        formDataObject.append("image", "");
+      }
+      await newBook(formDataObject);
+
+      notifySucess();
+      navigate("/books");
+    } catch (error) {
+      notifyFail("Something went wrong");
+      console.error("Error calling API:", error.message);
+      console.error("Server response:", error.response.data);
+    }
+  };
+
+  const notifySucess = () => {
+    toast.success("Book insert with success", {
+      position: "bottom-right",
+      autoClose: 1000,
+    });
+  };
+
+  const notifyFail = () => {
+    toast.error("already title this name", {
+      position: "bottom-right",
+      autoClose: 1000,
+    });
+  };
 
   return (
     <div>
@@ -33,15 +136,15 @@ export default function modal() {
               <div className="grid gap-4 mb-4 grid-cols-2">
                 <div className="col-span-2">
                   <label
-                    html="name"
+                    htmlFor="full_name"
                     className="block mb-2 text-sm font-medium text-white"
                   >
                     Name
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    id="full_name"
+                    onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="The hobbit"
                     required=""
@@ -56,6 +159,7 @@ export default function modal() {
                   </label>
                   <textarea
                     id="description"
+                    onChange={handleChange}
                     rows="4"
                     className="block p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write book description here"
@@ -63,70 +167,87 @@ export default function modal() {
                 </div>
                 <div className="col-span-2">
                   <label
-                    htmlFor="price"
+                    htmlFor="quantity"
                     className="block mb-2 text-sm font-medium text-white"
                   >
                     Quantity
                   </label>
                   <input
                     type="number"
-                    name="price"
-                    id="price"
+                    id="quantity"
+                    onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="put the description here"
+                    placeholder="15"
                     required=""
                   />
                 </div>
                 <div className="col-span-2">
                   <label
-                    htmlFor="price"
-                    className="block mb-2 text-sm font-medium text-white"
+                    className="block mb-2 text-sm font-medium text-white dark:text-white"
+                    htmlFor="file_input"
                   >
-                    Upload image
+                    Upload the book's image
                   </label>
                   <input
-                    type="text"
-                    name="price"
-                    id="price"
-                    className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="put the description here"
-                    required=""
+                    className="block w-full text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="file_input"
+                    type="file"
+                    onChange={handleFileChange}
                   />
                 </div>
                 <div className="col-span-2">
                   <label
-                    htmlFor="price"
+                    htmlFor="id_authors"
                     className="block mb-2 text-sm font-medium text-white"
-                  >
-                    Author
-                  </label>
-                  <input
-                    type="text"
-                    name="price"
-                    id="price"
-                    className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="put the description here"
-                    required=""
+                    value="Select the Author"
                   />
+                  <div>
+                    <select
+                      className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      id="id_authors"
+                      required
+                      onChange={handleChange}
+                      value={formData.id_authors}
+                    >
+                      <option value="" disabled>
+                        Author
+                      </option>
+                      {authors.map((author) => (
+                        <option key={author.id} value={author.id}>
+                          {author.full_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
                 <div className="col-span-2">
                   <label
-                    htmlFor="price"
+                    htmlFor="id_categories"
                     className="block mb-2 text-sm font-medium text-white"
-                  >
-                    Category
-                  </label>
-                  <input
-                    type="text"
-                    name="price"
-                    id="price"
-                    className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="put the description here"
-                    required=""
+                    value="Select the Author"
                   />
+                  <div>
+                    <select
+                      className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      id="id_categories"
+                      required
+                      onChange={handleChange}
+                      value={formData.id_categories}
+                    >
+                      <option value="" disabled>
+                        Category
+                      </option>
+                      {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
               <button
+                onClick={handleSubmit}
                 type="submit"
                 className="text-white inline-flex items-center bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >

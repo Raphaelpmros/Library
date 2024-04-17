@@ -32,41 +32,41 @@ module.exports.findBooks = async (req, res) => {
 module.exports.new = async (req, res) => {
   const { full_name, description, quantity, id_authors, id_categories } =
     req.body;
-
-  let image;
-
-  if (
-    !full_name ||
-    !description ||
-    !quantity ||
-    !id_authors ||
-    !id_categories
-  ) {
-    return res.status(422).json({ message: "Complete all fields" });
-  }
-
-  if (req.file && req.file.path) {
-    image = req.file.path;
-  } else {
-    image = process.env.DEFAULT_BOOK_IMAGE;
-  }
-
-  if (
-    !/^[0-9]+$/.test(id_authors) ||
-    !/^[0-9]+$/.test(id_categories) ||
-    !/^[0-9]+$/.test(quantity)
-  ) {
-    return res.status(422).json({
-      message: "The id field and quantity must be valid numbers",
-    });
-  }
-
-  try {
-    const existingBook = await Book.findBooks(full_name);
-    if (existingBook.length >= 1) {
-      return res.status(409).json({ message: "Book already exist!" });
+    
+    let image;
+    
+    if (
+      !full_name ||
+      !description ||
+      !quantity ||
+      !id_authors ||
+      !id_categories
+    ) {
+      return res.status(422).json({ message: "Complete all fields" });
     }
-
+    
+    if (req.file && req.file.path) {
+      image = req.file.path;
+    } else {
+      image = process.env.DEFAULT_BOOK_IMAGE;
+    }
+    
+    if (
+      !/^[0-9]+$/.test(id_authors) ||
+      !/^[0-9]+$/.test(id_categories) ||
+      !/^[0-9]+$/.test(quantity)
+    ) {
+      return res.status(422).json({
+        message: "The id field and quantity must be valid numbers",
+      });
+    }
+    
+    try {
+      const existingBook = await Book.findBooks(full_name);
+      if (existingBook.length >= 1) {
+        return res.status(409).json({ message: "Book already exist!" });
+      }
+      
     await Book.createBooks(
       full_name,
       description,

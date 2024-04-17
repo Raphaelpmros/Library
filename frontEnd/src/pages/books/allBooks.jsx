@@ -40,7 +40,7 @@ export default function AllBooks() {
   return (
     <>
       {userData.admin === "1" && (
-        <div className="flex justify-center pt-5">
+        <div className="flex justify-center p-5">
           <NewBookModal />
         </div>
       )}
@@ -54,7 +54,7 @@ export default function AllBooks() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center">
         {books.map((book) => (
           <ViewBooksComponents
             key={book.id}

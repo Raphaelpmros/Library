@@ -4,12 +4,12 @@ export default function ViewBooks({ id, full_name, quantity, image }) {
   return (
     <>
       <div
-        className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-5"
+        className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
         style={{ width: "18rem" }}
       >
         <Link
           to={`/books/${id}`}
-          className="flex justify-center"
+          className="flex justify-center pt-5"
           style={{ height: "20rem" }}
         >
           {" "}
