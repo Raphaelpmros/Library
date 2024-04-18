@@ -36,7 +36,6 @@ export default function AllCategories() {
       setUserData(parsedUserData);
     }
   }, []);
-  console.log(userData.admin);
 
   return (
     <>

@@ -49,10 +49,10 @@ function createAuthor(full_name, nationality) {
   });
 }
 
-function findAuthorByName(full_name) {
+function findAuthor(id) {
   return new Promise((resolve, reject) => {
-    var find = "SELECT * FROM authors WHERE full_name=?";
-    con.query(find, [full_name], (err, result) => {
+    var find = "SELECT * FROM authors WHERE id=?";
+    con.query(find, [id], (err, result) => {
       if(err) {
         return reject(err)
       }
@@ -89,7 +89,7 @@ function deleteAuthor(id) {
 module.exports = {
   allAuthors,
   createAuthor,
-  findAuthorByName,
+  findAuthor,
   updateAuthor,
   deleteAuthor
 };

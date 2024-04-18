@@ -9,6 +9,20 @@ export const viewAuthors = async () => {
   }
 };
 
+
+export const findAuthor = async (id) => {
+  try {
+    const response = await fetchApi.patch(`/authors/${id}`);
+    if (!response.data) {
+      throw new Error("No author found for the given ID"); 
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error in findAUthor:", error);
+    throw error;
+  }
+};
+
 export const newAuthor = async (authors, config) => {
   try {
     const response = await fetchApi.post(`/authors/new`, authors, config);

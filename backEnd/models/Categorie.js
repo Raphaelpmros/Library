@@ -35,10 +35,10 @@ function allCategories() {
 }
 
 
-function findCategoriesByName(name) {
+function findCategories(id) {
   return new Promise((resolve, reject) => {
-    const find = "SELECT * FROM categories WHERE name=?";
-    con.query(find, [name], (err, result) => {
+    const find = "SELECT * FROM categories WHERE id=?";
+    con.query(find, [id], (err, result) => {
       if(err) {
         return reject(err)
       }
@@ -88,7 +88,7 @@ function deleteCategorie(id) {
 module.exports = {
   allCategories,
   createCategories,
-  findCategoriesByName,
+  findCategories,
   updateCategorieName,
   deleteCategorie,
 };

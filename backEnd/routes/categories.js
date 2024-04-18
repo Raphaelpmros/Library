@@ -5,7 +5,8 @@ const admin = require("../middleware/admin")
 
 router.get("/", categories.categories);
 router.post("/new", categories.new);
-router.post("/update", categories.update)
+router.patch("/update", categories.update)
+router.patch("/id", categories.findCategories)
 router.delete("/:id", categories.delete)
 
 module.exports = router;

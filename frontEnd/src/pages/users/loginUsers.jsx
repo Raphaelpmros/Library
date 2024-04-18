@@ -50,7 +50,7 @@ const LoginUser = () => {
             config.headers['Authorization'] = `Bearer ${data.token}`;
 
             notifySucess();
-            navigate('/books')
+            navigate('/')
 
         } catch (error) {
             console.error('Erro ao chamar a API:', error.message);

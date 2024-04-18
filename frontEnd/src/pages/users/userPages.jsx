@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import DeleteButton from "../../components/Buttons/DeleteButton";
 import EditButton from "../../components/Buttons/EditButton";
 
 export default function Perfil() {
@@ -59,7 +58,7 @@ export default function Perfil() {
             </div>
             <div className="flex justify-center text-white">
               <p className="mb-3 font-normal text-white">
-                <DeleteButton/><EditButton/>
+                <EditButton/>
               </p>
             </div>
           </div>

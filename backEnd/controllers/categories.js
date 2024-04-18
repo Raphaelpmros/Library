@@ -10,6 +10,17 @@ module.exports.categories = async (req, res) => {
   }
 };
 
+module.exports.findCategories = async (req, res) => {
+  const {id} = req.params
+  try {
+    const findCategories = await User.findCategories(id);
+    return res.status(200).json(findCategories);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server Error!" });
+  }
+};
+
 module.exports.new = async (req, res) => {
   const { name } = req.body;
 
@@ -18,7 +29,7 @@ module.exports.new = async (req, res) => {
       return res.status(422).json({ message: "Category must have a name!" });
     }
 
-    const existingCategorie = await Categorie.findCategoriesByName(name);
+    const existingCategorie = await Categorie.findCategories(id);
     if (existingCategorie.length >= 1) {
       return res.status(409).json({ message: "Category already exist!" });
     }
