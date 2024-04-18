@@ -2,12 +2,60 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
+import { newCategories } from "../../../../requests_api/categories";
+import { toast } from "react-toastify";
 
 export default function modal() {
   const [open, setOpen] = useState(false);
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleCloseModalAndNavigate = () => {
+    onCloseModal();
+    window.location.reload();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsSubmitting(true);
+      await newCategories(formData);
+
+      notifySucess();
+    } catch (error) {
+      notifyFail("Something went wrong");
+      console.error("Error calling API:", error.message);
+      console.error("Server response:", error.response.data);
+    }
+  };
+
+  const notifySucess = () => {
+    toast.success("Book insert with success", {
+      position: "bottom-right",
+      autoClose: 1000,
+    });
+  };
+
+  const notifyFail = () => {
+    toast.error("already title this name", {
+      position: "bottom-right",
+      autoClose: 1000,
+    });
+  };
 
   return (
     <div>
@@ -29,7 +77,7 @@ export default function modal() {
               </h3>
             </div>
 
-            <form className="p-4 md:p-5 bg-gray-700">
+            <form className="p-4 md:p-5 bg-gray-700" onSubmit={handleSubmit}>
               <div className="grid gap-4 mb-4 grid-cols-2">
                 <div className="col-span-2">
                   <label
@@ -44,11 +92,13 @@ export default function modal() {
                     id="name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Horror"
+                    onChange={handleChange}
                     required=""
                   />
                 </div>
               </div>
               <button
+                onClick={handleCloseModalAndNavigate}
                 type="submit"
                 className="text-white inline-flex items-center bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >

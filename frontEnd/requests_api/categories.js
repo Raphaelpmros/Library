@@ -9,9 +9,9 @@ export const viewCategories = async () => {
   }
 };
 
-export const newCategories = async (categories, config) => {
+export const newCategories = async (formData) => {
   try {
-    const response = await fetchApi.post(`/categories`, categories, config);
+    const response = await fetchApi.post(`/categories/new`, formData);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,7 +20,7 @@ export const newCategories = async (categories, config) => {
 
 export const updateCategories = async (id, categories, config) => {
   try {
-    const response = await fetchApi.post(`/categories`, id, categories, config);
+    const response = await fetchApi.post(`/categories/update`, id, categories, config);
     return response.data;
   } catch (error) {
     throw error;
