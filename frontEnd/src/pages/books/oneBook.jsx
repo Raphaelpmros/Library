@@ -1,13 +1,12 @@
 import { newReviews, allReviews } from "../../../requests_api/reviews";
 import { findBooks } from "../../../requests_api/books";
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Pagination } from "flowbite-react";
 import Rating from "@mui/material/Rating";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Review from "./components/Review";
-import * as React from "react";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import EditButton from "../../components/Buttons/EditButton";
 import { deleteBooks } from "../../../requests_api/books";
@@ -28,12 +27,11 @@ export default function OneBook() {
   const handleDelete = async () => {
     try {
       await deleteBooks(id);
-      navigate(`/books`)
+      navigate(`/books`);
     } catch (error) {
       console.error("Error deleting Book:", error.message);
     }
   };
-
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -46,6 +44,16 @@ export default function OneBook() {
     };
 
     fetchBooks();
+  }, []);
+
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const userDataFromStorage = localStorage.getItem("user");
+    if (userDataFromStorage) {
+      const parsedUserData = JSON.parse(userDataFromStorage);
+      setUserData(parsedUserData);
+    }
   }, []);
 
   return (
@@ -66,8 +74,12 @@ export default function OneBook() {
             <h5 className="text-white">Description:</h5>
             <p className="mb-3 font-normal text-white">{book.description}</p>
           </div>
-          <DeleteButton deleteFunction={handleDelete}/>
-          <EditButton />
+          {userData.admin === "1" && (
+            <div className="flex justify-center pt-5">
+              <DeleteButton deleteFunction={handleDelete} />
+              <EditButton />
+            </div>
+          )}
         </div>
       </div>
     </>
