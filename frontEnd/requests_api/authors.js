@@ -32,9 +32,9 @@ export const updateAuthor = async (id, authors, config) => {
   }
 };
 
-export const deleteAuthor = async (id, config) => {
+export const deleteAuthor = async (id) => {
   try {
-    const response = await fetchApi.delete(`/authors/${id}`, config);
+    const response = await fetchApi.delete(`/authors/${id}`);
     return response.data;
   } catch (error) {
     throw error;

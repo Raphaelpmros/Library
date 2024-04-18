@@ -1,8 +1,19 @@
 import { Link } from "react-router-dom";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
 import EditButton from "../../../components/Buttons/EditButton";
+import { deleteCategories } from "../../../../requests_api/categories";
 
 export default function ViewCategoryComponent({ id, name }) {
+  const handleDelete = async () => {
+    try {
+      await deleteCategories(id);
+      console.log("Category deleted successfully");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting category:", error); 
+    }
+  };
+
   return (
     <>
       <div
@@ -10,10 +21,9 @@ export default function ViewCategoryComponent({ id, name }) {
         style={{ width: "15rem" }}
       >
         <div className="p-5">
-          <h5 className="mb-2 text-1xl tracking-tight text-white">
-            {name}
-          </h5>
-          <DeleteButton/> <EditButton/>
+          <h5 className="mb-2 text-1xl tracking-tight text-white">{name}</h5>
+          <DeleteButton deleteFunction={handleDelete} />
+          <EditButton />
         </div>
       </div>
     </>

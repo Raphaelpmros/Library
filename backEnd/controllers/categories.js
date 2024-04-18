@@ -6,7 +6,7 @@ module.exports.categories = async (req, res) => {
     return res.status(200).json( {viewCategories} );
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Erro interno do servidor" });
+    return res.status(500).json({ message: "Internal Server Error!" });
   }
 };
 
@@ -15,21 +15,21 @@ module.exports.new = async (req, res) => {
 
   try {
     if (!name) {
-      return res.status(422).json({ message: "Preencha o nome da categoria!" });
+      return res.status(422).json({ message: "Category must have a name!" });
     }
 
     const existingCategorie = await Categorie.findCategoriesByName(name);
     if (existingCategorie.length >= 1) {
-      return res.status(409).json({ message: "Categoria já cadastrada!" });
+      return res.status(409).json({ message: "Category already exist!" });
     }
 
     await Categorie.createCategories(name);
     return res
       .status(201)
-      .json({ message: "Categoria cadastrada com sucesso!" });
+      .json({ message: "Category created!" });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Erro ao criar a categoria." });
+    return res.status(500).json({ message: "Fail creating category." });
   }
 };
 
@@ -38,20 +38,20 @@ module.exports.update = async (req, res) => {
 
   try {
     if (!id || !newName) {
-      return res.status(400).json({ message: "Parâmetros inválidos!" });
+      return res.status(400).json({ message: "Invalid parameter!" });
     }
 
     const result = await Categorie.updateCategorieName(id, newName);
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Categoria não encontrada!" });
+      return res.status(404).json({ message: "Not found!" });
     }
 
-    return res.status(200).json({ message: "Nome alterado com sucesso!" });
+    return res.status(200).json({ message: "Updated!" });
   } catch (err) {
     console.error(err);
     return res
       .status(500)
-      .json({ message: "Erro ao tentar mudar o nome, tente novamente!" });
+      .json({ message: "Fail to update!" });
   }
 };
 
@@ -60,21 +60,21 @@ module.exports.delete = async (req, res) => {
 
   try {
     if (!id) {
-      return res.status(404).json({ message: "Tente novamente" });
+      return res.status(404).json({ message: "Try again!" });
     }
 
     const categoryDelete = await Categorie.deleteCategorie(id);
     if (categoryDelete.affectedRows === 0) {
-      return res.status(404).json({ message: "Esta categoria não existe!" });
+      return res.status(404).json({ message: "Category not found!" });
     }
 
     return res
       .status(200)
-      .json({ message: "Apagado com Sucesso!", data: category });
+      .json({ message: "Successifully deleted!", data: category });
   } catch (err) {
     console.log(err);
     return res
       .status(500)
-      .json({ message: "Erro ao tentar deletar a categoria." });
+      .json({ message: "Something went wrong." });
   }
 };
