@@ -22,10 +22,9 @@ export const findBooks = async (id) => {
   }
 };
 
-export const newBook = async (formDataObject) => {
+export const newBook = async (formData) => {
   try {
-    const response = await fetchApi.post(`/books/new`, formDataObject);
-    console.log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+    const response = await fetchApi.post(`/books/new`, formData);
     return response.data;
   } catch (error) {
     throw error;
