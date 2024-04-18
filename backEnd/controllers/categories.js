@@ -3,7 +3,7 @@ const Categorie = require("../models/Categorie");
 module.exports.categories = async (req, res) => {
   try {
     const viewCategories = await Categorie.allCategories();
-    return res.status(200).json( viewCategories );
+    return res.status(200).json( {viewCategories} );
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Erro interno do servidor" });

@@ -30,8 +30,8 @@ module.exports.findBooks = async (req, res) => {
 };
 
 module.exports.new = async (req, res) => {
-  const { full_name, description, quantity, id_authors, id_categories } = req.body;
-    console.log(req.body)
+  const { full_name, description, quantity, id_authors, id_categories } =
+    req.body;
     
     let image;
     

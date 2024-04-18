@@ -2,12 +2,48 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
+import { newAuthor } from "../../../../requests_api/authors";
 
 export default function modal() {
   const [open, setOpen] = useState(false);
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    full_name: "",
+    nationality: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleCloseModalAndNavigate = () => {
+    onCloseModal();
+    window.location.reload();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsSubmitting(true);
+      await newAuthor(formData);
+
+      notifySucess();
+    } catch (error) {
+      notifyFail("Something went wrong");
+      console.error("Error calling API:", error.message);
+      console.error("Server response:", error.response.data);
+    }
+  };
+
+
 
   return (
     <div>

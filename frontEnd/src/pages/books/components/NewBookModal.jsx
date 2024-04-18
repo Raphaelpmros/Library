@@ -16,7 +16,6 @@ export default function modal() {
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
 
-  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState([]);
@@ -41,8 +40,10 @@ export default function modal() {
     const file = e.target.files[0];
 
     if (file) {
-      setImageUrl(file);
-      setFormData.image = imageUrl
+      setFormData({
+        ...formData,
+        image: file,
+      });
     }
   };
 
@@ -50,9 +51,17 @@ export default function modal() {
     const fetchCategories = async () => {
       try {
         const response = await viewCategories();
-        setCategories(response);
+        if (
+          response &&
+          response.viewCategories &&
+          Array.isArray(response.viewCategories)
+        ) {
+          setCategories(response.viewCategories);
+        } else {
+          console.error("Error: Invalid data format received");
+        }
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error searching for categories:", error);
       }
     };
 
@@ -63,9 +72,17 @@ export default function modal() {
     const fetchAuthors = async () => {
       try {
         const response = await viewAuthors();
-        setAuthors(response);
+        if (
+          response &&
+          response.viewAuthors &&
+          Array.isArray(response.viewAuthors)
+        ) {
+          setAuthors(response.viewAuthors);
+        } else {
+          console.error("Error: Invalid data format received");
+        }
       } catch (error) {
-        console.error("Error fetching authors:", error);
+        console.error("Error searching for Authors:", error);
       }
     };
 
@@ -74,7 +91,7 @@ export default function modal() {
 
   const handleCloseModalAndNavigate = () => {
     onCloseModal();
-    window.location.reload()
+    window.location.reload();
   };
 
   const handleSubmit = async (e) => {
@@ -182,15 +199,15 @@ export default function modal() {
                 <div className="col-span-2">
                   <label
                     className="block mb-2 text-sm font-medium text-white dark:text-white"
-                    htmlFor="image"
+                    htmlFor="file_input"
                   >
                     Upload the book's image
                   </label>
                   <input
                     className="block w-full text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    id="image"
+                    id="file_input"
                     type="file"
-                    onChange={handleChange}
+                    onChange={handleFileChange}
                   />
                 </div>
                 <div className="col-span-2">
@@ -245,7 +262,7 @@ export default function modal() {
                 </div>
               </div>
               <button
-              onClick={handleCloseModalAndNavigate}
+                onClick={handleCloseModalAndNavigate}
                 type="submit"
                 className="text-white inline-flex items-center bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
