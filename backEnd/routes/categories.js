@@ -4,8 +4,8 @@ const router = express();
 const admin = require("../middleware/admin")
 
 router.get("/", categories.categories);
-router.post("/new", admin, categories.new);
-router.post("/update", admin, categories.update)
-router.delete("/:id", admin, categories.delete)
+router.post("/new", categories.new);
+router.post("/update", categories.update)
+router.delete("/:id", categories.delete)
 
 module.exports = router;

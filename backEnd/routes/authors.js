@@ -4,7 +4,7 @@ const router = express();
 const admin = require("../middleware/admin")
 
 router.get("/", authors.authors)
-router.post("/new", admin, authors.new)
-router.post("/update", admin, authors.update);
-router.delete("/:id", admin, authors.delete)
+router.post("/new", authors.new)
+router.post("/update", authors.update);
+router.delete("/:id", authors.delete)
 module.exports = router;
