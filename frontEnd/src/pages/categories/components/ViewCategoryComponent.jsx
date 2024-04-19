@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
-import EditButton from "../../../components/Buttons/EditButton";
+import EditButtonModal from "../../../components/Buttons/EditButton";
 import { deleteCategories } from "../../../../requests_api/categories";
 import { updateCategories } from "../../../../requests_api/categories";
 import React, { useState, useEffect } from "react";
@@ -36,7 +36,7 @@ export default function ViewCategoryComponent({ id, name }) {
           {userData.admin === "1" && (
             <div className="flex justify-center pt-5">
               <DeleteButton deleteFunction={handleDelete} />
-              <EditButtonModal link="/authors/update/" id={id} />
+              <EditButtonModal link="/categories/update/" id={id} />
             </div>
           )}
         </div>

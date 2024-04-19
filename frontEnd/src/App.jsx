@@ -21,12 +21,10 @@ import AllBooks from "./pages/books/allBooks";
 import EditBooks from "./pages/books/editBooks";
 import OneBook from "./pages/books/oneBook";
 
-import NewAuthors from "./pages/authors/newAuthors";
 import AllAuthors from "./pages/authors/allAuthors";
 import EditAuthors from "./pages/authors/editAuthors";
 
 import AllCategories from "./pages/categories/allCategories";
-import NewCategories from "./pages/categories/newCategories";
 import EditCategories from "./pages/categories/editCategories";
 
 function App() {
@@ -51,12 +49,10 @@ function App() {
           <Route path="/Books" element={<AllBooks />} />
           <Route path="/books/update" element={<EditBooks />} />
 
-          <Route path="/authors/new" element={<NewAuthors />} />
           <Route path="/authors" element={<AllAuthors />} />
           <Route path="/authors/update/:id" element={<EditAuthors />} />
 
-          <Route path="/categories/update" element={<EditCategories />} />
-          <Route path="/categories/new" element={<NewCategories />} />
+          <Route path="/categories/update/:id" element={<EditCategories />} />
           <Route path="/categories" element={<AllCategories />} />
 
           <Route path="*" element={<NotFound />} />

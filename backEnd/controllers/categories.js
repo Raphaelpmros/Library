@@ -13,7 +13,7 @@ module.exports.categories = async (req, res) => {
 module.exports.findCategories = async (req, res) => {
   const {id} = req.params
   try {
-    const findCategories = await User.findCategories(id);
+    const findCategories = await Categorie.findCategories(id);
     return res.status(200).json(findCategories);
   } catch (err) {
     console.error(err);
@@ -45,14 +45,14 @@ module.exports.new = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-  const { id, newName } = req.body;
+  const { id, name } = req.body;
 
   try {
-    if (!id || !newName) {
+    if (!id || !name) {
       return res.status(400).json({ message: "Invalid parameter!" });
     }
 
-    const result = await Categorie.updateCategorieName(id, newName);
+    const result = await Categorie.updateCategorieName(id, name);
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Not found!" });
     }

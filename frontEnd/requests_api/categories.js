@@ -18,9 +18,22 @@ export const newCategories = async (formData) => {
   }
 };
 
-export const updateCategories = async (id, categories, config) => {
+export const findCategories = async (id) => {
   try {
-    const response = await fetchApi.post(`/categories/update`, id, categories, config);
+    const response = await fetchApi.get(`/categories/${id}`);
+    if (!response.data) {
+      throw new Error("No category found for the given ID");
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error in findCategory:", error);
+    throw error;
+  }
+};
+
+export const updateCategories = async (id, formData) => {
+  try {
+    const response = await fetchApi.patch(`/categories/update/${id}`, formData);
     return response.data;
   } catch (error) {
     throw error;
