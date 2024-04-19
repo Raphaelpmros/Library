@@ -25,6 +25,7 @@
     "dotenv": "^16.4.5",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.8",
+    "pagination": "^0.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-favicon": "^2.0.3",

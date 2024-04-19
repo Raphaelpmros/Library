@@ -10,7 +10,7 @@ const upload = multer({ storage })
 router.get("/", books.books);
 router.get("/:id", books.findBooks)
 router.post("/new", upload.single("image"), books.new);
-router.patch("/update", upload.single("image"), books.updateBook)
+router.patch("/update/:id", upload.single("image"), books.updateBook)
 router.delete("/:id", books.delete);
 
 module.exports = router;

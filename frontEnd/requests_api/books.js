@@ -31,9 +31,9 @@ export const newBook = async (formData) => {
   }
 };
 
-export const updateBook = async (id, books, config) => {
+export const updateBook = async (id, formData) => {
   try {
-    const response = await fetchApi.post(`/books/update`, id, books, config);
+    const response = await fetchApi.patch(`/books/update/${id}`, formData);
     return response.data;
   } catch (error) {
     throw error;

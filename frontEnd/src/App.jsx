@@ -16,7 +16,6 @@ import EditUser from "./pages/users/editUsers";
 import UserPage from "./pages/users/userPages";
 import LoginUser from "./pages/users/loginUsers";
 
-import NewBooks from "./pages/books/newBooks";
 import AllBooks from "./pages/books/allBooks";
 import EditBooks from "./pages/books/editBooks";
 import OneBook from "./pages/books/oneBook";
@@ -44,10 +43,9 @@ function App() {
           <Route path="/users" element={<UserPage />} />
           <Route path="/users/login" element={<LoginUser />} />
 
-          <Route path="/books/new" element={<NewBooks />} />
           <Route path="/books/:id" element={<OneBook />} />
           <Route path="/Books" element={<AllBooks />} />
-          <Route path="/books/update" element={<EditBooks />} />
+          <Route path="/books/update/:id" element={<EditBooks />} />
 
           <Route path="/authors" element={<AllAuthors />} />
           <Route path="/authors/update/:id" element={<EditAuthors />} />

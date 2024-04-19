@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Review from "./components/Review";
 import DeleteButton from "../../components/Buttons/DeleteButton";
-import EditButton from "../../components/Buttons/EditButton";
+import EditButtonModal from "../../components/Buttons/EditButton";
 import { deleteBooks } from "../../../requests_api/books";
 import { updateBook } from "../../../requests_api/books";
 
