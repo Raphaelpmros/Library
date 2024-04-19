@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
-import EditButton from "../../../components/Buttons/EditButton";
+import EditButtonModal from "../../../components/Buttons/EditButton";
 import { deleteAuthor } from "../../../../requests_api/authors";
 import { updateAuthor } from "../../../../requests_api/authors";
 
@@ -36,7 +36,7 @@ export default function ViewAuthorsComponent({ id, name, nationality }) {
         {userData.admin === "1" && (
           <div className="flex justify-center pt-5">
             <DeleteButton deleteFunction={handleDelete} />
-            <EditButton />
+            <EditButtonModal link="/authors/update/" id={id} />
           </div>
         )}
       </div>

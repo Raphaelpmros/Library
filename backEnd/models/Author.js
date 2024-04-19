@@ -61,10 +61,10 @@ function findAuthor(id) {
   });
 }
 
-function updateAuthor(id, newName, newNationality) {
+function updateAuthor(id, full_name, nationality) {
   return new Promise((resolve, reject) => {
     let change = "UPDATE authors SET full_name = ?, nationality = ? WHERE  id = ?";
-    con.query(change, [newName, newNationality,  id], function (err, result) {
+    con.query(change, [full_name, nationality,  id], function (err, result) {
       if(err) {
         return reject(err)
       }

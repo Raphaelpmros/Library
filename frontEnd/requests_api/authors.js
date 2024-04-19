@@ -9,37 +9,32 @@ export const viewAuthors = async () => {
   }
 };
 
-
 export const findAuthor = async (id) => {
   try {
-    const response = await fetchApi.patch(`/authors/${id}`);
+    const response = await fetchApi.get(`/authors/${id}`);
     if (!response.data) {
-      throw new Error("No author found for the given ID"); 
+      throw new Error("No author found for the given ID");
     }
     return response.data;
   } catch (error) {
-    console.error("Error in findAUthor:", error);
+    console.error("Error in findAuthor:", error);
     throw error;
   }
 };
 
-export const newAuthor = async (authors, config) => {
+export const newAuthor = async (formData) => {
   try {
-    const response = await fetchApi.post(`/authors/new`, authors, config);
+    const response = await fetchApi.post(`/authors/new`, formData);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const updateAuthor = async (id, authors, config) => {
+export const updateAuthor = async (id, formData) => {
   try {
-    const response = await fetchApi.post(
-      `/authors/update`,
-      id,
-      authors,
-      config
-    );
+    const response = await fetchApi.patch(`/authors/update/${id}`, formData);
+    console.log("passou a API");
     return response.data;
   } catch (error) {
     throw error;

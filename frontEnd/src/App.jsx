@@ -53,7 +53,7 @@ function App() {
 
           <Route path="/authors/new" element={<NewAuthors />} />
           <Route path="/authors" element={<AllAuthors />} />
-          <Route path="/authors/update" element={<EditAuthors />} />
+          <Route path="/authors/update/:id" element={<EditAuthors />} />
 
           <Route path="/categories/update" element={<EditCategories />} />
           <Route path="/categories/new" element={<NewCategories />} />

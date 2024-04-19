@@ -13,7 +13,7 @@ module.exports.authors = async (req, res) => {
 module.exports.findAuthor = async (req, res) => {
   const {id} = req.params
   try {
-    const findAuthor = await User.findAuthor(id);
+    const findAuthor = await Author.findAuthor(id);
     return res.status(200).json(findAuthor);
   } catch (err) {
     console.error(err);
@@ -23,6 +23,7 @@ module.exports.findAuthor = async (req, res) => {
 
 module.exports.new = async (req, res) => {
   const { full_name, nationality } = req.body;
+  const {id} = req.params
 
   try {
     if (!full_name || !nationality) {
@@ -45,13 +46,13 @@ module.exports.new = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-  const { id, newName, newNationality } = req.body;
+  const { id, full_name, nationality } = req.body;
   try {
-    if (!id || (!newName && !newNationality)) {
+    if ( (!full_name && !nationality)) {
       return res.status(400).json({ message: "Invalid fields" });
     }
 
-    const result = await Author.updateAuthor(id, newName, newNationality);
+    const result = await Author.updateAuthor(id, full_name, nationality);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Author not found" });

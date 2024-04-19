@@ -36,7 +36,7 @@ export default function ViewCategoryComponent({ id, name }) {
           {userData.admin === "1" && (
             <div className="flex justify-center pt-5">
               <DeleteButton deleteFunction={handleDelete} />
-              <EditButton />
+              <EditButtonModal link="/authors/update/" id={id} />
             </div>
           )}
         </div>
