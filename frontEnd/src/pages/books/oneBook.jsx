@@ -1,4 +1,3 @@
-import { newReviews, allReviews } from "../../../requests_api/reviews";
 import { findBooks } from "../../../requests_api/books";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -6,12 +5,12 @@ import { Pagination } from "flowbite-react";
 import Rating from "@mui/material/Rating";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
-import Reviews from "./components/Reviews";
+import Reviews from "./components/ReviewsCard";
+import NewReview from "./components/NewReview";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import EditButtonModal from "../../components/Buttons/EditButton";
 import { deleteBooks } from "../../../requests_api/books";
 import { updateBook } from "../../../requests_api/books";
-
 
 export default function OneBook() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,32 +58,34 @@ export default function OneBook() {
 
   return (
     <>
-      <Reviews/>
-      <div className="flex justify-center p-5">
-        <div className="max-w-sm bg-gray-800 rounded-lg shadow p-5">
-          <div className="flex justify-center">
-            <img
-              className="rounded-t-lg"
-              src={book.image}
-              alt={book.full_name}
-            />
-          </div>
-          <div className="p-5">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
-              {book.full_name}
-            </h5>
-            <h5 className="text-white">Description:</h5>
-            <p className="mb-3 font-normal text-white">{book.description}</p>
-          </div>
-          <div>
-          </div>
-          {userData.admin === "1" && (
-            <div className="flex justify-center pt-5">
-              <DeleteButton deleteFunction={handleDelete} />
-              <EditButtonModal link="/books/update/" id={id} />
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="flex justify-center p-5">
+          <div className="max-w-sm bg-gray-800 rounded-lg shadow p-5">
+            <div className="flex justify-center">
+              <img
+                className="rounded-t-lg"
+                src={book.image}
+                alt={book.full_name}
+              />
             </div>
-          )}
+            <div className="p-5">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
+                {book.full_name}
+              </h5>
+              <h5 className="text-white">Description:</h5>
+              <p className="mb-3 font-normal text-white">{book.description}</p>
+            </div>
+            <div></div>
+            {userData.admin === "1" && (
+              <div className="flex justify-center pt-5">
+                <DeleteButton deleteFunction={handleDelete} />
+                <EditButtonModal link="/books/update/" id={id} />
+              </div>
+            )}
+          </div>
         </div>
+        <NewReview />
+        <Reviews />
       </div>
     </>
   );
