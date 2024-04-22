@@ -54,7 +54,7 @@ export default function AllBooks() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center p-5">
         {books.map((book) => (
           <ViewBooksComponents
             key={book.id}
