@@ -5,7 +5,6 @@ import { Pagination } from "flowbite-react";
 import Rating from "@mui/material/Rating";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
-import Reviews from "./components/ReviewsCard";
 import NewReview from "./components/NewReview";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import EditButtonModal from "../../components/Buttons/EditButton";
@@ -85,7 +84,6 @@ export default function OneBook() {
           </div>
         </div>
         <NewReview />
-        <Reviews />
       </div>
     </>
   );

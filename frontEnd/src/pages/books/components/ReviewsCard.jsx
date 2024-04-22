@@ -1,5 +1,5 @@
-import { deleteReviews } from "../../../../requests_api/reviews";
-import { allUsers } from "../../../../requests_api/users";
+import { allReviews, deleteReviews } from "../../../../requests_api/reviews";
+import { findUser } from "../../../../requests_api/users";
 import React, { useEffect, useState } from "react";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
 
@@ -7,22 +7,46 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
   const adminData = localStorage.getItem("user");
   const adminObject = JSON.parse(adminData);
   const [users, setUsers] = useState([]);
+  const [reviews, setReviews] = useState([])
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await allUsers(id);
-        const filteredUsers = response.viewUsers.filter(
+        const response = await findUser(id);
+        const filteredUsers = response.findUser.filter(
           (user) => user.id === id
         );
+        console.log(filteredUsers)
         setUsers(filteredUsers);
       } catch (error) {
-        console.error("Erro ao buscar os usuários:", error);
+        console.error("Error finding user:", error);
       }
     };
 
     fetchUsers();
   }, [id]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await allReviews(id_books);
+        console.log("renderizando", response)
+        if (
+          response &&
+          response.allReviews &&
+          Array.isArray(response.allReviews)
+        ) {
+          setReviews(response.allReviews.data);
+        } else {
+          console.error("Error: Invalid data format received");
+        }
+      } catch (error) {
+        console.error("Error searching for reviews:", error);
+      }
+    };
+
+    fetchReviews();
+  }, [id_books]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -64,7 +88,7 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
 
   return (
     <>
-      <article className="max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
+      <article className="bg-white border border-gray-200 rounded-lg shadow w-full">
         <div className="flex justify-between m-3">
           <div className="flex items-center mb-4 ">
             {users.map((user) => (
@@ -76,7 +100,7 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
                 />
                 <div className="font-medium dark:text-white">
                   <p className="text-black">
-                    {user.username}
+                    {user.full_name}
                     <time
                       dateTime="2014-08-16 19:00"
                       className="block text-sm text-gray-500 dark:text-gray-400"
@@ -90,12 +114,12 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
           </div>
 
           <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse ">
-            <Stars rating={rating} className="" />
+            <Stars rating={reviews.rating} className="" />
           </div>
         </div>
 
         <p className="mb-2 dark:text-gray-400 text-sm m-3 text-black break-all">
-          {comment}
+          {reviews.comment}
         </p>
         <div className="flex justify-end">
           {(adminObject.admin === 1 || isCommentAuthor) && (

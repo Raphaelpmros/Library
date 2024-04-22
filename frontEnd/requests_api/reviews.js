@@ -3,7 +3,8 @@ import fetchApi from "../axios/api";
 export const allReviews = async (id_books) => {
   try {
     const response = await fetchApi.get(`/reviews/${id_books}`);
-    return response.data;
+    console.log(response.data)
+    return response.data
   } catch (error) {
     throw error;
   }
