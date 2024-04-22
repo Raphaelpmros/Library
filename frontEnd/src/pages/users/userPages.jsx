@@ -57,9 +57,7 @@ export default function Perfil() {
               </p>
             </div>
             <div className="flex justify-center text-white">
-              <p className="mb-3 font-normal text-white">
-                <EditButton/>
-              </p>
+                <EditButton link="/users/update/" id={userData.id}/>
             </div>
           </div>
         </div>

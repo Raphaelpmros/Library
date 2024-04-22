@@ -12,7 +12,7 @@ passport.deserializeUser(users.valid);
 passport.serializeUser(users.valid);
 passport.use('protect', users.tokenValid);
 
-router.patch("/update", login, upload.single("image"), users.update);
+router.patch("/update/:id", login, upload.single("image"), users.update);
 router.post("/new", upload.single("image"), users.new);
 router.post("/login", users.login);
 router.delete("/:id", login, users.delete);

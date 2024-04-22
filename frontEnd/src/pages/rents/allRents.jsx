@@ -68,7 +68,7 @@ export default function allRentsAdmin() {
     // const currentRents = rents.slice(indexOfFirstAuthor, indexOfLastAuthor);
     return (
         <>
-            {userData.admin == 1 ? <div>
+            {userData ? <div>
                 {rents.length == 0 ? (<div>
                     <div className="mt-20 text-xl text-center flex justify-center flex-col" style={{ height: "65vh" }}>
                         <h1 className="text-4xl">Don't have Rents yet</h1>
