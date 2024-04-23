@@ -14,7 +14,6 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
     const fetchUsers = async () => {
       try {
         const response = await allUsers(id_user);
-        console.log("user: ", response)
         const filteredUsers = response.viewUsers.filter(
           (user) => user.id == id_user
         );
@@ -27,11 +26,9 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
     fetchUsers();
   }, [id]);
 
-  const handleDelete = async (e) => {
-    e.preventDefault();
-
+  const handleDelete = async () => {
     try {
-      await deleteReviews(id);
+      await deleteReviews(id, id_books);
       window.location.href = `/books/${id_books}`;
     } catch (error) {
       console.error("Error calling API:", error.message);

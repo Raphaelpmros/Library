@@ -20,6 +20,7 @@ export const newReviews = async (id, formData) => {
 
 export const deleteReviews = async (id, id_books) => {
   try {
+    console.log("rota", id, id_books)
     const response = await fetchApi.delete(`/reviews/${id_books}/${id}`);
     return response.data;
   } catch (error) {

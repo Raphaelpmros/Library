@@ -147,7 +147,7 @@ export default function NewReview() {
           {review.map((reviews) => (
             <ReviewsCard
               key={reviews.id}
-              id={reviews.id_user}
+              id={reviews.id}
               comment={reviews.comment}
               rating={reviews.rating}
               id_books={reviews.id_books}

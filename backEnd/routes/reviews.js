@@ -5,7 +5,7 @@ const login = require("../middleware/login")
 
 router.get("/:id_books", reviews.reviews);
 router.post("/:id_books", reviews.new);
-router.delete("/:id_books/:id", login, reviews.delete);
+router.delete("/:id_books/:id", reviews.delete);
 
 
 module.exports = router;
