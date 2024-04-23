@@ -6,7 +6,7 @@ module.exports.rents = async (req, res) => {
     const viewRents = await Rent.allRents();
     return res.status(200).json({ viewRents });
   } catch (err) {
-    return res.status(500).json({ message: "Erro interno do servidor!" });
+    return res.status(500).json({ message: "Internal server error!" });
   }
 };
 
@@ -14,12 +14,12 @@ module.exports.new = async (req, res) => {
   const { id_books, id_user } = req.body;
 
   if (!id_books || !id_user) {
-    return res.status(422).json({ message: "Preencha todos os campos!" });
+    return res.status(422).json({ message: "Fill all fields!" });
   }
 
   if (!/^[0-9]+$/.test(id_books) || !/^[0-9]+$/.test(id_user)) {
     return res.status(422).json({
-      message: "Os campos de id devem ser números inteiros e válidos!",
+      message: "Id must be valid!",
     });
   }
 
@@ -29,10 +29,10 @@ module.exports.new = async (req, res) => {
 
   try {
     await Rent.createRents(id_books, id_user, pickUpDate, returnDate);
-    return res.status(200).json({ message: "Aluguel realizado com sucesso!" });
+    return res.status(200).json({ message: "Successifully rented!" });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Erro interno do servidor!" });
+    return res.status(500).json({ message: "Internal server error!" });
   }
 };
 
@@ -46,7 +46,7 @@ module.exports.update = async (req, res) => {
       if (rent.error) {
         return res.status(400).json({ message: rent.error });
       } else {
-        return res.status(404).json({ message: "Aluguel não encontrado." });
+        return res.status(404).json({ message: "Rent not found!" });
       }
     }
 
@@ -56,7 +56,7 @@ module.exports.update = async (req, res) => {
     if (returnDate.isSameOrBefore(today, "day")) {
       return res.status(400).json({
         message:
-          "Não é possível renovar o aluguel, pois a data limite de devolução já passou.",
+          "It is not possible to renew the rental as the return deadline has passed.",
       });
     }
 
@@ -64,10 +64,10 @@ module.exports.update = async (req, res) => {
 
     await Rent.updateRents(id, newReturnDate, true);
 
-    return res.status(200).json({ message: "Aluguel renovado com sucesso!" });
+    return res.status(200).json({ message: "Rent renewed with success!" });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Erro interno do servidor!" });
+    return res.status(500).json({ message: "Internal server error!" });
   }
 };
 
@@ -79,12 +79,12 @@ module.exports.delete = async (req, res) => {
     const rentsDelete = await Rent.deleteRents(id, id_books);
 
     if (rentsDelete.affectedRows === 0) {
-      return res.status(404).json({ message: "Aluguel não encontrado." });
+      return res.status(404).json({ message: "Rent not found." });
     }
 
-    res.status(200).json({ message: "Aluguel devolvido com sucesso!" });
+    res.status(200).json({ message: "Successfully returned rent!" });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(500).json({ message: "Internal server error." });
   }
 };

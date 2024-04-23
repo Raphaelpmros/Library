@@ -8,20 +8,27 @@ import Box from "@mui/material/Box";
 import NewReview from "./components/NewReview";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import EditButtonModal from "../../components/Buttons/EditButton";
+import { newRents } from "../../../requests_api/rents";
 import { deleteBooks } from "../../../requests_api/books";
 import { updateBook } from "../../../requests_api/books";
+import RentBook from "../../components/Buttons/RentButton";
 
 export default function OneBook() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const onPageChange = (page) => setCurrentPage(page);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const adminData = localStorage.getItem("user");
-  const adminObject = JSON.parse(adminData);
-  const [review, setReview] = useState([]);
   const { id } = useParams();
   const [book, setBook] = useState({});
   const navigate = useNavigate();
+
+  const handleRent = async () => {
+    try {
+      await newRents(id)
+    } catch (error) {
+      console.error("Error renting Book:", error.message);
+
+    }
+  }
 
   const handleDelete = async () => {
     try {
@@ -74,13 +81,21 @@ export default function OneBook() {
               <h5 className="text-white">Description:</h5>
               <p className="mb-3 font-normal text-white">{book.description}</p>
             </div>
-            <div></div>
-            {userData.admin === "1" && (
-              <div className="flex justify-center pt-5">
-                <DeleteButton deleteFunction={handleDelete} />
-                <EditButtonModal link="/books/update/" id={id} />
+            <div className="flex justify-center">
+              {userData && (
+                <div >
+                  <RentBook rentFunction={handleRent} />
+                </div>
+              )}
               </div>
-            )}
+              <div>
+              {userData.admin === "1" && (
+                <div className="flex justify-center pt-3">
+                  <EditButtonModal link="/books/update/" id={id} />
+                  <DeleteButton deleteFunction={handleDelete} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <NewReview />

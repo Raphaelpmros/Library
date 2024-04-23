@@ -8,7 +8,6 @@ import Home from "./pages/home/home";
 import About from "./pages/about/about";
 import NotFound from "./components/NotFound/NotFound";
 
-import NewRent from "./pages/rents/newRents";
 import AllRents from "./pages/rents/allRents";
 
 import NewUser from "./pages/users/newUsers";
@@ -36,7 +35,6 @@ function App() {
           <Route path="/about" element={<About />} />
 
           <Route path="/rents/" element={<AllRents />} />
-          <Route path="/rents/new" element={<NewRent />} />
 
           <Route path="/users/new" element={<NewUser />} />
           <Route path="/users/update/:id" element={<EditUser />} />
