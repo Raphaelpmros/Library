@@ -25,7 +25,7 @@ export default function NewReview() {
 
   const reloadPage = () => {
     window.location.reload();
-  }
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -72,7 +72,6 @@ export default function NewReview() {
 
         const reviewResponse = await allReviews(id);
         setReview(reviewResponse);
-        // setTotalPages(Math.ceil(reviewResponse.length / 3));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -85,9 +84,9 @@ export default function NewReview() {
     setCurrentPage(page);
   };
 
-//   const indexOfLastAuthor = currentPage * 3;
-//   const indexOfFirstAuthor = indexOfLastAuthor - 3;
-//   const currentReview = review.slice(indexOfFirstAuthor, indexOfLastAuthor);
+  //   const indexOfLastAuthor = currentPage * 3;
+  //   const indexOfFirstAuthor = indexOfLastAuthor - 3;
+  //   const currentReview = review.slice(indexOfFirstAuthor, indexOfLastAuthor);
 
   return (
     <div className="flex justify-center mt-5">
@@ -145,16 +144,17 @@ export default function NewReview() {
             </div>
           </form>
 
-          {/* {currentReview.map((review) => (
-            <Review
-              key={review.id}
-              id={review.user_id}
-              comment={review.comment}
-              rating={review.rating}
-              id_books={review.id_books}
-              idReview={review.id}
+          {review.map((reviews) => (
+            <ReviewsCard
+              key={reviews.id}
+              id={reviews.id_user}
+              comment={reviews.comment}
+              rating={reviews.rating}
+              id_books={reviews.id_books}
+              idReview={reviews.id}
+              id_user={reviews.id_user}
             />
-          ))} */}
+          ))}
 
           {/* {totalPages !== 1 && (
             <div className="flex justify-center mt-4">
@@ -170,7 +170,6 @@ export default function NewReview() {
             </div>
           )} */}
         </div>
-        <ReviewsCard/>
       </div>
     </div>
   );

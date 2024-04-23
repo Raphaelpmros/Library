@@ -1,5 +1,5 @@
 import { allReviews, deleteReviews } from "../../../../requests_api/reviews";
-import { findUser } from "../../../../requests_api/users";
+import { allUsers, findUser } from "../../../../requests_api/users";
 import React, { useEffect, useState } from "react";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
 
@@ -9,14 +9,15 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
   const [users, setUsers] = useState([]);
   const [reviews, setReviews] = useState([])
 
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await findUser(id);
-        const filteredUsers = response.findUser.filter(
-          (user) => user.id === id
+        const response = await allUsers(id_user);
+        console.log("user: ", response)
+        const filteredUsers = response.viewUsers.filter(
+          (user) => user.id == id_user
         );
-        console.log(filteredUsers)
         setUsers(filteredUsers);
       } catch (error) {
         console.error("Error finding user:", error);
@@ -26,34 +27,12 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
     fetchUsers();
   }, [id]);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await allReviews(id_books);
-        console.log("renderizando", response)
-        if (
-          response &&
-          response.allReviews &&
-          Array.isArray(response.allReviews)
-        ) {
-          setReviews(response.allReviews.data);
-        } else {
-          console.error("Error: Invalid data format received");
-        }
-      } catch (error) {
-        console.error("Error searching for reviews:", error);
-      }
-    };
-
-    fetchReviews();
-  }, [id_books]);
-
   const handleDelete = async (e) => {
     e.preventDefault();
 
     try {
       await deleteReviews(id);
-      window.location.href = `/Books/${id_books}`;
+      window.location.href = `/books/${id_books}`;
     } catch (error) {
       console.error("Error calling API:", error.message);
     }
@@ -95,7 +74,7 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
               <React.Fragment key={user.id}>
                 <img
                   className="w-10 h-10 me-4 rounded-full"
-                  src={user.img}
+                  src={user.image}
                   alt=""
                 />
                 <div className="font-medium dark:text-white">
@@ -114,12 +93,13 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
           </div>
 
           <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse ">
-            <Stars rating={reviews.rating} className="" />
+            <Stars rating={rating} className="" />
           </div>
         </div>
 
+
         <p className="mb-2 dark:text-gray-400 text-sm m-3 text-black break-all">
-          {reviews.comment}
+          {comment}
         </p>
         <div className="flex justify-end">
           {(adminObject.admin === 1 || isCommentAuthor) && (
