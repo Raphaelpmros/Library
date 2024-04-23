@@ -20,15 +20,12 @@ export default function OneBook() {
   const { id } = useParams();
   const [book, setBook] = useState({});
   const navigate = useNavigate();
+  const [rent, setRent] = useState({
+    id_book: "",
+    id_user: ""
+  });
 
-  const handleRent = async () => {
-    try {
-      await newRents(id)
-    } catch (error) {
-      console.error("Error renting Book:", error.message);
-
-    }
-  }
+  console.log(rent)
 
   const handleDelete = async () => {
     try {
@@ -44,13 +41,17 @@ export default function OneBook() {
       try {
         const response = await findBooks(id);
         setBook(response[0]);
+        setRent((prevRent) => ({
+          ...prevRent,
+          id_book: id
+        }))
       } catch (error) {
-        console.error("Error search book:", error);
+        console.error("Error searching for book:", error);
       }
     };
 
     fetchBooks();
-  }, []);
+  }, [id]);
 
   const [userData, setUserData] = useState("");
 
@@ -59,8 +60,21 @@ export default function OneBook() {
     if (userDataFromStorage) {
       const parsedUserData = JSON.parse(userDataFromStorage);
       setUserData(parsedUserData);
+      setRent((prevRent) => ({
+        ...prevRent,
+        id_user: parsedUserData.id
+      }));
     }
   }, []);
+
+  const handleRent = async () => {
+    try {
+      await newRents(rent.id_book, rent.id_user)
+    } catch (error) {
+      console.error("Error renting Book:", error.message);
+
+    }
+  }
 
   return (
     <>
