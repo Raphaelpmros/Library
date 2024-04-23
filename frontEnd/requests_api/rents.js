@@ -11,7 +11,7 @@ export const allRents = async () => {
 
 export const newRents = async (rent) => {
   try {
-    const response = await fetchApi.post(`/rents/new`, rent);
+    const response = await fetchApi.post(`/rents/new`, rent.id_book, rent.id_user);
     return response.data;
   } catch (error) {
     throw error;
