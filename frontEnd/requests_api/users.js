@@ -43,9 +43,10 @@ export const loginUser = async (formData) => {
   }
 };
 
-export const updateUsers = async (id, users, config) => {
+export const updateUsers = async (id, formData) => {
   try {
-    const response = await fetchApi.post(`/users`, id, users, config);
+    const response = await fetchApi.patch(`/users/update/${id}`, formData);
+    console.log(response)
     return response.data;
   } catch (error) {
     throw error;

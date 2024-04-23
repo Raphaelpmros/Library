@@ -8,6 +8,7 @@ export default function Perfil() {
 
   useEffect(() => {
     const userDataFromStorage = localStorage.getItem("user");
+    console.log(userDataFromStorage)
     if (userDataFromStorage) {
       const parsedUserData = JSON.parse(userDataFromStorage);
       setUserData(parsedUserData);
@@ -19,7 +20,7 @@ export default function Perfil() {
       <div className="flex justify-center p-5">
         <div
           className="max-w-sm bg-gray-800 border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-          style={{ width: "20rem" }}
+          style={{ width: "25rem" }}
         >
           <div className="flex justify-center" style={{ height: "25rem" }}>
             {" "}

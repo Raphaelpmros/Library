@@ -77,7 +77,7 @@ const Register = () => {
       await newUsers(formDataObject);
 
       notifySucess();
-      navigate("/login");
+      navigate("users/login");
     } catch (error) {
       notifyFail("Email already exists");
       console.error("Error calling API:", error.message);

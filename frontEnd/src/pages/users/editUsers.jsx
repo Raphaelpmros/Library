@@ -1,14 +1,18 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { findUser, updateUsers } from "../../../requests_api/users";
-import { viewAuthors } from "../../../requests_api/authors";
-import { viewCategories } from "../../../requests_api/categories";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import IconButton from "@mui/material/IconButton";
 
 export default function EditUser() {
   const { id } = useParams();
-  const [categories, setCategories] = useState([]);
-  const [authors, setAuthors] = useState([]);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [imageUrl, setImageUrl] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const [formData, setFormData] = useState({
     full_name: "",
     image: "",
@@ -16,8 +20,37 @@ export default function EditUser() {
     additional_address_details: "",
     phone: "",
     password: "",
+    passwordConfirm: "",
   });
+
   const navigate = useNavigate();
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageUrl(file);
+    }
+  };
+
+  const formChange = (e) => {
+    if (e.target.id === "passwordConfirm") {
+      setPasswordConfirm(e.target.value);
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const containsNumber = (password) => {
+    const numbers = password.match(/\d/g);
+    return numbers ? numbers.length : 0;
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,12 +65,39 @@ export default function EditUser() {
     fetchUsers();
   }, [id]);
 
+  function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      !containsNumber(formData.password) ||
+      formData.password.length < 5
+    ) {
+      notifyFail("The password is very weak. Try a more complex password.");
+      return;
+    }
+
     try {
+      const formDataObject = new FormData();
+      formDataObject.append("full_name", formData.full_name);
+      formDataObject.append("username", formData.username);
+      formDataObject.append("password", formData.password);
+      formDataObject.append("description", formData.description);
+      formDataObject.append("img", imageUrl);
+
+      if (formData.password !== passwordConfirm) {
+        notifyFail("Passwords do not match");
+        return;
+      }
+
       await updateUsers(id, formData);
-      navigate("/users");
+      navigate("users/login");
       notifySuccess();
+      logout();
     } catch (error) {
       console.error("Error calling API:", error.message);
       notifyFail();
@@ -77,9 +137,7 @@ export default function EditUser() {
               type="text"
               id="full_name"
               name="full_name"
-              onChange={(e) =>
-                setFormData({ ...formData, full_name: e.target.value })
-              }
+              onChange={formChange}
               value={formData.full_name}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="The hobbit"
@@ -97,9 +155,7 @@ export default function EditUser() {
               type="text"
               id="full_address"
               name="full_address"
-              onChange={(e) =>
-                setFormData({ ...formData, full_address: e.target.value })
-              }
+              onChange={formChange}
               value={formData.full_address}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Address"
@@ -117,12 +173,7 @@ export default function EditUser() {
               type="text"
               id="additional_address_details"
               name="additional_address_details"
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  additional_address_details: e.target.value,
-                })
-              }
+              onChange={formChange}
               value={formData.additional_address_details}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Address details"
@@ -137,18 +188,109 @@ export default function EditUser() {
               Edit phone number
             </label>
             <input
-              type="number"
+              type="text"
               id="phone"
               name="phone"
-              onChange={(e) =>
-                setFormData({ ...formData, phone: e.target.value })
-              }
+              onChange={formChange}
               value={formData.phone}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="phone"
               required
             />
           </div>
+
+          <div className="">
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-medium text-white dark:text-white"
+            >
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                onChange={formChange}
+                placeholder="••••••••"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                required
+              />
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+                tabIndex={-1}
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  right: "10px",
+                  transform: "translateY(-50%)",
+                }}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </div>
+          </div>
+
+          <div className="">
+            <label
+              htmlFor="passwordConfirm"
+              className="block mb-2 text-sm font-medium text-white dark:text-white"
+            >
+              Type your password again
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="passwordConfirm"
+                onChange={formChange}
+                placeholder="••••••••"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                required
+              />
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+                tabIndex={-1}
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  right: "10px",
+                  transform: "translateY(-50%)",
+                }}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </div>
+          </div>
+
+          <div className="text-sm	bg-gray-200 rounded-lg drop-shadow-lg">
+            <h1 className="text-black text-center text-lg">
+              Password validation:
+            </h1>
+            {formData.password.length < 8 ? (
+              <p className="text-red-500 p-2">
+                Password must contain 8 character
+              </p>
+            ) : (
+              <p className="text-green-500 p-2">
+                Password must contain 5 character
+              </p>
+            )}
+            {containsNumber(formData.password) < 2 ? (
+              <p className="text-red-500 p-2">
+                Password must contain at least 2 numbers
+              </p>
+            ) : (
+              <p className="text-green-500 p-2">
+                Password contains at least 2 numbers
+              </p>
+            )}
+          </div>
+
           <div className="col-span-2">
             <label
               className="block mb-2 text-sm font-medium text-white dark:text-white"
@@ -160,9 +302,7 @@ export default function EditUser() {
               className="block w-full text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               id="file_input"
               type="file"
-              onChange={(e) =>
-                setFormData({ ...formData, image: e.target.value })
-              }
+              onChange={formChange}
             />
           </div>
 
