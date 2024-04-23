@@ -23,6 +23,10 @@ export default function NewReview() {
     id_books: id,
   });
 
+  const reloadPage = () => {
+    window.location.reload();
+  }
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -48,7 +52,7 @@ export default function NewReview() {
         position: "bottom-right",
         autoClose: 1000,
         onClose: () => {
-          window.location.href = `/Books/${id}`;
+          window.location.href = `/books/${id}`;
         },
       });
     } catch (error) {
@@ -133,6 +137,7 @@ export default function NewReview() {
                   type="submit"
                   className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-green-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-green-800 w-full"
                   disabled={isSubmitting}
+                  onClick={reloadPage}
                 >
                   <p className="mx-auto">Post comment</p>
                 </button>
