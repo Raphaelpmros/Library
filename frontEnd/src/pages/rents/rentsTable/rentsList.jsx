@@ -21,29 +21,11 @@ export default function RentsList({
   const handleDelete = async () => {
     try {
       await deleteRents(id);
-      navigate(`/rents`);
+      navigate(`/books`);
       notifySuccess();
     } catch (error) {
       console.error("Error deleting Book:", error.message);
       notifyFail(`/rents/${id}`);
-    }
-  };
-
-  const deleteRents = async (e) => {
-    e.preventDefault();
-
-    if (isSubmitting) {
-      return;
-    }
-
-    try {
-      await deleteRents(id);
-
-      
-    } catch (error) {
-      console.error("Error calling API:", error.message);
-      setIsSubmitting(true);
-      
     }
   };
 
