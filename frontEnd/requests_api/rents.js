@@ -31,7 +31,7 @@ export const newRents = async (rentData) => {
 
 export const updateRents = async (id, rents, renewed) => {
   try {
-    const response = await fetchApi.patch(`/rents/update/`, id, rents, renewed);
+    const response = await fetchApi.patch(`/rents/update/${id}`, rents, renewed);
     return response.data;
   } catch (error) {
     throw error;

@@ -9,12 +9,22 @@ export default function EditRent() {
 
   const [book, setBook] = useState({ full_name: "" });
   const [rent, setRent] = useState({ returns_date: "" });
+  const [nextWeek, setNextWeek] = useState({new_date: ""})
 
   const User = localStorage.getItem("user");
   const userData = JSON.parse(User);
 
   const navigate = useNavigate();
   const { id } = useParams();
+
+  useEffect(() => {
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(nextWeek.getDate() + 7);
+
+    const formattedDate = nextWeek.toISOString().slice(0, 10);
+    setNextWeek({ new_date: formattedDate });
+  }, []); // Executa uma vez ao montar o componente
 
   useEffect(() => {
     const fetchRent = async () => {
@@ -103,9 +113,10 @@ export default function EditRent() {
                 return date
               </label>
               <input
+                disabled
                 type="date"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-text  "
-                value={rent.returns_date.slice(0, 10)}
+                value={nextWeek.new_date.slice(0, 10)}
                 onChange={(e) => setRent({ ...rent, returns_date: e.target.value })}
                 id="pointer"
               />
