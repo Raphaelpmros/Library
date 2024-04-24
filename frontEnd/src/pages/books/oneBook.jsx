@@ -21,11 +21,9 @@ export default function OneBook() {
   const [book, setBook] = useState({});
   const navigate = useNavigate();
   const [rent, setRent] = useState({
-    id_book: "",
+    id_books: "",
     id_user: ""
   });
-
-  console.log(rent)
 
   const handleDelete = async () => {
     try {
@@ -43,7 +41,7 @@ export default function OneBook() {
         setBook(response[0]);
         setRent((prevRent) => ({
           ...prevRent,
-          id_book: id
+          id_books: id
         }))
       } catch (error) {
         console.error("Error searching for book:", error);
@@ -69,12 +67,17 @@ export default function OneBook() {
 
   const handleRent = async () => {
     try {
-      await newRents(rent.id_book, rent.id_user)
+      const rentData = {
+      ...rent,
+        id_books: parseInt(rent.id_books),
+        id_user: parseInt(rent.id_user),
+      };
+  
+      await newRents(rentData);
     } catch (error) {
       console.error("Error renting Book:", error.message);
-
     }
-  }
+  };
 
   return (
     <>

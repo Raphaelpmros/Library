@@ -11,8 +11,8 @@ module.exports.rents = async (req, res) => {
 };
 
 module.exports.new = async (req, res) => {
-  const { id_user } = req.body;
-  const { id_books } = req.params
+  const { id_user, id_books } = req.body;
+  // const {  } = req.params
 
   if (!id_books || !id_user) {
     return res.status(422).json({ message: "Fill all fields!" });

@@ -9,11 +9,13 @@ export const allRents = async () => {
   }
 };
 
-export const newRents = async (rent) => {
+export const newRents = async (rentData) => {
+  console.log(rentData)
   try {
-    const response = await fetchApi.post(`/rents/new`, rent.id_book, rent.id_user);
+    const response = await fetchApi.post(`/rents/new`, rentData);
     return response.data;
   } catch (error) {
+    console.log("deu erro: ", error)
     throw error;
   }
 };

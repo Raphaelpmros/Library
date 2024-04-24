@@ -132,11 +132,11 @@ export default function allRentsAdmin() {
         </div>
       ) : (
         <div
-          className="mt-20 text-xl text-center flex justify-center flex-col"
+          className="pt-5 text-xl text-center flex justify-center flex-col"
           style={{ height: "65vh" }}
         >
           <h1 className="text-4xl">
-            You don't have Permission for enter this page ✋
+            Only admins can access this page
           </h1>
         </div>
       )}
