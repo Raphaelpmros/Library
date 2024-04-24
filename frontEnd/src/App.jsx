@@ -9,6 +9,7 @@ import About from "./pages/about/about";
 import NotFound from "./components/NotFound/NotFound";
 
 import AllRents from "./pages/rents/allRents";
+import EditRent from "./pages/rents/editRents";
 
 import NewUser from "./pages/users/newUsers";
 import EditUser from "./pages/users/editUsers";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/about" element={<About />} />
 
           <Route path="/rents/" element={<AllRents />} />
+          <Route path="/rents/update/:id" element={<EditRent/>} />
 
           <Route path="/users/new" element={<NewUser />} />
           <Route path="/users/update/:id" element={<EditUser />} />

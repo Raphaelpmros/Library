@@ -41,10 +41,10 @@ function allRents() {
   });
 }
 
-function findRents(id_books) {
+function findRents(id) {
   return new Promise((resolve, reject) => {
-    const find = "SELECT * FROM reviews WHERE id_books=?";
-    con.query(find, [id_books], (err, result) => {
+    const find = "SELECT * FROM rents WHERE id=?";
+    con.query(find, [id], (err, result) => {
       if (err) {
         return reject(err);
       }
@@ -85,13 +85,13 @@ function updateRents(id, returns_date, renewed) {
       }
 
       if (result.length === 0) {
-        return reject("Aluguel não encontrado.");
+        return reject("Rent not found.");
       }
 
       if (result[0].renewed === 1) {
         return resolve({
           error:
-            "Não é possível renovar o aluguel, pois ele já foi renovado anteriormente.",
+            "Can't renew the data again",
         });
       }
 
@@ -118,7 +118,7 @@ function deleteRents(id) {
       }
 
       if (result.length === 0) {
-        return reject("Aluguel não encontrado.");
+        return reject("Rent not found.");
       }
 
       const { id_books } = result[0];

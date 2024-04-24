@@ -12,7 +12,6 @@ export default function allRentsAdmin() {
   const User = localStorage.getItem("user");
   const [books, setBooks] = useState([]);
   const [rents, setRents] = useState([]);
-  console.log(rents);
   const [user, setUser] = useState([]);
   const userData = JSON.parse(User);
 
@@ -22,11 +21,13 @@ export default function allRentsAdmin() {
     const fetchRents = async () => {
       try {
         const response = await allRents();
-        if (response && response.viewRents && Array.isArray(response.viewRents)) {
-          // Extract the array of rents from the response
+        if (
+          response &&
+          response.viewRents &&
+          Array.isArray(response.viewRents)
+        ) {
           const rentsArray = response.viewRents;
           setRents(rentsArray);
-          // Calculate totalPages here if needed
           // setTotalPages(Math.ceil(rentsArray.length / 5));
         } else {
           console.error("Invalid response format from allRents():", response);
@@ -35,28 +36,28 @@ export default function allRentsAdmin() {
         console.error("Error fetching rents:", error);
       }
     };
-  
+
     fetchRents();
   }, []);
 
   useEffect(() => {
-    const fetchRents = async () => {
+    const fetchUser = async () => {
       try {
         const response = await allUsers();
-        setUser(response);
+        setUser(response.viewUsers);
       } catch (error) {
         console.error("Erro search users:", error);
       }
     };
 
-    fetchRents();
+    fetchUser();
   }, []);
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const response = await viewBooks();
-        setBooks(response);
+        setBooks(response.viewBooks);
       } catch (error) {
         console.error("Erro search book:", error);
       }
@@ -65,7 +66,7 @@ export default function allRentsAdmin() {
     fetchBooks();
   }, []);
 
-  function getStandardFormattedDateTime(dateTimeString) {
+  function formatDateTime(dateTimeString) {
     const datePart = dateTimeString.split("T")[0];
     return datePart.split("-").reverse().join("-");
   }
@@ -89,26 +90,26 @@ export default function allRentsAdmin() {
             </div>
           ) : (
             <div>
-              <div className="flex items-center justify-center mt-20">
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <div className="flex items-center justify-center pt-5">
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                  <table className="w-full text-sm text-left rtl:text-right text-white">
                     <RentsHead />
                     {rents.map((rent) => (
                       <RentsList
                         key={rent.id}
-                        pick_up_date={getStandardFormattedDateTime(
+                        pick_up_date={formatDateTime(
                           rent.pick_up_date
                         )}
-                        returns_date={getStandardFormattedDateTime(
+                        returns_date={formatDateTime(
                           rent.returns_date
                         )}
                         id_user={
                           user.find((user) => user.id === rent.id_user)
-                            ?.username || "N/A"
+                            ?.full_name || "N/A"
                         }
                         id_books={
                           books.find((book) => book.id === rent.id_books)
-                            ?.title || "N/A"
+                            ?.full_name || "N/A"
                         }
                         id={rent.id}
                       />
@@ -116,7 +117,7 @@ export default function allRentsAdmin() {
                   </table>
                 </div>
               </div>
-              <div className="flex justify-center mt-4">
+              {/* <div className="flex justify-center mt-4">
                 <Pagination
                   layout="pagination"
                   currentPage={currentPage}
@@ -126,7 +127,7 @@ export default function allRentsAdmin() {
                   nextLabel="Next"
                   showIcons
                 />
-              </div>
+              </div> */}
             </div>
           )}
         </div>
@@ -135,9 +136,7 @@ export default function allRentsAdmin() {
           className="pt-5 text-xl text-center flex justify-center flex-col"
           style={{ height: "65vh" }}
         >
-          <h1 className="text-4xl">
-            Only admins can access this page
-          </h1>
+          <h1 className="text-4xl">Only admins can access this page</h1>
         </div>
       )}
     </>

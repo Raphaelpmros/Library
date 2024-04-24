@@ -9,6 +9,15 @@ export const allRents = async () => {
   }
 };
 
+export const findRents = async (id) => {
+  try {
+    const response = await fetchApi.get(`/rents/${id}`)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const newRents = async (rentData) => {
   console.log(rentData)
   try {
@@ -20,9 +29,9 @@ export const newRents = async (rentData) => {
   }
 };
 
-export const updateRents = async (id, rents, config) => {
+export const updateRents = async (id, rents, renewed) => {
   try {
-    const response = await fetchApi.post(`/rents`, id, rents, config);
+    const response = await fetchApi.patch(`/rents/update/`, id, rents, renewed);
     return response.data;
   } catch (error) {
     throw error;

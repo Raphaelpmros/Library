@@ -10,6 +10,25 @@ module.exports.rents = async (req, res) => {
   }
 };
 
+module.exports.findRents = async (req, res) => {
+  const { id } = req.params;
+
+  if (!/^[1-9]\d*$/.test(id)) {
+    res
+      .status(400)
+      .json({ message: "Invalid Id!" });
+    return;
+  }
+
+  try {
+    const findRents = await Rent.findRents(id);
+    return res.status(200).json( findRents );
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports.new = async (req, res) => {
   const { id_user, id_books } = req.body;
   // const {  } = req.params
