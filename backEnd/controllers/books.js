@@ -46,9 +46,13 @@ module.exports.new = async (req, res) => {
     
     let image;
 
+
     if (req.file && req.file.path) {
+      console.log(req.file)
+      console.log(req.file.path)  
       image = req.file.path;
     } else {
+      console.log("a imagem não ta batendo aqui no req.file")
       image = process.env.DEFAULT_BOOK_IMAGE;
     }
     

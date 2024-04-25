@@ -15,7 +15,7 @@ passport.use('protect', users.tokenValid);
 router.patch("/update/:id", upload.single("image"), users.update);
 router.post("/new", upload.single("image"), users.new);
 router.post("/login", users.login);
-router.delete("/:id", login, users.delete);
+router.delete("/:id", users.delete);
 router.get("/", users.users);
 router.get("/:id", users.findUser)
 

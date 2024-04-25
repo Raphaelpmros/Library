@@ -90,7 +90,7 @@ export default function modal() {
 
   const handleCloseModalAndNavigate = () => {
     onCloseModal();
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleSubmit = async (e) => {

@@ -1,8 +1,6 @@
-const LocalStrategy = require("passport-local").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 const JWTstrategy = require("passport-jwt").Strategy;
 const User = require("../models/User");
-const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const secreteKey = process.env.JWT_KEY;
@@ -44,8 +42,11 @@ module.exports.new = async (req, res) => {
   } = req.body;
 
   let image;
+  
 
   if (req.file && req.file.path) {
+    console.log(req.file)
+    console.log(req.file.path)
     image = req.file.path;
   } else {
     image = process.env.DEFAULT_USER_IMAGE;
