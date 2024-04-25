@@ -44,7 +44,7 @@ function App() {
           <Route path="/users/login" element={<LoginUser />} />
 
           <Route path="/books/:id" element={<OneBook />} />
-          <Route path="/Books" element={<AllBooks />} />
+          <Route path="/books" element={<AllBooks />} />
           <Route path="/books/update/:id" element={<EditBooks />} />
 
           <Route path="/authors" element={<AllAuthors />} />

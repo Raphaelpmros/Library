@@ -42,11 +42,10 @@ module.exports.new = async (req, res) => {
   } = req.body;
 
   let image;
+  console.log(req.file)
   
 
   if (req.file && req.file.path) {
-    console.log(req.file)
-    console.log(req.file.path)
     image = req.file.path;
   } else {
     image = process.env.DEFAULT_USER_IMAGE;

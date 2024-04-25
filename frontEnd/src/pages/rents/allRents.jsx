@@ -15,6 +15,8 @@ export default function allRentsAdmin() {
   const [user, setUser] = useState([]);
   const userData = JSON.parse(User);
 
+  console.log(rents)
+
   const onPageChange = (page) => setCurrentPage(page);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function allRentsAdmin() {
         ) {
           const rentsArray = response.viewRents;
           setRents(rentsArray);
-          // setTotalPages(Math.ceil(rentsArray.length / 5));
+          setTotalPages(Math.ceil(rentsArray.length / 5));
         } else {
           console.error("Invalid response format from allRents():", response);
         }
@@ -71,12 +73,12 @@ export default function allRentsAdmin() {
     return datePart.split("-").reverse().join("-");
   }
 
-  // const indexOfLastAuthor = currentPage * 5;
-  // const indexOfFirstAuthor = indexOfLastAuthor - 5;
-  // const currentRents = rents.slice(indexOfFirstAuthor, indexOfLastAuthor);
+  const indexOfLastAuthor = currentPage * 5;
+  const indexOfFirstAuthor = indexOfLastAuthor - 5;
+  const currentRents = rents.slice(indexOfFirstAuthor, indexOfLastAuthor);
   return (
     <>
-      {userData.admin == 1 ? (
+      {userData && userData.admin == 1 ? (
         <div>
           {rents.length == 0 ? (
             <div>
@@ -94,15 +96,11 @@ export default function allRentsAdmin() {
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                   <table className="w-full text-sm text-left rtl:text-right text-white">
                     <RentsHead />
-                    {rents.map((rent) => (
+                    {currentRents.map((rent) => (
                       <RentsList
                         key={rent.id}
-                        pick_up_date={formatDateTime(
-                          rent.pick_up_date
-                        )}
-                        returns_date={formatDateTime(
-                          rent.returns_date
-                        )}
+                        pick_up_date={formatDateTime(rent.pick_up_date)}
+                        returns_date={formatDateTime(rent.returns_date)}
                         id_user={
                           user.find((user) => user.id === rent.id_user)
                             ?.full_name || "N/A"
@@ -117,7 +115,7 @@ export default function allRentsAdmin() {
                   </table>
                 </div>
               </div>
-              {/* <div className="flex justify-center mt-4">
+              <div className="flex justify-center mt-4">
                 <Pagination
                   layout="pagination"
                   currentPage={currentPage}
@@ -127,7 +125,7 @@ export default function allRentsAdmin() {
                   nextLabel="Next"
                   showIcons
                 />
-              </div> */}
+              </div>
             </div>
           )}
         </div>

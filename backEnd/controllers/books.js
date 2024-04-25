@@ -14,15 +14,13 @@ module.exports.findBooks = async (req, res) => {
   const { id } = req.params;
 
   if (!/^[1-9]\d*$/.test(id)) {
-    res
-      .status(400)
-      .json({ message: "Invalid Id!" });
+    res.status(400).json({ message: "Invalid Id!" });
     return;
   }
 
   try {
     const findBooks = await Book.findBooks(id);
-    return res.status(200).json( findBooks );
+    return res.status(200).json(findBooks);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal server error" });
@@ -32,46 +30,47 @@ module.exports.findBooks = async (req, res) => {
 module.exports.new = async (req, res) => {
   const { full_name, description, quantity, id_authors, id_categories } =
     req.body;
-    
-    
-    if (
-      !full_name ||
-      !description ||
-      !quantity ||
-      !id_authors ||
-      !id_categories
-    ) {
-      return res.status(422).json({ message: "Complete all fields" });
-    }
-    
-    let image;
+
+  let image;
+
+  if (req.file && req.file.path) {
+    image = req.file.path;
+
+  } else {
+    image = process.env.DEFAULT_BOOK_IMAGE;
+  }
+
+  console.log(req.body)
 
 
-    if (req.file && req.file.path) {
-      console.log(req.file)
-      console.log(req.file.path)  
-      image = req.file.path;
-    } else {
-      console.log("a imagem não ta batendo aqui no req.file")
-      image = process.env.DEFAULT_BOOK_IMAGE;
+
+  if (
+    !full_name ||
+    !description ||
+    !quantity ||
+    !id_authors ||
+    !id_categories
+  ) {
+    return res.status(422).json({ message: "Complete all fields" });
+  }
+
+
+  if (
+    !/^[0-9]+$/.test(id_authors) ||
+    !/^[0-9]+$/.test(id_categories) ||
+    !/^[0-9]+$/.test(quantity)
+  ) {
+    return res.status(422).json({
+      message: "The id field and quantity must be valid numbers",
+    });
+  }
+
+  try {
+    const existingBook = await Book.findBooks(full_name);
+    if (existingBook.length >= 1) {
+      return res.status(409).json({ message: "Book already exist!" });
     }
-    
-    if (
-      !/^[0-9]+$/.test(id_authors) ||
-      !/^[0-9]+$/.test(id_categories) ||
-      !/^[0-9]+$/.test(quantity)
-    ) {
-      return res.status(422).json({
-        message: "The id field and quantity must be valid numbers",
-      });
-    }
-    
-    try {
-      const existingBook = await Book.findBooks(full_name);
-      if (existingBook.length >= 1) {
-        return res.status(409).json({ message: "Book already exist!" });
-      }
-      
+
     await Book.createBooks(
       full_name,
       description,

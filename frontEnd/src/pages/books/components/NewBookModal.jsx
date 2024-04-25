@@ -26,8 +26,6 @@ export default function modal() {
     id_categories: "",
   });
 
-  console.log(formData);
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -37,12 +35,8 @@ export default function modal() {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-
     if (file) {
-      setFormData({
-        ...formData,
-        image: file,
-      });
+      setImageUrl(file);
     }
   };
 
@@ -98,6 +92,13 @@ export default function modal() {
 
     try {
       setIsSubmitting(true);
+
+      if (imageUrl) {
+        formData.image = imageUrl
+      } else {
+        formData.image = "";
+      }
+
       await newBook(formData);
 
       notifySucess();
@@ -199,6 +200,7 @@ export default function modal() {
                   <label
                     className="block mb-2 text-sm font-medium text-white dark:text-white"
                     htmlFor="file_input"
+                    
                   >
                     Upload the book's image
                   </label>

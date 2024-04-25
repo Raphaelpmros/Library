@@ -9,8 +9,8 @@ import IconButton from "@mui/material/IconButton";
 export default function EditUser() {
   const { id } = useParams();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const [imageUrl, setImageUrl] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
 
   const [formData, setFormData] = useState({
@@ -23,6 +23,7 @@ export default function EditUser() {
     passwordConfirm: "",
   });
 
+  console.log(imageUrl)
   const navigate = useNavigate();
 
   const handleFileChange = async (e) => {
@@ -73,10 +74,7 @@ export default function EditUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !containsNumber(formData.password) ||
-      formData.password.length < 5
-    ) {
+    if (!containsNumber(formData.password) || formData.password.length < 5) {
       notifyFail("The password is very weak. Try a more complex password.");
       return;
     }
@@ -87,7 +85,7 @@ export default function EditUser() {
       formDataObject.append("username", formData.username);
       formDataObject.append("password", formData.password);
       formDataObject.append("description", formData.description);
-      formDataObject.append("img", imageUrl);
+      formDataObject.append("image", imageUrl);
 
       if (formData.password !== passwordConfirm) {
         notifyFail("Passwords do not match");
@@ -95,7 +93,7 @@ export default function EditUser() {
       }
 
       await updateUsers(id, formData);
-      navigate("users/login");
+      navigate("/");
       notifySuccess();
       logout();
     } catch (error) {
@@ -291,18 +289,18 @@ export default function EditUser() {
             )}
           </div>
 
-          <div className="col-span-2">
+          <div className="">
             <label
               className="block mb-2 text-sm font-medium text-white dark:text-white"
               htmlFor="file_input"
             >
-              Upload the user's image
+              Upload your profile picture
             </label>
             <input
               className="block w-full text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               id="file_input"
               type="file"
-              onChange={formChange}
+              onChange={handleFileChange}
             />
           </div>
 
