@@ -3,7 +3,7 @@ const moment = require("moment");
 
 con.connect((err) => {
   if (err) {
-    console.error("Erro ao conectar-se ao banco de dados:", err.stack);
+    console.error("Fail connecting database:", err.stack);
     return;
   }
 });
@@ -22,11 +22,11 @@ CREATE TABLE IF NOT EXISTS rents(
 
 con.query(createLibraryTableSQL, (err, result) => {
   if (err) {
-    console.error("Erro ao criar tabela rents:", err);
+    console.error("Error creating rent's table:", err);
     return;
   }
 
-  console.log("Tabela rents criada com sucesso.");
+  console.log("rent's table successfuly created.");
 });
 
 function allRents() {

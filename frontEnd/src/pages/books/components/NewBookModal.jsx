@@ -1,9 +1,6 @@
 import { toast } from "react-toastify";
 import "react-responsive-modal/styles.css";
-import { useNavigate } from "react-router-dom";
 import { Modal } from "react-responsive-modal";
-import { Label, Select } from "flowbite-react";
-import IconButton from "@mui/material/IconButton";
 import React, { useState, useEffect } from "react";
 
 import { viewAuthors } from "../../../../requests_api/authors";
@@ -28,6 +25,8 @@ export default function modal() {
     id_authors: "",
     id_categories: "",
   });
+
+  console.log(formData);
 
   const handleChange = (e) => {
     setFormData({
@@ -207,9 +206,7 @@ export default function modal() {
                     className="block w-full text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     id="file_input"
                     type="file"
-                    onChange={(e) =>
-                      setFormData({ ...formData, image: e.target.value })
-                    }
+                    onChange={handleFileChange}
                   />
                 </div>
                 <div className="col-span-2">

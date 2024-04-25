@@ -2,7 +2,7 @@ const con = require("../database/db");
 
 con.connect(function (err) {
   if (err) {
-    console.error("Erro ao conectar ao banco de dados:", err);
+    console.error("Fail connecting database:", err);
     return;
   }
   
@@ -19,9 +19,9 @@ con.connect(function (err) {
 
   con.query(createLibraryTableSQL, function (err, result) {
     if (err) {
-      console.error("Erro ao criar a tabela:", err);
+      console.error("Error creating review's table:", err);
     } else {
-      console.log("Tabela reviews criada com sucesso");
+      console.log("Review's table successfuly created.");
     }
   });
 });

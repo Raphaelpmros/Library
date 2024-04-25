@@ -17,7 +17,7 @@ module.exports.users = async (req, res) => {
     return res.status(200).json({ viewUsers });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Erro interno do servidor" });
+    return res.status(500).json({ message: "Internal server error!" });
   }
 };
 
@@ -28,7 +28,7 @@ module.exports.findUser = async (req, res) => {
     return res.status(200).json(findUser);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Erro interno do servidor" });
+    return res.status(500).json({ message: "Internal server error!" });
   }
 };
 
@@ -48,19 +48,19 @@ module.exports.new = async (req, res) => {
   if (req.file && req.file.path) {
     image = req.file.path;
   } else {
-    image = process.env.DEFAULT_BOOK_IMAGE;
+    image = process.env.DEFAULT_USER_IMAGE;
   }
 
   try {
     if (!full_name || !email || !cpf || !full_address || !phone || !password) {
       return res
         .status(422)
-        .json({ message: "Preencha todos os dados obrigatórios" });
+        .json({ message: "All the filds must be complete" });
     }
 
     const existingUser = await User.login(email);
     if (existingUser.length >= 1) {
-      return res.status(409).json({ message: "E-mail já cadastrado" });
+      return res.status(409).json({ message: "E-mail already exists" });
     }
 
     await User.createUser(
@@ -74,11 +74,11 @@ module.exports.new = async (req, res) => {
       password
     );
 
-    return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
+    return res.status(201).json({ message: "User created!" });
   } catch (err) {
     console.error(err);
     console.log(password);
-    return res.status(500).json({ message: "Erro ao criar o usuário" });
+    return res.status(500).json({ message: "Fail to create user!" });
   }
 };
 
@@ -95,7 +95,7 @@ module.exports.update = async (req, res) => {
 
   try {
     if (!id) {
-      return res.status(400).json({ message: "Informações incorretas" });
+      return res.status(400).json({ message: "Incorrect info!" });
     }
 
     const result = await User.updateUser(
@@ -109,13 +109,13 @@ module.exports.update = async (req, res) => {
     );
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Usuário não encontrado" });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    return res.status(200).json({ message: "Usuário alterado com sucesso" });
+    return res.status(200).json({ message: "User successifully updated" });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Erro ao editar o usuário" });
+    return res.status(500).json({ message: "Error updating user" });
   }
 };
 
@@ -138,18 +138,18 @@ module.exports.delete = async (req, res) => {
 
   try {
     if (!id) {
-      return res.status(404).json({ message: "Tente novamente" });
+      return res.status(404).json({ message: "Error, try again" });
     }
 
     const userDelete = await User.deleteUser(id);
     if (userDelete.affectedRows === 0) {
-      return res.status(404).json({ message: "Este usuário não existe!" });
+      return res.status(404).json({ message: "User not found!" });
     }
 
-    return res.status(200).json({ message: "Usuário excluido com sucesso!" });
+    return res.status(200).json({ message: "User deleted!" });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Erro ao tentar excluir!" });
+    return res.status(500).json({ message: "Error deleting user!" });
   }
 };
 
@@ -160,7 +160,7 @@ module.exports.login = async (req, res) => {
     const login = await User.login(email);
     const crypt = await bcrypt.compare(password, login[0].password);
     if (!crypt) {
-      return res.status(500).json({ message: "Senha errada" });
+      return res.status(500).json({ message: "Wrong user or password" });
     }
     const dateUser = await User.findUser(login[0].id);
     const body = { id: login[0].id, email: login[0].email };
@@ -168,6 +168,6 @@ module.exports.login = async (req, res) => {
     return res.json({ dateUser, token });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Erro ao tentar logar!" });
+    return res.status(500).json({ message: "Wrong user or password" });
   }
 };

@@ -47,7 +47,7 @@ export default function AllBooks() {
 
       {books.length === 0 && (
         <div
-          className="mt-20 text-xl text-center flex justify-center flex-col"
+          className="pt-5 text-xl text-center flex justify-center flex-col"
           style={{ height: "60vh" }}
         >
           <h1 className="text-4xl">We don't have any books yet</h1>

@@ -33,7 +33,6 @@ module.exports.new = async (req, res) => {
   const { full_name, description, quantity, id_authors, id_categories } =
     req.body;
     
-    let image;
     
     if (
       !full_name ||
@@ -45,6 +44,8 @@ module.exports.new = async (req, res) => {
       return res.status(422).json({ message: "Complete all fields" });
     }
     
+    let image;
+
     if (req.file && req.file.path) {
       image = req.file.path;
     } else {

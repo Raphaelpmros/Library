@@ -2,7 +2,7 @@ const con = require("../database/db");
 
 con.connect((err) => {
   if (err) {
-    console.error("Erro ao conectar-se ao banco de dados:", err.stack);
+    console.error("Fail connecting database:", err.stack);
     return;
   }
 });
@@ -15,11 +15,11 @@ CREATE TABLE IF NOT EXISTS categories(
 
 con.query(createLibraryTableSQL, (err, result) => {
   if (err) {
-    console.error("Erro ao criar tabela categories:", err);
+    console.error("Error creating category's table:", err);
     return;
   }
 
-  console.log("Tabela categories criada com sucesso.");
+  console.log("Category's table successfuly created.");
 });
 
 function allCategories() {
