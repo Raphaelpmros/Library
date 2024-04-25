@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import NewBookModal from "./components/NewBookModal";
 import ViewBooksComponents from "./components/ViewBooksComponent";
 import { viewBooks } from "../../../requests_api/books";
+import { Pagination } from "flowbite-react";
 
 export default function AllBooks() {
   const [books, setBooks] = useState([]);
+  const onPageChange = (page) => setCurrentPage(page);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -15,7 +19,9 @@ export default function AllBooks() {
           response.viewBooks &&
           Array.isArray(response.viewBooks)
         ) {
+          const booksArray = response.viewBooks;
           setBooks(response.viewBooks);
+          setTotalPages(Math.ceil(booksArray.length / 12));
         } else {
           console.error("Error: Invalid data format received");
         }
@@ -37,6 +43,10 @@ export default function AllBooks() {
     }
   }, []);
 
+  const indexOfLastBook = currentPage * 12;
+  const indexOfFirstBook = indexOfLastBook - 12;
+  const currentBook = books.slice(indexOfFirstBook, indexOfLastBook);
+
   return (
     <>
       {userData.admin === "1" && (
@@ -55,7 +65,7 @@ export default function AllBooks() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center p-5">
-        {books.map((book) => (
+        {currentBook.map((book) => (
           <ViewBooksComponents
             key={book.id}
             id={book.id}
@@ -64,6 +74,17 @@ export default function AllBooks() {
             image={book.image}
           />
         ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        <Pagination
+          layout="pagination"
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          previousLabel="Back"
+          nextLabel="Next"
+          showIcons
+        />
       </div>
     </>
   );

@@ -73,9 +73,9 @@ export default function allRentsAdmin() {
     return datePart.split("-").reverse().join("-");
   }
 
-  const indexOfLastAuthor = currentPage * 5;
-  const indexOfFirstAuthor = indexOfLastAuthor - 5;
-  const currentRents = rents.slice(indexOfFirstAuthor, indexOfLastAuthor);
+  const indexOfLastRent = currentPage * 5;
+  const indexOfFirstRent = indexOfLastRent - 5;
+  const currentRents = rents.slice(indexOfFirstRent, indexOfLastRent);
   return (
     <>
       {userData && userData.admin == 1 ? (
