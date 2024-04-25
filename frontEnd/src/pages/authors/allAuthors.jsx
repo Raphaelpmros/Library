@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import NewAuthorModal from "./components/NewAuthorModal";
 import ViewAuthorsComponent from "./components/ViewAuthorsComponent";
 import { viewAuthors } from "../../../requests_api/authors";
+import { Pagination } from "flowbite-react";
 
 export default function AllAuthors() {
   const [authors, setAuthors] = useState([]);
+  const onPageChange = (page) => setCurrentPage(page);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchAuthors = async () => {
@@ -15,7 +19,9 @@ export default function AllAuthors() {
           response.viewAuthors &&
           Array.isArray(response.viewAuthors)
         ) {
+          const authorsArray = response.viewAuthors;
           setAuthors(response.viewAuthors);
+          setTotalPages(Math.ceil(authorsArray.length / 12));
         } else {
           console.error("Error: Invalid data format received");
         }
@@ -37,6 +43,10 @@ export default function AllAuthors() {
     }
   }, []);
 
+  const indexOfLastAuthor = currentPage * 12;
+  const indexOfFirstAuthor = indexOfLastAuthor - 12;
+  const currentAuthor = authors.slice(indexOfFirstAuthor, indexOfLastAuthor);
+
   return (
     <>
       {userData.admin === "1" && (
@@ -55,7 +65,7 @@ export default function AllAuthors() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5 place-items-center">
-        {authors.map((author) => (
+        {currentAuthor.map((author) => (
           <ViewAuthorsComponent
             key={author.id}
             id={author.id}
@@ -63,6 +73,17 @@ export default function AllAuthors() {
             nationality={author.nationality}
           />
         ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        <Pagination
+          layout="pagination"
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          previousLabel="Back"
+          nextLabel="Next"
+          showIcons
+        />
       </div>
     </>
   );
