@@ -93,7 +93,7 @@ export default function OneBook() {
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => window.location.reload()
+      onClose: () => navigate(`/books`)
       });
   };
 

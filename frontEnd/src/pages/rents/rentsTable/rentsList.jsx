@@ -21,32 +21,39 @@ export default function RentsList({
   const handleDelete = async () => {
     try {
       await deleteRents(id);
-      navigate(`/books`);
-      notifySuccess();
+      notifySucess();
     } catch (error) {
       console.error("Error deleting Book:", error.message);
       notifyFail(`/rents/${id}`);
     }
   };
 
-  const notifySuccess = () => {
-    toast.success("Rent returned successfully", {
-      position: "bottom-right",
-      autoClose: 1000,
-      onClose: () => {
-        navigate(0);
-      },
-    });
+  const notifySucess = () => {
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => navigate(`/books`)
+      });
   };
 
-  const notifyFail = (redirectUrl) => {
-    toast.error("Failed to return rent.", {
-      position: "bottom-right",
-      autoClose: 1000,
-      onClose: () => {
-        window.location.href = redirectUrl;
-      },
-    });
+  const notifyFail = () => {
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (

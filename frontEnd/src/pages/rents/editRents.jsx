@@ -55,7 +55,6 @@ export default function EditRent() {
 
       await updateRents(id, rent, renewed);
       notifySucess();
-      navigate(`/rents/`);
     } catch (error) {
       notifyFail("Edit fail");
       console.error("Error updating rent:", error);
@@ -63,17 +62,31 @@ export default function EditRent() {
   };
 
   const notifySucess = () => {
-    toast.success("Succss edit", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => navigate(`/rents/`)
+      });
   };
 
-  const notifyFail = (msg) => {
-    toast.error(msg, {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+  const notifyFail = () => {
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (
