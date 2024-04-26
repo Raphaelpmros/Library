@@ -2,6 +2,7 @@ import { allReviews, deleteReviews } from "../../../../requests_api/reviews";
 import { allUsers, findUser } from "../../../../requests_api/users";
 import React, { useEffect, useState } from "react";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
+import { toast } from "react-toastify";
 
 export default function Review({ comment, rating, id, id_books, id_user }) {
   const adminData = localStorage.getItem("user");
@@ -29,8 +30,9 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
   const handleDelete = async () => {
     try {
       await deleteReviews(id, id_books);
-      window.location.href = `/books/${id_books}`;
+      notifySucess()
     } catch (error) {
+      notifyFail('Something went wrong!')
       console.error("Error calling API:", error.message);
     }
   };
@@ -60,6 +62,34 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
     }
 
     return <div className="flex">{stars}</div>;
+  };
+
+  const notifySucess = () => {
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
+  };
+
+  const notifyFail = () => {
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (

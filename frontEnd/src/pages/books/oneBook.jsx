@@ -29,7 +29,9 @@ export default function OneBook() {
     try {
       await deleteBooks(id);
       navigate(`/books`);
+      notifySucess()
     } catch (error) {
+      notifyFail('Something went wrong!')
       console.error("Error deleting Book:", error.message);
     }
   };
@@ -74,9 +76,39 @@ export default function OneBook() {
       };
   
       await newRents(rentData);
+      notifySucess()
     } catch (error) {
+      notifyFail('Something went wrong!')
       console.error("Error renting Book:", error.message);
     }
+  };
+
+  const notifySucess = () => {
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
+  };
+
+  const notifyFail = () => {
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (

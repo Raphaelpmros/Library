@@ -48,19 +48,8 @@ export default function NewReview() {
     try {
       await newReviews(id, formData);
 
-      toast.success("Comment posted", {
-        position: "bottom-right",
-        autoClose: 1000,
-        onClose: () => {
-          window.location.href = `/books/${id}`;
-        },
-      });
     } catch (error) {
       console.error("Error calling API:", error.message);
-      toast.error(error.message, {
-        position: "bottom-right",
-        autoClose: 1000,
-      });
     }
   };
 
@@ -71,7 +60,9 @@ export default function NewReview() {
         setBooks(bookResponse[0]);
 
         const reviewResponse = await allReviews(id);
+        const reviewsArray = reviewResponse;
         setReview(reviewResponse);
+        setTotalPages(Math.ceil(reviewsArray.length / 3));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -84,9 +75,9 @@ export default function NewReview() {
     setCurrentPage(page);
   };
 
-  //   const indexOfLastAuthor = currentPage * 3;
-  //   const indexOfFirstAuthor = indexOfLastAuthor - 3;
-  //   const currentReview = review.slice(indexOfFirstAuthor, indexOfLastAuthor);
+  const indexOfLastAuthor = currentPage * 3;
+  const indexOfFirstAuthor = indexOfLastAuthor - 3;
+  const currentReview = review.slice(indexOfFirstAuthor, indexOfLastAuthor);
 
   return (
     <div className="flex justify-center mt-5">
@@ -144,7 +135,7 @@ export default function NewReview() {
             </div>
           </form>
 
-          {review.map((reviews) => (
+          {currentReview.map((reviews) => (
             <ReviewsCard
               key={reviews.id}
               id={reviews.id}
@@ -156,7 +147,7 @@ export default function NewReview() {
             />
           ))}
 
-          {/* {totalPages !== 1 && (
+          {totalPages !== 1 && (
             <div className="flex justify-center mt-4">
               <Pagination
                 layout="pagination"
@@ -168,7 +159,7 @@ export default function NewReview() {
                 showIcons
               />
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </div>
