@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import NewReview from "./components/NewReview";
+import React, { useState, useEffect } from "react";
 import { newRents } from "../../../requests_api/rents";
 import { findBooks } from "../../../requests_api/books";
 import { deleteBooks } from "../../../requests_api/books";
@@ -17,6 +17,8 @@ export default function OneBook() {
     id_books: "",
     id_user: ""
   });
+
+  console.log(book)
 
   const handleDelete = async () => {
     try {
@@ -69,7 +71,7 @@ export default function OneBook() {
       };
   
       await newRents(rentData);
-      notifySucess()
+      notifySuccess()
     } catch (error) {
       notifyFail('Something went wrong!')
       console.error("Error renting Book:", error.message);
