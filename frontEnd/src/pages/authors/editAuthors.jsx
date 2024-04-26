@@ -26,26 +26,39 @@ export default function EditAuthor() {
 
     try {
       await updateAuthor(id, formData);
-      navigate("/authors");
-      notifySuccess();
+      notifySucess();
     } catch (error) {
       console.error("Error calling API:", error.message);
       notifyFail();
     }
   };
 
-  const notifySuccess = () => {
-    toast.success("Author updated successfully", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+  const notifySucess = () => {
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => navigate("/authors")
+      });
   };
 
   const notifyFail = () => {
-    toast.error("Failed to update author", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (

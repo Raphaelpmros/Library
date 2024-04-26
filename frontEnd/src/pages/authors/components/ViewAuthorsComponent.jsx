@@ -1,16 +1,18 @@
+import { toast } from "react-toastify";
 import React, { useState, useEffect } from "react";
+import { updateAuthor } from "../../../../requests_api/authors";
+import { deleteAuthor } from "../../../../requests_api/authors";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
 import EditButtonModal from "../../../components/Buttons/EditButton";
-import { deleteAuthor } from "../../../../requests_api/authors";
-import { updateAuthor } from "../../../../requests_api/authors";
 
 export default function ViewAuthorsComponent({ id, name, nationality }) {
   const handleDelete = async () => {
     try {
       await deleteAuthor(id);
-      window.location.reload();
+      notifySucess();
     } catch (error) {
       console.error("Error deleting author:", error.message);
+      notifyFail('Something went wrong!');
     }
   };
 
@@ -23,6 +25,34 @@ export default function ViewAuthorsComponent({ id, name, nationality }) {
       setUserData(parsedUserData);
     }
   }, []);
+
+  const notifySucess = () => {
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
+  };
+
+  const notifyFail = () => {
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
+  };
 
   return (
     <div
