@@ -1,10 +1,10 @@
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
+import { toast } from "react-toastify";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import { newUsers } from "../../../requests_api/users";
-import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import { toast } from "react-toastify";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Register = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);

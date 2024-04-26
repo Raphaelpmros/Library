@@ -1,5 +1,5 @@
-import MenuBookIcon from "@mui/icons-material/MenuBook";
 import React from "react";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 export default function RentBook({ rentFunction }) {
   const onClickHandler = async (e) => {

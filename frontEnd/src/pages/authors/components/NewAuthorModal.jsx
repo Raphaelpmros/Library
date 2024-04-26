@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import { toast } from "react-toastify";
+import React, { useState } from "react";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { newAuthor } from "../../../../requests_api/authors";
-import { toast } from "react-toastify";
 
 export default function modal() {
   const [open, setOpen] = useState(false);

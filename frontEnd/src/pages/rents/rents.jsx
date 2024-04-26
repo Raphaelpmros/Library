@@ -1,12 +1,12 @@
-import { viewBooks } from "../../../requests_api/books";
-import React, { useEffect, useState } from "react";
-import { allUsers } from "../../../requests_api/users";
-import { oneRent } from "../../../requests_api/rents";
-import RentsList from './rentsTable/rentsList'
-import RentsHead from './rentsTable/rentsHead'
-import { useParams } from "react-router-dom";
-import { Pagination } from 'flowbite-react';
 import { format } from 'date-fns';
+import { Pagination } from 'flowbite-react';
+import { useParams } from "react-router-dom";
+import RentsHead from './rentsTable/rentsHead'
+import RentsList from './rentsTable/rentsList'
+import React, { useEffect, useState } from "react";
+import { oneRent } from "../../../requests_api/rents";
+import { allUsers } from "../../../requests_api/users";
+import { viewBooks } from "../../../requests_api/books";
 
 export default function Rents() {
     const [currentPage, setCurrentPage] = useState(1);

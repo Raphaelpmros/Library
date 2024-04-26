@@ -1,7 +1,7 @@
-import { findCategories, updateCategories } from "../.././../requests_api/categories";
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { findCategories, updateCategories } from "../.././../requests_api/categories";
 
 export default function EditCategory() {
   const { id } = useParams();

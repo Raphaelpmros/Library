@@ -1,8 +1,8 @@
-import { allReviews, deleteReviews } from "../../../../requests_api/reviews";
-import { allUsers, findUser } from "../../../../requests_api/users";
-import React, { useEffect, useState } from "react";
-import DeleteButton from "../../../components/Buttons/DeleteButton";
 import { toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { allUsers, findUser } from "../../../../requests_api/users";
+import DeleteButton from "../../../components/Buttons/DeleteButton";
+import { allReviews, deleteReviews } from "../../../../requests_api/reviews";
 
 export default function Review({ comment, rating, id, id_books, id_user }) {
   const adminData = localStorage.getItem("user");

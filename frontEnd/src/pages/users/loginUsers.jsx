@@ -1,11 +1,11 @@
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Visibility from '@mui/icons-material/Visibility';
-import IconButton from '@mui/material/IconButton';
-import { loginUser } from '../../../requests_api/users';
-import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { useState } from 'react';
 import * as React from 'react';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import { loginUser } from '../../../requests_api/users';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 const LoginUser = () => {

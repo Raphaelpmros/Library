@@ -1,8 +1,8 @@
+import { Pagination } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import NewBookModal from "./components/NewBookModal";
-import ViewBooksComponents from "./components/ViewBooksComponent";
 import { viewBooks } from "../../../requests_api/books";
-import { Pagination } from "flowbite-react";
+import ViewBooksComponents from "./components/ViewBooksComponent";
 
 export default function AllBooks() {
   const [books, setBooks] = useState([]);

@@ -1,5 +1,5 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function DeleteButton({ deleteFunction }) {
   const onClickHandler = async (e) => {

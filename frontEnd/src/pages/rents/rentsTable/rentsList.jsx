@@ -1,7 +1,7 @@
-import { deleteRents } from "../../../../requests_api/rents";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { deleteRents } from "../../../../requests_api/rents";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
 import EditButtonModal from "../../../components/Buttons/EditButton";
 

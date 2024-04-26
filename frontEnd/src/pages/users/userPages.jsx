@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import EditButton from "../../components/Buttons/EditButton";
 
 export default function Perfil() {

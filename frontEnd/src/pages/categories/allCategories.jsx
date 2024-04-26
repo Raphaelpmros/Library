@@ -1,8 +1,8 @@
+import { Pagination } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import NewCategoryModal from "./components/NewCategoryModal";
-import ViewCategoryComponent from "./components/ViewCategoryComponent";
 import { viewCategories } from "../../../requests_api/categories";
-import { Pagination } from "flowbite-react";
+import ViewCategoryComponent from "./components/ViewCategoryComponent";
 
 export default function AllCategories() {
   const [categories, setCategories] = useState([]);

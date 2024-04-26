@@ -1,22 +1,15 @@
-import { findBooks } from "../../../requests_api/books";
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Pagination } from "flowbite-react";
-import Rating from "@mui/material/Rating";
 import { toast } from "react-toastify";
-import Box from "@mui/material/Box";
 import NewReview from "./components/NewReview";
+import { newRents } from "../../../requests_api/rents";
+import { findBooks } from "../../../requests_api/books";
+import { deleteBooks } from "../../../requests_api/books";
+import { useParams, useNavigate } from "react-router-dom";
+import RentBook from "../../components/Buttons/RentButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import EditButtonModal from "../../components/Buttons/EditButton";
-import { newRents } from "../../../requests_api/rents";
-import { deleteBooks } from "../../../requests_api/books";
-import { updateBook } from "../../../requests_api/books";
-import RentBook from "../../components/Buttons/RentButton";
 
 export default function OneBook() {
-  const onPageChange = (page) => setCurrentPage(page);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const { id } = useParams();
   const [book, setBook] = useState({});
   const navigate = useNavigate();

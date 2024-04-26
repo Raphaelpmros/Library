@@ -1,7 +1,7 @@
-import { findAuthor, updateAuthor } from "../.././../requests_api/authors";
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { findAuthor, updateAuthor } from "../.././../requests_api/authors";
 
 export default function EditAuthor() {
   const { id } = useParams();

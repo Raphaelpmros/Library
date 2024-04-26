@@ -1,8 +1,8 @@
+import { Pagination } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import NewAuthorModal from "./components/NewAuthorModal";
-import ViewAuthorsComponent from "./components/ViewAuthorsComponent";
 import { viewAuthors } from "../../../requests_api/authors";
-import { Pagination } from "flowbite-react";
+import ViewAuthorsComponent from "./components/ViewAuthorsComponent";
 
 export default function AllAuthors() {
   const [authors, setAuthors] = useState([]);

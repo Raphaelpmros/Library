@@ -1,10 +1,10 @@
-import { useParams, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { findUser, updateUsers } from "../../../requests_api/users";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
 import IconButton from "@mui/material/IconButton";
+import React, { useState, useEffect } from "react";
+import Visibility from "@mui/icons-material/Visibility";
+import { useParams, useNavigate } from "react-router-dom";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { findUser, updateUsers } from "../../../requests_api/users";
 
 export default function EditUser() {
   const { id } = useParams();

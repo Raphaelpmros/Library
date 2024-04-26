@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
+import { Routes, Route} from "react-router-dom";
 import Container from "./components/Container/Container";
-import { Routes, Route, Router, useLocation } from "react-router-dom";
 
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
@@ -18,9 +18,9 @@ import EditUser from "./pages/users/editUsers";
 import UserPage from "./pages/users/userPages";
 import LoginUser from "./pages/users/loginUsers";
 
+import OneBook from "./pages/books/oneBook";
 import AllBooks from "./pages/books/allBooks";
 import EditBooks from "./pages/books/editBooks";
-import OneBook from "./pages/books/oneBook";
 
 import AllAuthors from "./pages/authors/allAuthors";
 import EditAuthors from "./pages/authors/editAuthors";
@@ -45,15 +45,15 @@ function App() {
           <Route path="/users" element={<UserPage />} />
           <Route path="/users/login" element={<LoginUser />} />
 
-          <Route path="/books/:id" element={<OneBook />} />
           <Route path="/books" element={<AllBooks />} />
+          <Route path="/books/:id" element={<OneBook />} />
           <Route path="/books/update/:id" element={<EditBooks />} />
 
           <Route path="/authors" element={<AllAuthors />} />
           <Route path="/authors/update/:id" element={<EditAuthors />} />
 
-          <Route path="/categories/update/:id" element={<EditCategories />} />
           <Route path="/categories" element={<AllCategories />} />
+          <Route path="/categories/update/:id" element={<EditCategories />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
