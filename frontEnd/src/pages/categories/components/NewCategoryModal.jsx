@@ -44,10 +44,17 @@ export default function modal() {
   };
 
   const notifySucess = () => {
-    toast.success("Book insert with success", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.success('Successifully created the category!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   const notifyFail = () => {

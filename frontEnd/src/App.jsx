@@ -1,8 +1,10 @@
+import React, { useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
-import React, { useEffect } from "react";
-import { Routes, Route, Router, useLocation } from "react-router-dom";
 import Container from "./components/Container/Container";
+import { Routes, Route, Router, useLocation } from "react-router-dom";
 
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
@@ -36,7 +38,7 @@ function App() {
           <Route path="/about" element={<About />} />
 
           <Route path="/rents/" element={<AllRents />} />
-          <Route path="/rents/update/:id" element={<EditRent/>} />
+          <Route path="/rents/update/:id" element={<EditRent />} />
 
           <Route path="/users/new" element={<NewUser />} />
           <Route path="/users/update/:id" element={<EditUser />} />
@@ -57,6 +59,19 @@ function App() {
         </Routes>
       </Container>
 
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition:Bounce
+      />
       <Footer />
     </>
   );

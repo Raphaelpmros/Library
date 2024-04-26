@@ -84,7 +84,6 @@ export default function modal() {
 
   const handleCloseModalAndNavigate = () => {
     onCloseModal();
-    // window.location.reload();
   };
 
   const handleSubmit = async (e) => {
@@ -110,17 +109,31 @@ export default function modal() {
   };
 
   const notifySucess = () => {
-    toast.success("Book insert with success", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.success('Successifully created the book!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   const notifyFail = () => {
-    toast.error("already title this name", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (
