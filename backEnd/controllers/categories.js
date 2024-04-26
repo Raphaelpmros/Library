@@ -29,7 +29,7 @@ module.exports.new = async (req, res) => {
       return res.status(422).json({ message: "Category must have a name!" });
     }
 
-    const existingCategorie = await Categorie.findCategories(id);
+    const existingCategorie = await Categorie.findCategories(name);
     if (existingCategorie.length >= 1) {
       return res.status(409).json({ message: "Category already exist!" });
     }

@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import NewCategoryModal from "./components/NewCategoryModal";
 import ViewCategoryComponent from "./components/ViewCategoryComponent";
 import { viewCategories } from "../../../requests_api/categories";
+import { Pagination } from "flowbite-react";
 
 export default function AllCategories() {
   const [categories, setCategories] = useState([]);
+  const onPageChange = (page) => setCurrentPage(page);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -15,7 +19,9 @@ export default function AllCategories() {
           response.viewCategories &&
           Array.isArray(response.viewCategories)
         ) {
+          const categoriesArray = response.viewCategories;
           setCategories(response.viewCategories);
+          setTotalPages(Math.ceil(categoriesArray.length / 12));
         } else {
           console.error("Error: Invalid data format received");
         }
@@ -37,6 +43,13 @@ export default function AllCategories() {
     }
   }, []);
 
+  const indexOfLastcategory = currentPage * 12;
+  const indexOfFirstcategory = indexOfLastcategory - 12;
+  const currentCategory = categories.slice(
+    indexOfFirstcategory,
+    indexOfLastcategory
+  );
+
   return (
     <>
       {userData.admin === "1" && (
@@ -47,7 +60,7 @@ export default function AllCategories() {
 
       {categories.length === 0 && (
         <div
-          className="mt-20 text-xl text-center flex justify-center flex-col"
+          className="pt-5 text-xl text-center flex justify-center flex-col"
           style={{ height: "60vh" }}
         >
           <h1 className="text-4xl">We don't have any categories yet</h1>
@@ -55,13 +68,24 @@ export default function AllCategories() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5 place-items-center">
-        {categories.map((category) => (
+        {currentCategory.map((category) => (
           <ViewCategoryComponent
             key={category.id}
             id={category.id}
             name={category.name}
           />
         ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        <Pagination
+          layout="pagination"
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          previousLabel="Back"
+          nextLabel="Next"
+          showIcons
+        />
       </div>
     </>
   );
