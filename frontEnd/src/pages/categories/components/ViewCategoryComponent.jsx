@@ -1,17 +1,19 @@
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import DeleteButton from "../../../components/Buttons/DeleteButton";
 import EditButtonModal from "../../../components/Buttons/EditButton";
 import { deleteCategories } from "../../../../requests_api/categories";
 import { updateCategories } from "../../../../requests_api/categories";
-import React, { useState, useEffect } from "react";
 
 export default function ViewCategoryComponent({ id, name }) {
   const handleDelete = async () => {
     try {
       await deleteCategories(id);
-      window.location.reload();
+      notifySucess();
     } catch (error) {
       console.error("Error deleting category:", error);
+      notifyFail('Something went wrong!');
     }
   };
 
@@ -24,6 +26,34 @@ export default function ViewCategoryComponent({ id, name }) {
       setUserData(parsedUserData);
     }
   }, []);
+
+  const notifySucess = () => {
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
+  };
+
+  const notifyFail = () => {
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
+  };
 
   return (
     <>

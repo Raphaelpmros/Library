@@ -1,10 +1,10 @@
-import { viewBooks } from "../../../requests_api/books";
+import { Pagination } from "flowbite-react";
+import RentsList from "./rentsTable/rentsList";
+import RentsHead from "./rentsTable/rentsHead";
 import React, { useEffect, useState } from "react";
 import { allRents } from "../../../requests_api/rents";
 import { allUsers } from "../../../requests_api/users";
-import RentsList from "./rentsTable/rentsList";
-import RentsHead from "./rentsTable/rentsHead";
-import { Pagination } from "flowbite-react";
+import { viewBooks } from "../../../requests_api/books";
 
 export default function allRentsAdmin() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,8 +14,6 @@ export default function allRentsAdmin() {
   const [rents, setRents] = useState([]);
   const [user, setUser] = useState([]);
   const userData = JSON.parse(User);
-
-  console.log(rents)
 
   const onPageChange = (page) => setCurrentPage(page);
 

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import { toast } from "react-toastify";
+import React, { useState } from "react";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { newCategories } from "../../../../requests_api/categories";
-import { toast } from "react-toastify";
 
 export default function modal() {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,6 @@ export default function modal() {
 
   const handleCloseModalAndNavigate = () => {
     onCloseModal();
-    window.location.reload();
   };
 
   const handleSubmit = async (e) => {
@@ -58,10 +57,17 @@ export default function modal() {
   };
 
   const notifyFail = () => {
-    toast.error("already title this name", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (
