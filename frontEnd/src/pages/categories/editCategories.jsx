@@ -25,26 +25,39 @@ export default function EditCategory() {
     e.preventDefault();
     try {
       await updateCategories(id, formData);
-      navigate("/categories");
-      notifySuccess();
+      notifySucess();
     } catch (error) {
       console.error("Error calling API:", error.message);
       notifyFail();
     }
   };
 
-  const notifySuccess = () => {
-    toast.success("Category updated successfully", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+  const notifySucess = () => {
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => navigate("/categories")
+      });
   };
 
   const notifyFail = () => {
-    toast.error("Failed to update category", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (
