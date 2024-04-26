@@ -9,7 +9,7 @@ export default function ViewAuthorsComponent({ id, name, nationality }) {
   const handleDelete = async () => {
     try {
       await deleteAuthor(id);
-      notifySucess();
+      notifySuccess();
     } catch (error) {
       console.error("Error deleting author:", error.message);
       notifyFail('Something went wrong!');
@@ -26,7 +26,7 @@ export default function ViewAuthorsComponent({ id, name, nationality }) {
     }
   }, []);
 
-  const notifySucess = () => {
+  const notifySuccess = () => {
     toast.success('Success!', {
       position: "top-center",
       autoClose: 3000,

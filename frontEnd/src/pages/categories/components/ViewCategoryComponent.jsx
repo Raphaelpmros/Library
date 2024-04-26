@@ -10,7 +10,7 @@ export default function ViewCategoryComponent({ id, name }) {
   const handleDelete = async () => {
     try {
       await deleteCategories(id);
-      notifySucess();
+      notifySuccess();
     } catch (error) {
       console.error("Error deleting category:", error);
       notifyFail('Something went wrong!');
@@ -27,7 +27,7 @@ export default function ViewCategoryComponent({ id, name }) {
     }
   }, []);
 
-  const notifySucess = () => {
+  const notifySuccess = () => {
     toast.success('Success!', {
       position: "top-center",
       autoClose: 3000,

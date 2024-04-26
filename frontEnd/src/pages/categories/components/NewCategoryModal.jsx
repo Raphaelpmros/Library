@@ -34,7 +34,7 @@ export default function modal() {
       setIsSubmitting(true);
       await newCategories(formData);
 
-      notifySucess();
+      notifySuccess();
     } catch (error) {
       notifyFail("Something went wrong");
       console.error("Error calling API:", error.message);
@@ -42,7 +42,7 @@ export default function modal() {
     }
   };
 
-  const notifySucess = () => {
+  const notifySuccess = () => {
     toast.success('Successifully created the category!', {
       position: "top-center",
       autoClose: 3000,

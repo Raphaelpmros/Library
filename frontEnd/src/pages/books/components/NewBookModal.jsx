@@ -100,7 +100,7 @@ export default function modal() {
 
       await newBook(formData);
 
-      notifySucess();
+      notifySuccess();
     } catch (error) {
       notifyFail("Something went wrong");
       console.error("Error calling API:", error.message);
@@ -108,7 +108,7 @@ export default function modal() {
     }
   };
 
-  const notifySucess = () => {
+  const notifySuccess = () => {
     toast.success('Successifully created the book!', {
       position: "top-center",
       autoClose: 3000,

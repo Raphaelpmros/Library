@@ -49,7 +49,7 @@ const LoginUser = () => {
 
             config.headers['Authorization'] = `Bearer ${data.token}`;
 
-            notifySucess();
+            notifySuccess();
             navigate('/')
 
         } catch (error) {
@@ -58,19 +58,33 @@ const LoginUser = () => {
         }
     };
 
-    const notifySucess = () => {
-        toast.success("Logged in", {
-            position: "bottom-right",
-            autoClose: 500,
-        });
-    };
-
-    const notifyFail = () => {
-        toast.error("email or Password Incorrect!", {
-            position: "bottom-right",
-            autoClose: 1000,
-        });
-    };
+    const notifySuccess = () => {
+        toast.success('Logged in!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          onClose: () => navigate("/")
+          });
+      };
+    
+      const notifyFail = () => {
+        toast.error('Something went wrong!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          onClose: () => window.location.reload()
+          });
+      };
 
     return (
         <>

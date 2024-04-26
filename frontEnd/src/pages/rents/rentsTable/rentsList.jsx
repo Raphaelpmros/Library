@@ -21,14 +21,14 @@ export default function RentsList({
   const handleDelete = async () => {
     try {
       await deleteRents(id);
-      notifySucess();
+      notifySuccsess();
     } catch (error) {
       console.error("Error deleting Book:", error.message);
       notifyFail(`/rents/${id}`);
     }
   };
 
-  const notifySucess = () => {
+  const notifySuccsess = () => {
     toast.success('Success!', {
       position: "top-center",
       autoClose: 3000,

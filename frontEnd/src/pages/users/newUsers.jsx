@@ -76,8 +76,7 @@ const Register = () => {
 
       await newUsers(formDataObject);
 
-      notifySucess();
-      navigate("/");
+      notifySuccess();
     } catch (error) {
       notifyFail("Email already exists");
       console.error("Error calling API:", error.message);
@@ -85,18 +84,32 @@ const Register = () => {
     }
   };
 
-  const notifySucess = () => {
-    toast.success("Create user", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+  const notifySuccess = () => {
+    toast.success('User created!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => navigate("/")
+      });
   };
 
-  const notifyFail = (mensagem) => {
-    toast.error(mensagem, {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+  const notifyFail = () => {
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   const containsNumber = (password) => {

@@ -26,14 +26,14 @@ export default function EditAuthor() {
 
     try {
       await updateAuthor(id, formData);
-      notifySucess();
+      notifySuccess();
     } catch (error) {
       console.error("Error calling API:", error.message);
       notifyFail();
     }
   };
 
-  const notifySucess = () => {
+  const notifySuccess = () => {
     toast.success('Success!', {
       position: "top-center",
       autoClose: 3000,

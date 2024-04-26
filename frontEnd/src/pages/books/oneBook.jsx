@@ -29,7 +29,7 @@ export default function OneBook() {
     try {
       await deleteBooks(id);
       navigate(`/books`);
-      notifySucess()
+      notifySuccess()
     } catch (error) {
       notifyFail('Something went wrong!')
       console.error("Error deleting Book:", error.message);
@@ -83,7 +83,7 @@ export default function OneBook() {
     }
   };
 
-  const notifySucess = () => {
+  const notifySuccess = () => {
     toast.success('Success!', {
       position: "top-center",
       autoClose: 3000,

@@ -54,14 +54,14 @@ export default function EditRent() {
       }
 
       await updateRents(id, rent, renewed);
-      notifySucess();
+      notifySuccess();
     } catch (error) {
       notifyFail("Edit fail");
       console.error("Error updating rent:", error);
     }
   };
 
-  const notifySucess = () => {
+  const notifySuccess = () => {
     toast.success('Success!', {
       position: "top-center",
       autoClose: 3000,

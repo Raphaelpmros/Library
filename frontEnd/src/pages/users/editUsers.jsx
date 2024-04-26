@@ -93,7 +93,6 @@ export default function EditUser() {
       }
 
       await updateUsers(id, formData);
-      navigate("/");
       notifySuccess();
       logout();
     } catch (error) {
@@ -103,17 +102,31 @@ export default function EditUser() {
   };
 
   const notifySuccess = () => {
-    toast.success("Users updated successfully", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.success('Success!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => navigate("/")
+      });
   };
 
   const notifyFail = () => {
-    toast.error("Failed to update users", {
-      position: "bottom-right",
-      autoClose: 1000,
-    });
+    toast.error('Something went wrong!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      onClose: () => window.location.reload()
+      });
   };
 
   return (
