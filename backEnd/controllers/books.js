@@ -35,7 +35,6 @@ module.exports.new = async (req, res) => {
 
   if (req.file && req.file.path) {
     image = req.file.path;
-
   } else {
     image = process.env.DEFAULT_BOOK_IMAGE;
   }
@@ -91,11 +90,19 @@ module.exports.updateBook = async function (req, res) {
     full_name,
     description,
     quantity,
-    image,
     id_authors,
     id_categories,
-    id,
   } = req.body;
+
+  const {id} = req.params
+
+  let image;
+
+  if (req.file && req.file.path) {
+    image = req.file.path;
+  } else {
+    image = process.env.DEFAULT_BOOK_IMAGE;
+  }
 
   if (
     !full_name ||

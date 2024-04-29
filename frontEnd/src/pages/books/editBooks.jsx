@@ -7,6 +7,8 @@ import { findBooks, updateBook } from "../../../requests_api/books";
 
 export default function EditBooks() {
   const { id } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
   const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [formData, setFormData] = useState({
@@ -17,6 +19,21 @@ export default function EditBooks() {
     id_authors: "",
     id_categories: "",
   });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageUrl(file);
+    }
+  };
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,18 +93,27 @@ export default function EditBooks() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await updateBook(id, formData);
-      navigate("/books");
+      setIsSubmitting(true);
+      const formDataObject = new FormData();
+      formDataObject.append("full_name", formData.full_name);
+      formDataObject.append("quantity", formData.quantity);
+      formDataObject.append("description", formData.description);
+      formDataObject.append("image", imageUrl);
+      formDataObject.append("id_authors", formData.id_authors);
+      formDataObject.append("id_categories", formData.id_categories);
+
+      await updateBook(id, formDataObject);
       notifySuccess();
     } catch (error) {
-      console.error("Error calling API:", error.message);
       notifyFail();
+      console.error("Error calling API:", error.message);
     }
   };
 
   const notifySuccess = () => {
-    toast.success('Success!', {
+    toast.success("Success!", {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -96,12 +122,12 @@ export default function EditBooks() {
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => navigate("/")
-      });
+      onClose: () => navigate(`/books/${id}`),
+    });
   };
 
   const notifyFail = () => {
-    toast.error('Something went wrong!', {
+    toast.error("Something went wrong!", {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
@@ -110,8 +136,8 @@ export default function EditBooks() {
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => window.location.reload()
-      });
+      onClose: () => window.location.reload(),
+    });
   };
 
   return (
@@ -133,9 +159,7 @@ export default function EditBooks() {
               type="text"
               id="full_name"
               name="full_name"
-              onChange={(e) =>
-                setFormData({ ...formData, full_name: e.target.value })
-              }
+              onChange={handleChange}
               value={formData.full_name}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="The hobbit"
@@ -153,9 +177,7 @@ export default function EditBooks() {
               type="text"
               id="description"
               name="description"
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
+              onChange={handleChange}
               value={formData.description}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Description"
@@ -173,9 +195,7 @@ export default function EditBooks() {
               type="number"
               id="quantity"
               name="quantity"
-              onChange={(e) =>
-                setFormData({ ...formData, quantity: e.target.value })
-              }
+              onChange={handleChange}
               value={formData.quantity}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Quantity"
@@ -193,9 +213,7 @@ export default function EditBooks() {
               className="block w-full text-sm text-black border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               id="file_input"
               type="file"
-              onChange={(e) =>
-                setFormData({ ...formData, image: e.target.value })
-              }
+              onChange={handleFileChange}
             />
           </div>
 
@@ -210,9 +228,7 @@ export default function EditBooks() {
                 className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 id="id_authors"
                 required
-                onChange={(e) =>
-                  setFormData({ ...formData, id_authors: e.target.value })
-                }
+                onChange={handleChange}
                 value={formData.id_authors}
               >
                 <option value="" disabled>
@@ -237,9 +253,7 @@ export default function EditBooks() {
                 className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 id="id_categories"
                 required
-                onChange={(e) =>
-                  setFormData({ ...formData, id_categories: e.target.value })
-                }
+                onChange={handleChange}
                 value={formData.id_categories}
               >
                 <option value="" disabled>

@@ -22,19 +22,18 @@ export const findBooks = async (id) => {
   }
 };
 
-export const newBook = async (formData) => {
+export const newBook = async (formDataObject) => {
   try {
-    console.log(formData.image);
-    const response = await fetchApi.post(`/books`, formData);
+    const response = await fetchApi.post(`/books`, formDataObject);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const updateBook = async (id, formData) => {
+export const updateBook = async (id, formDataObject) => {
   try {
-    const response = await fetchApi.patch(`/books/update/${id}`, formData);
+    const response = await fetchApi.patch(`/books/update/${id}`, formDataObject);
     return response.data;
   } catch (error) {
     throw error;

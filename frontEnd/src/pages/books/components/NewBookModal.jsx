@@ -35,6 +35,7 @@ export default function modal() {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
+    console.log(file)
     if (file) {
       setImageUrl(file);
     }
@@ -90,23 +91,23 @@ export default function modal() {
     e.preventDefault();
 
     try {
-      setIsSubmitting(true);
+        setIsSubmitting(true);
+        const formDataObject = new FormData();
+        formDataObject.append('full_name', formData.full_name);
+        formDataObject.append('quantity', formData.quantity);
+        formDataObject.append('description', formData.description);
+        formDataObject.append('image', imageUrl);
+        formDataObject.append('id_authors', formData.id_authors);
+        formDataObject.append('id_categories', formData.id_categories);
 
-      if (imageUrl) {
-        formData.image = imageUrl
-      } else {
-        formData.image = "";
-      }
+        await newBook(formDataObject);
 
-      await newBook(formData);
-
-      notifySuccess();
+        notifySuccess()
     } catch (error) {
-      notifyFail("Something went wrong");
-      console.error("Error calling API:", error.message);
-      console.error("Server response:", error.response.data);
+        notifyFail()
+        console.error('Error calling API:', error.message);
     }
-  };
+};
 
   const notifySuccess = () => {
     toast.success('Successifully created the book!', {
