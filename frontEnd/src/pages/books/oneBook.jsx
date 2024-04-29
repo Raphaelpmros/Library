@@ -18,8 +18,6 @@ export default function OneBook() {
     id_user: ""
   });
 
-  console.log(book)
-
   const handleDelete = async () => {
     try {
       await deleteBooks(id);
