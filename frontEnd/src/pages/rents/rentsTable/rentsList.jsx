@@ -13,7 +13,6 @@ export default function RentsList({
   id_books,
   id,
 }) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const adminData = localStorage.getItem("user");
   const adminObject = JSON.parse(adminData);
   const navigate = useNavigate();
@@ -21,15 +20,15 @@ export default function RentsList({
   const handleDelete = async () => {
     try {
       await deleteRents(id);
-      notifySuccsess();
+      notifySuccsess("Book returned with success!");
     } catch (error) {
       console.error("Error deleting Book:", error.message);
       notifyFail(`/rents/${id}`);
     }
   };
 
-  const notifySuccsess = () => {
-    toast.success('Success!', {
+  const notifySuccsess = (message) => {
+    toast.success(message, {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,

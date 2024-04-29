@@ -24,7 +24,7 @@ export default function EditRent() {
 
     const formattedDate = nextWeek.toISOString().slice(0, 10);
     setNextWeek({ new_date: formattedDate });
-  }, []); // Executa uma vez ao montar o componente
+  }, []);
 
   useEffect(() => {
     const fetchRent = async () => {
@@ -56,7 +56,7 @@ export default function EditRent() {
       await updateRents(id, rent, renewed);
       notifySuccess();
     } catch (error) {
-      notifyFail("Edit fail");
+      notifyFail(error.response.data.message);
       console.error("Error updating rent:", error);
     }
   };
@@ -75,8 +75,8 @@ export default function EditRent() {
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
+  const notifyFail = (message) => {
+    toast.error(message, {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
