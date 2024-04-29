@@ -124,7 +124,7 @@ export default function OneBook() {
               <p className="mb-3 font-normal text-white">{book.description}</p>
             </div>
             <div className="flex justify-center">
-              {userData && (
+              {userData && book.quantity > 0 && (
                 <div >
                   <RentBook rentFunction={handleRent} />
                 </div>
