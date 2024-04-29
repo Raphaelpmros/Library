@@ -9,13 +9,13 @@ import { findUser, updateUsers } from "../../../requests_api/users";
 export default function EditUser() {
   const { id } = useParams();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [imageUrl, setImageUrl] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
 
   const [formData, setFormData] = useState({
     full_name: "",
-    image: "",
     full_address: "",
     additional_address_details: "",
     phone: "",
@@ -23,7 +23,6 @@ export default function EditUser() {
     passwordConfirm: "",
   });
 
-  console.log(imageUrl)
   const navigate = useNavigate();
 
   const handleFileChange = async (e) => {
@@ -74,30 +73,37 @@ export default function EditUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!containsNumber(formData.password) || formData.password.length < 5) {
-      notifyFail("The password is very weak. Try a more complex password.");
+    if (!containsNumber(formData.password) || formData.password.length < 8) {
+      notifyFail("Something is missing from the password.");
       return;
     }
 
     try {
+      setIsSubmitting(true);
       const formDataObject = new FormData();
       formDataObject.append("full_name", formData.full_name);
-      formDataObject.append("username", formData.username);
-      formDataObject.append("password", formData.password);
-      formDataObject.append("description", formData.description);
+      formDataObject.append("full_address", formData.full_address);
+      formDataObject.append(
+        "additional_address_details",
+        formData.additional_address_details
+      );
       formDataObject.append("image", imageUrl);
+      formDataObject.append("phone", formData.phone);
+      formDataObject.append("password", formData.password);
 
       if (formData.password !== passwordConfirm) {
-        notifyFail("Passwords do not match");
-        return;
+        return notifyFail("Password is not the same");
       }
 
-      await updateUsers(id, formData);
+      await updateUsers(id, formDataObject);
+
       notifySuccess();
       logout();
+      window.location.reload()
     } catch (error) {
-      console.error("Error calling API:", error.message);
       notifyFail();
+      console.error("Error calling API:", error.message);
+      console.error("Server response:", error.response.data);
     }
   };
 
@@ -115,8 +121,8 @@ export default function EditUser() {
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
+  const notifyFail = (message) => {
+    toast.error(message, {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,

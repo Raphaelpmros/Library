@@ -51,6 +51,7 @@ const LoginUser = () => {
 
             notifySuccess();
             navigate('/')
+            window.location.reload()
 
         } catch (error) {
             console.error('Erro ao chamar a API:', error.message);

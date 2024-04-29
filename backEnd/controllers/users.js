@@ -84,14 +84,19 @@ module.exports.new = async (req, res) => {
 
 module.exports.update = async (req, res) => {
   const {
-    id,
     full_name,
-    image,
     full_address,
     additional_address_details,
     phone,
     password,
   } = req.body;
+  const{id} = req.params
+
+  if (req.file && req.file.path) {
+    image = req.file.path;
+  } else {
+    image = process.env.DEFAULT_USER_IMAGE;
+  }
 
   try {
     if (!id) {

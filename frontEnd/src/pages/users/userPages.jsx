@@ -8,7 +8,6 @@ export default function Perfil() {
 
   useEffect(() => {
     const userDataFromStorage = localStorage.getItem("user");
-    console.log(userDataFromStorage)
     if (userDataFromStorage) {
       const parsedUserData = JSON.parse(userDataFromStorage);
       setUserData(parsedUserData);

@@ -24,7 +24,6 @@ export const findUser = async (id) => {
 
 export const newUsers = async (formDataObject) => {
   try {
-    console.log(formDataObject)
     const response = await fetchApi.post(`/users/new`, formDataObject);
     return response.data;
   } catch (error) {
@@ -43,9 +42,10 @@ export const loginUser = async (formData) => {
   }
 };
 
-export const updateUsers = async (id, formData) => {
+export const updateUsers = async (id, formDataObject) => {
   try {
-    const response = await fetchApi.patch(`/users/update/${id}`, formData);
+    console.log(formDataObject)
+    const response = await fetchApi.patch(`/users/update/${id}`, formDataObject);
     console.log(response)
     return response.data;
   } catch (error) {
