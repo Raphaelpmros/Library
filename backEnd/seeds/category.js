@@ -9,9 +9,9 @@ con.connect((err) => {
     const sql = `INSERT INTO categories (name) VALUES ('${categorieName}')`
     con.query(sql, (err, result) => {
         if(err) {
-            return console.log("Categoria já registrada");
+            return console.log("Category already exist");
         }
-        return console.log("Categoria inserida com sucesso")
+        return console.log("Success creating category")
     })
   } catch (err) {
     console.err(err);

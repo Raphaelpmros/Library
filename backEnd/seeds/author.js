@@ -10,9 +10,9 @@ con.connect((err) => {
       const sql = `INSERT INTO authors (full_name, nationality) VALUES ('${authorName}', '${authorNationality}')`;
       con.query(sql, (err, result) => {
         if (err) {
-          return console.log("Autor já inserido no banco de dados");
+          return console.log("Author already exist");
         }
-        return console.log("Autor inserido com sucesso");
+        return console.log("Success creating author");
       });
     } catch (err) {
       console.err(err);
