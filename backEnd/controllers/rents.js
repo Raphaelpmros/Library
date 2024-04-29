@@ -58,7 +58,6 @@ module.exports.new = async (req, res) => {
 
 module.exports.update = async (req, res) => {
   const { id } = req.params;
-  console.log(id)
 
   try {
     const rent = await Rent.updateRents(id);

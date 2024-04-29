@@ -41,9 +41,7 @@ module.exports.new = async (req, res) => {
     password,
   } = req.body;
 
-  let image;
-  console.log(req.file)
-  
+  let image;  
 
   if (req.file && req.file.path) {
     image = req.file.path;
@@ -77,7 +75,6 @@ module.exports.new = async (req, res) => {
     return res.status(201).json({ message: "User created!" });
   } catch (err) {
     console.error(err);
-    console.log(password);
     return res.status(500).json({ message: "Fail to create user!" });
   }
 };

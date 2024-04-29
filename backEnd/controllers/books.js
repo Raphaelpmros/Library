@@ -39,10 +39,6 @@ module.exports.new = async (req, res) => {
     image = process.env.DEFAULT_BOOK_IMAGE;
   }
 
-  console.log(req.body)
-
-
-
   if (
     !full_name ||
     !description ||

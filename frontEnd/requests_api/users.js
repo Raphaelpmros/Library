@@ -34,7 +34,6 @@ export const newUsers = async (formDataObject) => {
 export const loginUser = async (formData) => {
   try {
     const response = await fetchApi.post(`/users/login`, formData);
-    console.log(response.data); 
     return response.data;
   } catch (error) {
     console.error('Erro ao chamar a API de login:', error.message);
@@ -44,9 +43,7 @@ export const loginUser = async (formData) => {
 
 export const updateUsers = async (id, formDataObject) => {
   try {
-    console.log(formDataObject)
     const response = await fetchApi.patch(`/users/update/${id}`, formDataObject);
-    console.log(response)
     return response.data;
   } catch (error) {
     throw error;

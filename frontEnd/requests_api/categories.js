@@ -12,7 +12,6 @@ export const viewCategories = async () => {
 export const newCategories = async (formData) => {
   try {
     const response = await fetchApi.post(`/categories/new`, formData);
-    console.log(response)
     return response.data;
   } catch (error) {
     throw error;

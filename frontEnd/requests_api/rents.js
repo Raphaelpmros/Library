@@ -19,12 +19,10 @@ export const findRents = async (id) => {
 }
 
 export const newRents = async (rentData) => {
-  console.log(rentData)
   try {
     const response = await fetchApi.post(`/rents/new`, rentData);
     return response.data;
   } catch (error) {
-    console.log("deu erro: ", error)
     throw error;
   }
 };

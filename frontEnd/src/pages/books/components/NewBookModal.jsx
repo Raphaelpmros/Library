@@ -35,7 +35,6 @@ export default function modal() {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    console.log(file)
     if (file) {
       setImageUrl(file);
     }

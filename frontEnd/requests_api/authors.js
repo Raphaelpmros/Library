@@ -34,7 +34,6 @@ export const newAuthor = async (formData) => {
 export const updateAuthor = async (id, formData) => {
   try {
     const response = await fetchApi.patch(`/authors/update/${id}`, formData);
-    console.log("passou a API");
     return response.data;
   } catch (error) {
     throw error;
