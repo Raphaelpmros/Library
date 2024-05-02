@@ -46,10 +46,10 @@ function App() {
           <Route path="/rents/" element={<AllRents />} />
           <Route path="/rents/update/:id" element={<EditRent />} />
 
-          <Route path="/users/new" element={<NewUser />} />
-          <Route path="/users/update/:id" element={<EditUser />} />
           <Route path="/users" element={<UserPage />} />
+          <Route path="/users/new" element={<NewUser />} />
           <Route path="/users/login" element={<LoginUser />} />
+          <Route path="/users/update/:id" element={<EditUser />} />
 
           <Route path="/books" element={<AllBooks />} />
           <Route path="/books/:id" element={<OneBook />} />
