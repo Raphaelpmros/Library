@@ -74,17 +74,20 @@ export default function AllAuthors() {
           />
         ))}
       </div>
-      <div className="flex justify-center mt-4">
-        <Pagination
-          layout="pagination"
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-          previousLabel="Back"
-          nextLabel="Next"
-          showIcons
-        />
-      </div>
+
+      {totalPages !== 1 && (
+        <div className="flex justify-center mt-4">
+          <Pagination
+            layout="pagination"
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            previousLabel="Back"
+            nextLabel="Next"
+            showIcons
+          />
+        </div>
+      )}
     </>
   );
 }

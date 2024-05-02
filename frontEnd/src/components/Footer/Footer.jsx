@@ -14,13 +14,13 @@ export default function Component() {
           />
           <FooterLinkGroup>
             <FooterLink href="/about" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">About</FooterLink>
-            <FooterLink href="/privacy" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Privacy Policy</FooterLink>
+            <FooterLink href="/privacypolicy" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Privacy Policy</FooterLink>
             <FooterLink href="/licensing" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Licensing</FooterLink>
             <FooterLink href="/contact" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Contact</FooterLink>
           </FooterLinkGroup>
         </div>
         <FooterDivider />
-        <FooterCopyright href="#" by="Flowbite™" year={2022} />
+        <FooterCopyright href="#" by="Mystic Library" year={2024} />
       </div>
     </Footer>
   );

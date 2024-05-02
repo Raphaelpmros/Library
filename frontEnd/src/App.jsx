@@ -8,7 +8,10 @@ import Container from "./components/Container/Container";
 
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
+import Contact from "./pages/contact/contact";
+import Licensing from "./pages/licensing/licensing";
 import NotFound from "./components/NotFound/NotFound";
+import Privacy from "./pages/privacyPolicy/privacyPolicy";
 
 import AllRents from "./pages/rents/allRents";
 import EditRent from "./pages/rents/editRents";
@@ -36,6 +39,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/licensing" element={<Licensing />} />
+          <Route path="/privacypolicy" element={<Privacy />} />
 
           <Route path="/rents/" element={<AllRents />} />
           <Route path="/rents/update/:id" element={<EditRent />} />
