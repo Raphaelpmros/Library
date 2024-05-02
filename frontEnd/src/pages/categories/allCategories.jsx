@@ -76,17 +76,19 @@ export default function AllCategories() {
           />
         ))}
       </div>
-      <div className="flex justify-center mt-4">
-        <Pagination
-          layout="pagination"
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-          previousLabel="Back"
-          nextLabel="Next"
-          showIcons
-        />
-      </div>
+      {totalPages !== 0 && totalPages !== 1 && (
+        <div className="flex justify-center mt-4">
+          <Pagination
+            layout="pagination"
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            previousLabel="Back"
+            nextLabel="Next"
+            showIcons
+          />
+        </div>
+      )}
     </>
   );
 }

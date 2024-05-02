@@ -75,7 +75,7 @@ export default function AllAuthors() {
         ))}
       </div>
 
-      {totalPages !== 1 && (
+      {totalPages !== 0 && totalPages !== 1 && (
         <div className="flex justify-center mt-4">
           <Pagination
             layout="pagination"
