@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const path = require("path");
-const cors = require("cors")
+const cors = require("cors");
 require('dotenv').config();
 const app = express();
 
@@ -9,40 +9,48 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-require("./database/createDb")
-require("./database/db");
-const categories = require("./routes/categories");
-const reviews = require ("./routes/reviews");
-const authors = require("./routes/authors");
-const books = require ("./routes/books");
-const rents = require ("./routes/rents");
-const users = require ("./routes/users");
+const createDb = require("./database/createDb");
 
-require("./seeds/category")
-require("./seeds/author")
-require("./seeds/admin")
+createDb()
+  .then(() => {
+    require("./database/db");
 
-app.use(express.static(path.join(__dirname, "public")));
-app.set("view engine", "ejs");
-app.use(bodyParser.json());
+    const categories = require("./routes/categories");
+    const reviews = require ("./routes/reviews");
+    const authors = require("./routes/authors");
+    const books = require ("./routes/books");
+    const rents = require ("./routes/rents");
+    const users = require ("./routes/users");
 
-app.use(cors({
-  origin: process.env.VITE_SERVER_PORT,
-  credentials: true
-}))
+    require("./seeds/category");
+    require("./seeds/author");
+    require("./seeds/admin");
 
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({ error: err });
-});
+    app.use(express.static(path.join(__dirname, "public")));
+    app.set("view engine", "ejs");
+    app.use(bodyParser.json());
 
-app.use("/categories", categories);
-app.use("/reviews", reviews);
-app.use("/authors", authors);
-app.use("/books", books);
-app.use("/rents", rents);
-app.use("/users", users);
+    app.use(cors({
+      origin: process.env.VITE_SERVER_PORT,
+      credentials: true
+    }));
 
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`listenning on port ${process.env.SERVER_PORT}`);
-});
+    app.use(function (err, req, res, next) {
+      res.status(err.status || 500);
+      res.json({ error: err });
+    });
+
+    app.use("/categories", categories);
+    app.use("/reviews", reviews);
+    app.use("/authors", authors);
+    app.use("/books", books);
+    app.use("/rents", rents);
+    app.use("/users", users);
+
+    app.listen(process.env.SERVER_PORT, () => {
+      console.log(`Listening on port ${process.env.SERVER_PORT}`);
+    });
+  })
+  .catch(error => {
+    console.error("Error creating database:", error);
+  });
