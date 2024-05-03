@@ -13,6 +13,7 @@ export default function modal() {
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState([]);
@@ -27,10 +28,17 @@ export default function modal() {
   });
 
   const handleChange = (e) => {
+    if (e.target.id === "quantity" && (isNaN(e.target.value) || parseInt(e.target.value) < 1)) {
+      notifyFailQuantity("Quantity need to be a valid number")
+      setIsButtonDisabled(true);
+      return;
+    }
+
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
+    setIsButtonDisabled(false);
   };
 
   const handleFileChange = async (e) => {
@@ -103,15 +111,15 @@ export default function modal() {
 
         notifySuccess()
     } catch (error) {
-        notifyFail()
+        notifyFail(error.message)
         console.error('Error calling API:', error.message);
     }
 };
 
   const notifySuccess = () => {
     toast.success('Successifully created the book!', {
-      position: "top-center",
-      autoClose: 3000,
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -122,10 +130,10 @@ export default function modal() {
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -133,6 +141,19 @@ export default function modal() {
       progress: undefined,
       theme: "dark",
       onClose: () => window.location.reload()
+      });
+  };
+
+  const notifyFailQuantity = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
       });
   };
 
@@ -277,8 +298,9 @@ export default function modal() {
               </div>
               <button
                 onClick={handleCloseModalAndNavigate}
+                disabled={isButtonDisabled}
                 type="submit"
-                className="text-white inline-flex items-center bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white inline-flex items-center bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 <svg
                   className="me-1 -ms-1 w-5 h-5"

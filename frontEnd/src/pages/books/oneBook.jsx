@@ -24,7 +24,7 @@ export default function OneBook() {
       navigate(`/books`);
       notifySuccess()
     } catch (error) {
-      notifyFail('Something went wrong!')
+      notifyFail(error.message)
       console.error("Error deleting Book:", error.message);
     }
   };
@@ -78,8 +78,8 @@ export default function OneBook() {
 
   const notifySuccess = () => {
     toast.success('Success!', {
-      position: "top-center",
-      autoClose: 3000,
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -90,10 +90,10 @@ export default function OneBook() {
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -103,6 +103,8 @@ export default function OneBook() {
       onClose: () => window.location.reload()
       });
   };
+
+  
 
   return (
     <>

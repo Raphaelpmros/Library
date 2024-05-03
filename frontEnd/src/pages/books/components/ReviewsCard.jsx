@@ -32,7 +32,7 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
       await deleteReviews(id, id_books);
       notifySuccess()
     } catch (error) {
-      notifyFail('Something went wrong!')
+      notifyFail(error.message)
       console.error("Error calling API:", error.message);
     }
   };
@@ -66,8 +66,8 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
 
   const notifySuccess = () => {
     toast.success('Success!', {
-      position: "top-center",
-      autoClose: 3000,
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -78,10 +78,10 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -111,7 +111,6 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
                       dateTime="2014-08-16 19:00"
                       className="block text-sm text-gray-500 dark:text-gray-400"
                     >
-                      {user.email}
                     </time>
                   </p>
                 </div>
@@ -129,7 +128,7 @@ export default function Review({ comment, rating, id, id_books, id_user }) {
           {comment}
         </p>
         <div className="flex justify-end">
-          {(adminObject.admin === 1 || isCommentAuthor) && (
+          {(adminObject.admin === "1" || isCommentAuthor) && (
             <DeleteButton deleteFunction={handleDelete} />
           )}
         </div>

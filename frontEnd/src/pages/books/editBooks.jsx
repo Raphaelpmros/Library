@@ -6,6 +6,7 @@ import { viewCategories } from "../../../requests_api/categories";
 import { findBooks, updateBook } from "../../../requests_api/books";
 
 export default function EditBooks() {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const { id } = useParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -21,6 +22,12 @@ export default function EditBooks() {
   });
 
   const handleChange = (e) => {
+    if (e.target.id === "quantity" && (isNaN(e.target.value) || parseInt(e.target.value) < 1)) {
+      notifyFailQuantity("Quantity need to be a valid number")
+      setIsButtonDisabled(true);
+      return;
+    }
+
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
@@ -107,15 +114,15 @@ export default function EditBooks() {
       await updateBook(id, formDataObject);
       notifySuccess();
     } catch (error) {
-      notifyFail();
+      notifyFail(error.message);
       console.error("Error calling API:", error.message);
     }
   };
 
   const notifySuccess = () => {
-    toast.success("Success!", {
-      position: "top-center",
-      autoClose: 3000,
+    toast.success('Success!', {
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -123,21 +130,34 @@ export default function EditBooks() {
       progress: undefined,
       theme: "dark",
       onClose: () => navigate(`/books/${id}`),
-    });
+      });
   };
 
-  const notifyFail = () => {
-    toast.error("Something went wrong!", {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => window.location.reload(),
-    });
+      onClose: () => window.location.reload()
+      });
+  };
+
+  const notifyFailQuantity = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
   };
 
   return (
@@ -270,6 +290,7 @@ export default function EditBooks() {
 
           <button
             type="submit"
+            disabled={isButtonDisabled}
             className="w-full text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Save Changes
