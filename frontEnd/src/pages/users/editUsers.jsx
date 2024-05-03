@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import InputMask from "react-input-mask";
 import IconButton from "@mui/material/IconButton";
 import React, { useState, useEffect } from "react";
 import Visibility from "@mui/icons-material/Visibility";
@@ -21,6 +22,7 @@ export default function EditUser() {
     phone: "",
     password: "",
     passwordConfirm: "",
+    cpf: ""
   });
 
   const navigate = useNavigate();
@@ -29,6 +31,8 @@ export default function EditUser() {
     const file = e.target.files[0];
     if (file) {
       setImageUrl(file);
+    } else {
+      return;
     }
   };
 
@@ -97,9 +101,10 @@ export default function EditUser() {
 
       await updateUsers(id, formDataObject);
 
-      notifySuccess();
       logout();
+      navigate("/")
       window.location.reload()
+      notifySuccess();
     } catch (error) {
       notifyFail();
       console.error("Error calling API:", error.message);
@@ -109,22 +114,22 @@ export default function EditUser() {
 
   const notifySuccess = () => {
     toast.success('Success!', {
-      position: "top-center",
-      autoClose: 3000,
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => navigate("/")
+      // onClose: () => navigate("/")
       });
   };
 
   const notifyFail = (message) => {
     toast.error(message, {
-      position: "top-center",
-      autoClose: 3000,
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -307,6 +312,25 @@ export default function EditUser() {
               </p>
             )}
           </div>
+
+          <div className="mb-6">
+              <label
+                htmlFor="cpf"
+                className="block mb-2 text-sm font-medium text-white dark:text-white"
+              >
+                CPF
+              </label>
+              <InputMask
+                mask="999.999.999-99"
+                id="cpf"
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="xxx.xxx.xxx-xx"
+                value={formData.cpf}
+                required
+                onChange={formChange}
+              />
+            </div>
+
 
           <div className="">
             <label

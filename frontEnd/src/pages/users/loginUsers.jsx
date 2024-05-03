@@ -61,8 +61,8 @@ const LoginUser = () => {
 
     const notifySuccess = () => {
         toast.success('Logged in!', {
-          position: "top-center",
-          autoClose: 3000,
+          position: "bottom-left",
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -75,8 +75,8 @@ const LoginUser = () => {
     
       const notifyFail = () => {
         toast.error('Something went wrong!', {
-          position: "top-center",
-          autoClose: 3000,
+          position: "bottom-left",
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

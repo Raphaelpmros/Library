@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import React, { useState } from "react";
+import InputMask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import { newUsers } from "../../../requests_api/users";
@@ -78,38 +79,38 @@ const Register = () => {
 
       notifySuccess();
     } catch (error) {
-      notifyFail("Email already exists");
+      notifyFail(error.message);
       console.error("Error calling API:", error.message);
       console.error("Server response:", error.response.data);
     }
   };
 
   const notifySuccess = () => {
-    toast.success('User created!', {
-      position: "top-center",
-      autoClose: 3000,
+    toast.success("User created!", {
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => navigate("/")
-      });
+      onClose: () => navigate("/"),
+    });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => window.location.reload()
-      });
+      onClose: () => window.location.reload(),
+    });
   };
 
   const containsNumber = (password) => {
@@ -259,8 +260,8 @@ const Register = () => {
               >
                 CPF
               </label>
-              <input
-                type="text"
+              <InputMask
+                mask="999.999.999-99"
                 id="cpf"
                 className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="xxx.xxx.xxx-xx"
@@ -298,7 +299,6 @@ const Register = () => {
                 id="additional_address_details"
                 className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Number 7, apartament 81"
-                required
                 onChange={handleChange}
               />
             </div>
@@ -310,8 +310,8 @@ const Register = () => {
               >
                 Phone number
               </label>
-              <input
-                type="text"
+              <InputMask
+                mask="(99)99999-9999"
                 id="phone"
                 className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="(xx)xxxxx-xxxx"
