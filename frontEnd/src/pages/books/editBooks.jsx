@@ -30,7 +30,7 @@ export default function EditBooks() {
 
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value,
+      [e.target.id]: e.target.value.trim(),
     });
   };
 

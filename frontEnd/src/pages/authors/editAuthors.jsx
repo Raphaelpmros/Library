@@ -72,7 +72,7 @@ export default function EditAuthor() {
               type="text"
               id="full_name"
               name="full_name"
-              onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} value={formData.full_name}
+              onChange={(e) => setFormData({ ...formData, full_name: e.target.value.trim() })} value={formData.full_name}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Socrates"
               required
@@ -84,7 +84,7 @@ export default function EditAuthor() {
               type="text"
               id="nationality"
               name="nationality"
-              onChange={(e) => setFormData({ ...formData, nationality: e.target.value })} value={formData.nationality}
+              onChange={(e) => setFormData({ ...formData, nationality: e.target.value.trim() })} value={formData.nationality}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Greek"
               required
