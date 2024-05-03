@@ -29,14 +29,14 @@ export default function EditAuthor() {
       notifySuccess();
     } catch (error) {
       console.error("Error calling API:", error.message);
-      notifyFail();
+      notifyFail(error.message);
     }
   };
 
   const notifySuccess = () => {
     toast.success('Success!', {
-      position: "top-center",
-      autoClose: 3000,
+      position: "bottom-left",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -47,10 +47,10 @@ export default function EditAuthor() {
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

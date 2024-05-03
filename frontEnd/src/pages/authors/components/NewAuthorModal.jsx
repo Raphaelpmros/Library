@@ -37,30 +37,30 @@ export default function modal() {
 
       notifySuccess();
     } catch (error) {
-      notifyFail("Something went wrong");
+      notifyFail(error.message);
       console.error("Error calling API:", error.message);
       console.error("Server response:", error.response.data);
     }
   };
 
   const notifySuccess = () => {
-    toast.success('Successifully created the author!', {
-      position: "top-center",
-      autoClose: 3000,
+    toast.success('Success!', {
+      position: "bottom-left",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => window.location.reload()
+      onClose: () => navigate("/authors")
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

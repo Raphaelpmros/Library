@@ -12,7 +12,7 @@ export default function ViewAuthorsComponent({ id, name, nationality }) {
       notifySuccess();
     } catch (error) {
       console.error("Error deleting author:", error.message);
-      notifyFail('Something went wrong!');
+      notifyFail(error.message);
     }
   };
 
@@ -28,22 +28,22 @@ export default function ViewAuthorsComponent({ id, name, nationality }) {
 
   const notifySuccess = () => {
     toast.success('Success!', {
-      position: "top-center",
-      autoClose: 3000,
+      position: "bottom-left",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "dark",
-      onClose: () => window.location.reload()
+      onClose: () => navigate("/authors")
       });
   };
 
-  const notifyFail = () => {
-    toast.error('Something went wrong!', {
-      position: "top-center",
-      autoClose: 3000,
+  const notifyFail = (message) => {
+    toast.error(message, {
+      position: "bottom-left",
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
